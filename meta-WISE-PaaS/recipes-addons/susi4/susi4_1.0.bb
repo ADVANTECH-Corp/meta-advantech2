@@ -1,4 +1,4 @@
-# Copyright (C) 2015 Advantech
+# Copyright (C) 2019 Advantech
 
 DESCRIPTION = "Advantech SUSI4.0"
 LICENSE = "Proprietary"
@@ -6,9 +6,9 @@ SECTION = "libs"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 PR = "r0"
 
-SRC_URI_mx6 = "file://IMX6_SUSI4__Release_2017_08_22_ubuntu12.04.1_x64_fsl_yocto.tar.gz"
-SRC_URI_mx6[md5sum] = "bf5c5e68c2df93b39eedbc822a5d2853"
-SRC_NAME_mx6 = "SUSI4.0.14656"
+SRC_URI_mx6 = "file://IMX6_SUSI4__Release_2019_05_27_ubuntu12.04.1_x64_fsl_yocto.tar.gz"
+SRC_URI_mx6[md5sum] = "51e2a24c6ecb8064143a8dd84a10a1bf"
+SRC_NAME_mx6 = "SUSI4.0.15477"
 
 SRC_URI_dragonboard-410c = "file://Susi4_qualcomm_dragon_yocto_Release__2017-05-11.tar.gz"
 SRC_URI_dragonboard-410c[md5sum] = "a45b53f822ce18b77411ed66bd607a43"
