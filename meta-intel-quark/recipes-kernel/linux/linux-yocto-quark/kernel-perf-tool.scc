@@ -1,3 +1,0 @@
-include features/latencytop.scc
-include features/lttng.scc
-include features/powertop.scc

@@ -1,20 +1,12 @@
-# meta-advantech
+# meta-advantech2
 
 This repository contains Advantech meta layers for Yocto.
 
 ## Introduction
 
-### meta-fsl-imx6
+### meta-fsl-imx
 
-- Platform support for NXP i.MX6.
-
-### meta-intel-quark
-
-- Platform support for Intel Quark.
-
-### meta-qcom-410c
-
-- Platform support for Qualcomm dragonboard 410c.
+- Platform support for NXP i.MX6, i.MX7 & i.MX8 series.
 
 ### meta-ti-adv
 
@@ -26,11 +18,5 @@ This repository contains Advantech meta layers for Yocto.
 
 ### meta-WISE-PaaS
 
-- This layer provides Advantech add-on features, e.g. RMM, SUSI & SUSI-IOT.
+- This layer provides Advantech add-on features and corresponding packages.
 
-### meta-Edge-Sense
-
-- This layer provides additional packages for gateway solution, e.g. Arm Mbed, Node-RED, etc.
-
-### meta-timesys
-- This layer provide timesys scripts.
