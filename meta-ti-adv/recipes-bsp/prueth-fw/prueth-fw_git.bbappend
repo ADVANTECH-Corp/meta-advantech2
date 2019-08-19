@@ -1,0 +1,13 @@
+
+COMPATIBLE_MACHINE = "am57xx-evm|am437x-evm|am335x-evm|k2g|am335xrom3310a1|am335xrsb4220a1|am335xrsb4221a1|am335xepcr3220a1"
+
+PRU_VERSION_am335xrom3310a1 = "REV1"
+PRU_VERSION_am335xrsb4220a1 = "REV1"
+PRU_VERSION_am335xrsb4221a1 = "REV1"
+PRU_VERSION_am335xepcr3220a1 = "REV1"
+
+FW_PREFIX_am335xrom3310a1 = "am335x"
+FW_PREFIX_am335xrsb4220a1 = "am335x"
+FW_PREFIX_am335xrsb4221a1 = "am335x"
+FW_PREFIX_am335xepcr3220a1 = "am335x"
+

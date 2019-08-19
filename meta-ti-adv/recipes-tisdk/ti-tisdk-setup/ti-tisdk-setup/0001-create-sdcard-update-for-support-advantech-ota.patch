@@ -1,0 +1,282 @@
+diff --git a/create-sdcard.sh b/create-sdcard.sh
+index 39d8af1..ee0e6a0 100644
+--- a/create-sdcard.sh
++++ b/create-sdcard.sh
+@@ -339,6 +339,9 @@ echo ""
+ 
+ DRIVE=/dev/$DEVICEDRIVENAME
+ NUM_OF_DRIVES=`df | grep -c $DEVICEDRIVENAME`
++if [ "$NUM_OF_DRIVES" -gt 4 ]; then
++NUM_OF_DRIVES=`expr $NUM_OF_DRIVES + 1`
++fi
+ 
+ # This if statement will determine if we have a mounted sdX or mmcblkX device.
+ # If it is mmcblkX, then we need to set an extra char in the partition names, 'p',
+@@ -585,6 +588,99 @@ EOM
+ 	sync
+ 	sync
+ 	INSTALLSTARTHERE=n
++
++#create only 5 partitions
++elif [ "$PARTITION" -eq "5" ]
++then
++
++# Set the PARTS value as well
++PARTS=5
++cat << EOM
++
++################################################################################
++
++		Now making 5 partitions
++
++################################################################################
++
++EOM
++
++dd if=/dev/zero of=$DRIVE bs=1024 count=1024
++
++SIZE=`fdisk -l $DRIVE | grep Disk | awk '{print $5}'`
++
++echo DISK SIZE - $SIZE bytes
++
++CYLINDERS=`echo $SIZE/255/63/512 | bc`
++ROOTFS_END=`expr $CYLINDERS - 108`
++RECOVERY_START=`expr $CYLINDERS - 108`
++RECOVERY_END=`expr $CYLINDERS - 99`
++EXT_START=`expr $CYLINDERS - 98`
++MISC_START=`expr $CYLINDERS - 98`
++MISC_END=`expr $CYLINDERS - 97`
++CACHE_START=`expr $CYLINDERS - 96`
++
++parted -s $DRIVE mklabel msdos
++parted -s $DRIVE unit cyl mkpart primary fat32 -- 0 9
++parted -s $DRIVE set 1 boot on
++parted -s $DRIVE unit cyl mkpart primary ext2 -- 9 $ROOTFS_END
++parted -s $DRIVE unit cyl mkpart primary ext2 -- $RECOVERY_START $RECOVERY_END
++parted -s $DRIVE unit cyl mkpart extended -- $EXT_START -2
++parted -s $DRIVE unit cyl mkpart logic ext2 -- $MISC_START $MISC_END
++parted -s $DRIVE unit cyl mkpart logic ext2 -- $CACHE_START -2
++
++cat << EOM
++
++################################################################################
++
++		Partitioning Boot
++
++################################################################################
++EOM
++	mkfs.vfat -F 32 -n "boot" ${DRIVE}${P}1
++cat << EOM
++
++################################################################################
++
++		Partitioning rootfs
++
++################################################################################
++EOM
++	mkfs.ext3 -L "rootfs" ${DRIVE}${P}2
++
++cat << EOM
++
++################################################################################
++
++		Partitioning recovery
++
++################################################################################
++EOM
++	mkfs.ext3 -L "recovery" ${DRIVE}${P}3
++
++cat << EOM
++
++################################################################################
++
++		Partitioning misc
++
++################################################################################
++EOM
++	mkfs.ext3 -L "misc" ${DRIVE}${P}5
++
++cat << EOM
++
++################################################################################
++
++		Partitioning cache
++
++################################################################################
++EOM
++	mkfs.ext3 -L "cache" ${DRIVE}${P}6
++
++	sync
++	sync
++	#INSTALLSTARTHERE=n
+ fi
+ 
+ 
+@@ -633,15 +729,28 @@ mkdir $START_DIR/tmp
+ export PATH_TO_SDBOOT=boot
+ export PATH_TO_SDROOTFS=rootfs
+ export PATH_TO_TMP_DIR=$START_DIR/tmp
++if [ "$PARTS" -eq "2" ]
++then
++mkdir $START_DIR/initramfstmp
++export PATH_TO_SDINITRAMFS=initramfs
++fi
+ 
+ 
+ echo " "
+ echo "Mount the partitions "
+ mkdir $PATH_TO_SDBOOT
+ mkdir $PATH_TO_SDROOTFS
++if [ "$PARTS" -eq "2" ]
++then
++mkdir $PATH_TO_SDINITRAMFS
++fi
+ 
+ sudo mount -t vfat ${DRIVE}${P}1 boot/
+ sudo mount -t ext3 ${DRIVE}${P}2 rootfs/
++if [ "$PARTS" -eq "5" ]
++then
++sudo mount -t ext3 ${DRIVE}${P}3 initramfs/
++fi
+ 
+ 
+ 
+@@ -650,6 +759,10 @@ echo "Emptying partitions "
+ echo " "
+ sudo rm -rf  $PATH_TO_SDBOOT/*
+ sudo rm -rf  $PATH_TO_SDROOTFS/*
++if [ "$PARTS" -eq "2" ]
++then
++sudo rm -rf  $PATH_TO_SDINITRAMFS/*
++fi
+ 
+ echo ""
+ echo "Syncing...."
+@@ -1095,6 +1208,50 @@ elif [ $ROOTFSPATHOPTION -eq 2  ] ; then
+ 	untar_progress $ROOTFSUSERFILEPATH $PATH_TO_SDROOTFS
+ fi
+ 
++if [ "$PARTS" -ne "5" ]
++then
++	sed -i '/cache/d' $PATH_TO_SDROOTFS/etc/fstab
++fi
++
++if [ "$PARTS" -eq "2" ]
++then
++	#Make sure there is only 1 initramfs
++	CHECKNUMOFRAMFS=`ls $ROOTFILEPARTH | grep "initramfs.*debug" | grep 'cpio.gz' | grep -n '' | grep '2:' | awk {'print $1'}`
++	if [ -n "$CHECKNUMOFRAMFS" ]
++	then
++cat << EOM
++
++################################################################################
++
++   Multiple initramfs Tarballs found
++
++################################################################################
++
++EOM
++		ls $PARSEPATH/filesystem/ | grep "initramfs.*debug" | grep 'cpio.gz' | grep -n '' | awk {'print "	" , $1'}
++		echo ""
++		read -p "Enter Number of rootfs Tarball: " TARNUMBER
++		echo " "
++		FOUNDTARFILENAME=`ls $PARSEPATH/filesystem/ | grep "initramfs.*debug" | grep 'cpio.gz' | grep -n '' | grep "${TARNUMBER}:" | cut -c3- | awk {'print$1'}`
++		INITRAMFS=$FOUNDTARFILENAME
++
++	else
++		INITRAMFS=`ls  $PARSEPATH/filesystem/ | grep "initramfs.*debug" | grep 'cpio.gz' | awk {'print $1'}`
++	fi
++
++	INITRAMFSUSERFILEPATH=$PARSEPATH/filesystem/$INITRAMFS
++	sudo cp $PARSEPATH/filesystem/*.cpio.gz $START_DIR/initramfstmp
++	cd $START_DIR/initramfstmp
++	zcat *.cpio.gz | cpio -idmv  > /dev/zero 2>&1
++	sync
++	sudo rm *.cpio.gz
++	sudo cp -r $START_DIR/$PATH_TO_SDROOTFS/boot $START_DIR/initramfstmp/
++	cd $START_DIR/initramfstmp/
++	tar -cJf ../initramfs.tar.xz *
++	cd $START_DIR
++	sync
++fi
++
+ echo ""
+ echo ""
+ echo "Syncing..."
+@@ -1138,10 +1295,64 @@ then
+ 
+ fi
+ 
++read -p "Do you need to copy iNAND upgrate tools(y/n): " REPLY
++if [ "$REPLY" = 'y' -o "$REPLY" = 'Y' ]; then
++	echo "[Copying iNAND upgrate tools...]"
++	mkdir -p  $PATH_TO_SDROOTFS/mk_inand
++	mkdir -p  $PATH_TO_SDROOTFS/image
++	if [ $FILEPATHOPTION -eq 1 ] ; then
++		cp $ROOTFSUSERFILEPATH $PATH_TO_SDROOTFS/image/rootfs.tar.xz
++	else
++		cd $PATH_TO_SDROOTFS/
++		tar -cJf ../rootfs.tar.xz *
++		cd $START_DIR
++		mv rootfs.tar.xz $PATH_TO_SDROOTFS/image
++	fi
++	echo "rootfs.tar.xz copied"
++	[ -f ./mk-eMMC-boot.sh ] && cp -a mk-eMMC-boot.sh  $PATH_TO_SDROOTFS/mk_inand
++	# Copy Image to dest directory
++	if [ "$BOOTIMG" != "" ] ; then
++		cp $PATH_TO_SDBOOT/u-boot.img $PATH_TO_SDROOTFS/image
++		echo "u-boot.img copied"
++	elif [ "$BOOTBIN" != "" ] ; then
++		cp $PATH_TO_SDBOOT/u-boot.bin $PATH_TO_SDROOTFS/image
++		echo "u-boot.bin copied"
++	else
++		echo "No U-Boot file found"
++	fi
++
++	echo ""
++
++	if [ "$BOOTUENV" != "" ] ; then
++		cp $PATH_TO_SDBOOT/uEnv.txt $PATH_TO_SDROOTFS/image
++		echo "uEnv.txt copied"
++	fi
++
++	mv $START_DIR/initramfs.tar.xz $PATH_TO_SDROOTFS/image/initramfs.tar.xz
++	echo "initramfs.tar.xz copied"
++
++echo ""
++echo ""
++echo "Syncing..."
++sync
++sync
++sync
++sync
++sync
++sync
++sync
++sync
++
++fi
++
+ echo " "
+ echo "Un-mount the partitions "
+ sudo umount -f $PATH_TO_SDBOOT
+ sudo umount -f $PATH_TO_SDROOTFS
++if [ "$PARTS" -eq "5" ]
++then
++sudo umount -f $PATH_TO_SDINITRAMFS
++fi
+ 
+ 
+ echo " "
+@@ -1149,6 +1360,11 @@ echo "Remove created temp directories "
+ sudo rm -rf $PATH_TO_TMP_DIR
+ sudo rm -rf $PATH_TO_SDROOTFS
+ sudo rm -rf $PATH_TO_SDBOOT
++if [ "$PARTS" -eq "2" ]
++then
++sudo rm -rf $PATH_TO_SDINITRAMFS
++sudo rm -rf $START_DIR/initramfstmp
++fi
+ 
+ 
+ echo " "
