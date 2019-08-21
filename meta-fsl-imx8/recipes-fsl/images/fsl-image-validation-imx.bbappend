@@ -1,6 +1,9 @@
 IMAGE_FEATURES += " package-management "
 IMAGE_INSTALL += " haveged "
 
+#Advantech package
+require fsl-image-adv.inc
+
 ROOTFS_POSTPROCESS_COMMAND += "update_profile ;"
 ROOTFS_POSTPROCESS_COMMAND += "fix_haveged ;"
 

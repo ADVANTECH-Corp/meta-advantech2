@@ -1,0 +1,19 @@
+diff --git fsl-rc-local/rc.local.etc fsl-rc-local/rc.local.etc
+index 52838c0..669585e 100755
+--- fsl-rc-local/rc.local.etc
++++ fsl-rc-local/rc.local.etc
+@@ -22,5 +22,14 @@ fi
+ #For IR Application
+ mkdir -p /var/run/lirc
+ 
++if [ -e /usr/bin/key_event ];then
++        key_event &
++fi
++
++if [ -e /usr/bin/ec_uevent ];then
++        ec_uevent &
++fi
++
++
+ exit 0
+ 

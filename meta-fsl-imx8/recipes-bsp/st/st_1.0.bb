@@ -1,4 +1,4 @@
-SUMMARY = "Advantech rs-485 test tool for i.MX8 platform"
+SUMMARY = "Advantech rs-485 test tool for i.MX platform"
 SECTION = "base"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
@@ -12,11 +12,13 @@ S = "${WORKDIR}/st"
 
 inherit autotools pkgconfig
 
-EXTRA_OECONF = "--host aarch64-poky-linux --prefix=/usr"
+EXTRA_OECONF_append_mx6 = "--host arm-poky-linux-gnueabi --prefix=/usr/"
+EXTRA_OECONF_append_mx7 = "--host arm-poky-linux-gnueabi --prefix=/usr/"
+EXTRA_OECONF_append_mx8 = "--host aarch64-poky-linux --prefix=/usr/"
 
 # We overwrite do_configure() to avoid perform autoreconf again
 do_configure() {
     oe_runconf
 }
 
-COMPATIBLE_MACHINE = "(mx8)"
+COMPATIBLE_MACHINE = "(mx6|mx7|mx8)"
