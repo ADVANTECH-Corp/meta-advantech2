@@ -1,5 +1,5 @@
-SOC_FAMILY = "keystone"
-require conf/machine/include/soc-family.inc
+require conf/machine/include/ti-soc.inc
+SOC_FAMILY_append = ":keystone"
 
 DEFAULTTUNE ?= "armv7athf-neon"
 require conf/machine/include/tune-cortexa15.inc
@@ -23,5 +23,5 @@ UBI_VOLNAME = "rootfs"
 EXTRA_IMAGEDEPENDS += "u-boot"
 EXTRA_IMAGEDEPENDS += "boot-monitor"
 
-MACHINE_FEATURES = "kernel26 apm usbgadget usbhost vfat pci"
+MACHINE_FEATURES = "kernel26 apm usbgadget usbhost vfat pci dsp"
 MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"

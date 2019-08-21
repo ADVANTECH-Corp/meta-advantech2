@@ -1,5 +1,5 @@
-SOC_FAMILY = "ti43x"
-require conf/machine/include/soc-family.inc
+require conf/machine/include/ti-soc.inc
+SOC_FAMILY_append = ":ti43x"
 
 DEFAULTTUNE ?= "armv7athf-neon"
 require conf/machine/include/tune-cortexa9.inc
@@ -26,6 +26,12 @@ PREFERRED_PROVIDER_u-boot = "u-boot-ti-staging"
 
 KERNEL_IMAGETYPE = "zImage"
 
+KERNEL_DEVICETREE = "am437x-gp-evm.dtb am437x-gp-evm-hdmi.dtb \
+                    am437x-sk-evm.dtb am437x-idk-evm.dtb \
+                    am43x-epos-evm.dtb am43x-epos-evm-hdmi.dtb"
+
+KERNEL_DEVICETREE += "${@base_conditional('ENABLE_TI_UIO_DEVICES', '1', 'am437x-idk-pru-excl-uio.dtb', '', d)}"
+
 UBOOT_ARCH = "arm"
 UBOOT_MACHINE = "am43xx_evm_config"
 
@@ -40,3 +46,7 @@ EXTRA_IMAGEDEPENDS += "u-boot"
 
 # List common SoC features, may need to add touchscreen for specific machines
 MACHINE_FEATURES = "kernel26 apm usbgadget usbhost vfat ext2 screen alsa ethernet sgx"
+
+# Set the list of device targets for ti-pdk class recipes
+TI_PDK_LIMIT_SOCS = "am437x"
+TI_PDK_LIMIT_BOARDS = "evmAM437x idkAM437x skAM437x"

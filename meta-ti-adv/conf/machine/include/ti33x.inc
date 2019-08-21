@@ -1,5 +1,5 @@
-SOC_FAMILY = "ti33x"
-require conf/machine/include/soc-family.inc
+require conf/machine/include/ti-soc.inc
+SOC_FAMILY_append = ":ti33x"
 
 DEFAULTTUNE ?= "armv7athf-neon"
 require conf/machine/include/tune-cortexa8.inc
@@ -26,7 +26,16 @@ PREFERRED_PROVIDER_u-boot = "u-boot-ti-staging"
 
 KERNEL_IMAGETYPE = "zImage"
 
+KERNEL_DEVICETREE = "am335x-evm.dtb am335x-evmsk.dtb \
+                    am335x-icev2.dtb am335x-icev2-prueth.dtb \
+                    am335x-bone.dtb am335x-boneblue.dtb \
+                    am335x-boneblack.dtb am335x-boneblack-wireless.dtb \
+                    am335x-bonegreen.dtb am335x-bonegreen-wireless.dtb"
+
+KERNEL_DEVICETREE += "${@base_conditional('ENABLE_TI_UIO_DEVICES', '1', 'am335x-icev2-pru-excl-uio.dtb', '', d)}"
+
 UBOOT_ARCH = "arm"
+UBOOT_MACHINE = "am335x_evm_config"
 
 UBOOT_ENTRYPOINT = "0x80008000"
 UBOOT_LOADADDRESS = "0x80008000"
@@ -39,3 +48,7 @@ EXTRA_IMAGEDEPENDS += "u-boot"
 
 # List common SoC features, may need to add touchscreen for specific machines
 MACHINE_FEATURES = "kernel26 apm usbgadget usbhost vfat ext2 screen alsa ethernet sgx"
+
+# Set the list of device targets for ti-pdk class recipes
+TI_PDK_LIMIT_SOCS = "am335x"
+TI_PDK_LIMIT_BOARDS = "evmAM335x icev2AM335x iceAMIC110 bbbAM335x skAM335x"
