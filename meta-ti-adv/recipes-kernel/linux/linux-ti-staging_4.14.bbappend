@@ -1,5 +1,5 @@
 
-KERNEL_GIT_URI = "https://github.com/ADVANTECH-Corp/linux-ti.git"
+KERNEL_GIT_URI = "git://github.com/ADVANTECH-Corp/linux-ti.git"
 BRANCH = "linux-ti-staging-05.03.00"
 SRCREV = "${AUTOREV}"
 
