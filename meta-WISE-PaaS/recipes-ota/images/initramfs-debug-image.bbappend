@@ -11,10 +11,10 @@ modify_fstab() {
 
 ROOTFS_POSTPROCESS_COMMAND += " modify_fstab"
 
-# [i.MX6]
-DEPENDS_mx6 += "android-tools-native"
+# [i.MX]
+DEPENDS_imx += "android-tools-native"
 
-mk_recovery_img_mx6() {
+mk_recovery_img_imx() {
 
     mkbootimg --kernel ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE} \
               --ramdisk ${DEPLOY_DIR_IMAGE}/${PN}-${MACHINE}.cpio.gz \
@@ -27,7 +27,7 @@ mk_recovery_img_mx6() {
     ln -sf recovery-${MACHINE}.img ${DEPLOY_DIR_IMAGE}/recovery.img
 }
 
-IMAGE_POSTPROCESS_COMMAND_mx6 += " mk_recovery_img_mx6 ; "
+IMAGE_POSTPROCESS_COMMAND_imx += " mk_recovery_img_imx ; "
 
 # [Qcom APQ8016]
 DEPENDS_dragonboard-410c += "skales-native"

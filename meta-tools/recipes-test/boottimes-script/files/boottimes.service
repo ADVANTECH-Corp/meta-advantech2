@@ -2,7 +2,7 @@
 Description=Boot Times
 
 [Service]
-Type=oneshot
+Type=idle
 ExecStart=/tools/boottimes.sh
 StandardOutput=kmsg+console
 
