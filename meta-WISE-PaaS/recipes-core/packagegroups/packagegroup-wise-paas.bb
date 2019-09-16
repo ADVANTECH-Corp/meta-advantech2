@@ -15,7 +15,7 @@ RDEPENDS_${PN} = "\
 SUMMARY_${PN}-base = "Yocto native packages"
 RDEPENDS_${PN}-base = "\
    nodejs nodejs-npm zsh git git-perltools \
-   sqlite3 lua uci libbsd \
+   sqlite3 lua uci libbsd libavahi-client \
    curl curl-dev libxml2 libxml2-dev openssl openssl-dev lsb \
    mosquitto mosquitto-dev libdmclient libdmclient-dev \
    mosquitto-clients libmosquitto1 libmosquittopp1 packagegroup-sdk-target "
