@@ -9,7 +9,7 @@ IMAGE_INSTALL += " packagegroup-core-eclipse-debug "
 # Native Compiler
 IMAGE_INSTALL += " packagegroup-sdk-target "
 
-IMAGE_INSTALL += " boottimes-script st quectel-script 3g-script stress-script xterm mdio-tool "
+IMAGE_INSTALL += " advresize-script boottimes-script st quectel-script 3g-script stress-script xterm mdio-tool "
 
 # Depends on projects
 IMAGE_INSTALL_append_imx6qrom5420a1 = " ecuevent keyevent"
