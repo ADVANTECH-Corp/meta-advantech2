@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 PATH_THERMAL_ZONE0="/sys/class/thermal/thermal_zone0/temp"
 PATH_THERMAL_ZONE1="/sys/class/thermal/thermal_zone1/temp"

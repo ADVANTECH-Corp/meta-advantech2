@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 source /unit_tests/test-utils.sh
 
