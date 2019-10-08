@@ -3,6 +3,8 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
 
 SRC_URI = "file://stress.sh \
+	   file://log.sh \
+	   file://gpu.sh \
 	   file://power-test \
 	   file://power-test.service"
 
@@ -11,6 +13,8 @@ inherit systemd
 do_install() {
     install -d ${D}/tools
     install -m 755 ${WORKDIR}/stress.sh ${D}/tools/stress.sh
+    install -m 755 ${WORKDIR}/log.sh ${D}/tools/log.sh
+    install -m 755 ${WORKDIR}/gpu.sh ${D}/tools/gpu.sh
 
     # SysV
     if ${@bb.utils.contains('DISTRO_FEATURES','sysvinit','true','false',d)}; then

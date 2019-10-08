@@ -9,7 +9,8 @@ IMAGE_INSTALL += " packagegroup-core-eclipse-debug "
 # Native Compiler
 IMAGE_INSTALL += " packagegroup-sdk-target "
 
-IMAGE_INSTALL += " advresize-script boottimes-script st quectel-script 3g-script stress-script xterm mdio-tool "
+# Tools
+IMAGE_INSTALL += " add-virtual-network advresize-script boottimes-script st quectel-script 3g-script stress-script xterm mdio-tool "
 
 # Depends on projects
 IMAGE_INSTALL_append_imx6qrom5420a1 = " ecuevent keyevent"
@@ -20,6 +21,9 @@ IMAGE_INSTALL_append_imx6qrom7420a1 = " keyevent"
 IMAGE_INSTALL_append_imx6qprom7421a1 = " ecuevent keyevent"
 IMAGE_INSTALL_append_imx6qrom7421a1 = " ecuevent keyevent"
 IMAGE_INSTALL_append_imx6dlrom7421a1 = " ecuevent keyevent"
+IMAGE_INSTALL_append_imx6qrsb4410a1 = " lirc "
+IMAGE_INSTALL_append_imx6qrsb4410a2 = " lirc "
+IMAGE_INSTALL_append_mx8 = " si-script "
 
 # Browser
 #IMAGE_INSTALL += " firefox "
