@@ -8,19 +8,19 @@ echo "disabled" > /sys/devices/virtual/thermal/thermal_zone0/mode
 echo "disabled" > /sys/devices/virtual/thermal/thermal_zone1/mode
 echo "performance" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
 
-[ -e ${THERMAL_ZONE0_TEMP} ] && \
-xterm -title thermal_zone0 -e watch -n 1 cat ${THERMAL_ZONE0_TEMP} &
+if [ -n "$DISPLAY" ]; then
+	[ -e ${THERMAL_ZONE0_TEMP} ] && \
+	xterm -title thermal_zone0 -e watch -n 1 cat ${THERMAL_ZONE0_TEMP} &
 
-[ -e ${THERMAL_ZONE1_TEMP} ] && \
-xterm -title thermal_zone1 -e watch -n 1 cat ${THERMAL_ZONE1_TEMP} &
+	[ -e ${THERMAL_ZONE1_TEMP} ] && \
+	xterm -title thermal_zone1 -e watch -n 1 cat ${THERMAL_ZONE1_TEMP} &
 
-[ -e ${CPU_FREQENCY} ] && \
-xterm -title cpu_freq -e watch -n 1 cat ${CPU_FREQENCY} &
+	[ -e ${CPU_FREQENCY} ] && \
+	xterm -title cpu_freq -e watch -n 1 cat ${CPU_FREQENCY} &
 
-xterm -title memory_test -e watch -n 1 memtester 500M &
-
-xterm -title top -e top &
-
+	xterm -title top -e top &
+fi
+memtester 500M &
 /tools/gpu.sh &
 /tools/log.sh &
 stress -c 6
