@@ -23,7 +23,7 @@ IMAGE_INSTALL_append_imx6qrom7421a1 = " ecuevent keyevent"
 IMAGE_INSTALL_append_imx6dlrom7421a1 = " ecuevent keyevent"
 IMAGE_INSTALL_append_imx6qrsb4410a1 = " lirc "
 IMAGE_INSTALL_append_imx6qrsb4410a2 = " lirc "
-IMAGE_INSTALL_append_mx8 = " si-script "
+IMAGE_INSTALL_append_mx8 = " si-script keyevent "
 
 # Browser
 #IMAGE_INSTALL += " firefox "
