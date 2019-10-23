@@ -11,7 +11,7 @@ echo "Run For ${PROJECT}" >> ${LOG_FILE}
 echo "Log start"
 echo "Log start" >> ${LOG_FILE}
 echo "-------------------------------------------------------------------------------------"
-echo "-------------------------------------------------------------------------------------" >> ${LOG_FILE}
+echo "-------------------------------------------------------------------------------------" | tee -a ${LOG_FILE}
 
 i=0
 while true
@@ -27,11 +27,11 @@ do
     CPU_FREQUENCY=`cpufreq-info -f`
 
     #log temp
-    echo "Loop $i at $DATE" >> ${LOG_FILE}
-    echo "$TOP_LOG" >> ${LOG_FILE}
-    echo "temperature 0:$TEMPERATURE0" >> ${LOG_FILE}
-    echo "temperature 1:$TEMPERATURE1" >> ${LOG_FILE}
-    echo "CPU Frequency:$CPU_FREQUENCY" >> ${LOG_FILE}
+    echo "Loop $i at $DATE" | tee -a ${LOG_FILE}
+    echo "$TOP_LOG" | tee -a ${LOG_FILE}
+    echo "temperature 0:$TEMPERATURE0" | tee -a ${LOG_FILE}
+    echo "temperature 1:$TEMPERATURE1" | tee -a ${LOG_FILE}
+    echo "CPU Frequency:$CPU_FREQUENCY" | tee -a ${LOG_FILE}
     sleep 3
     sync
 done
