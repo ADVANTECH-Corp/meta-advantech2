@@ -5,19 +5,32 @@ IMAGE_INSTALL += "\
 IMAGE_INSTALL += "\
    ppp"
 
+# Wise-PaaS
+IMAGE_INSTALL += "\
+   susi4 susi-iot"
+
+# timezone
+IMAGE_INSTALL += "\
+   tzdata"
+
+# minicom
+IMAGE_INSTALL += "\
+   minicom"
 
 IMAGE_INSTALL += "\
-   mosquitto mosquitto-dev \
+   cmake \
+   mosquitto-clients mosquitto mosquitto-dev \
    libxml2 libxml2-dev \
    git-perltools \
    openobex obexd \
    openobex-dev \
    python-pybluez \
-   minicom \
    "
 TOOLCHAIN_TARGET_TASK += "\
+   cmake \
+   git git-perltools \
    curl curl-dev \
-   mosquitto mosquitto-dev \
+   mosquitto-clients mosquitto mosquitto-dev \
    libxml2 libxml2-dev \
    linux-libc-headers-dev \
    openobex obexd \
