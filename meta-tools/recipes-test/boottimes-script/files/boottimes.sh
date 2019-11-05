@@ -22,6 +22,7 @@ LEND=("" "FAIL!!")
 ((boot_count++))
 
 echo "$boot_count $boot_sec" > $F
+sync
 echo -e "\033[35m"\
 "Boot Times:$boot_count, Seconds:$boot_sec, Cost:$time_cost ${LEND[$FAILED]}"\
 "\033[0m"
