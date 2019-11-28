@@ -163,7 +163,7 @@ MIRRORS_prepend = "\
     git://.*/.* \${ADVANTECH_MIRROR_SERVER} \n \\
     gitsm://.*/.* \${ADVANTECH_MIRROR_SERVER} \n \\
     https?$://.*/.* \${ADVANTECH_MIRROR_SERVER} \n \\
-    ftp://.*/.* \${ADVANTECH_MIRROR_SERVER} \n \\"
+    ftp://.*/.* \${ADVANTECH_MIRROR_SERVER} \n "
 EOF
     # Change settings according environment
     sed -e "s,MACHINE ??=.*,MACHINE ??= '$MACHINE',g" \
