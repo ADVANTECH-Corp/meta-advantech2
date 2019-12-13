@@ -21,6 +21,8 @@ alias ls='/bin/ls --color=auto'
 alias ll='ls -l'
 alias la='ls -al'
 alias l=ll
+shopt -s checkwinsize
+resize > /dev/null
 EOF
 }
 
