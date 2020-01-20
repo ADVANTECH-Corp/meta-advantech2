@@ -1,9 +1,0 @@
-[Unit]
-Description=Power Test
-
-[Service]
-Type=oneshot
-ExecStart=/tools/stress.sh
-
-[Install]
-WantedBy=multi-user.target

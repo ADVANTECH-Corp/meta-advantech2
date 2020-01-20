@@ -5,8 +5,7 @@
 
 case "$1" in
     start)
-        echo -n "Starting Power Test: "
-        export DISPLAY=:0
+        echo -n "Starting Stress Test: "
         /tools/stress.sh &
         echo "OK"
         ;;

@@ -20,10 +20,14 @@ if [ -n "$DISPLAY" ]; then
 
 	xterm -title top -e top &
 fi
-memtester 500M &
+
+. /etc/profile.d/weston.sh
+export DISPLAY=:0
+
+/tools/play.sh &
 /tools/gpu.sh &
 /tools/log.sh &
+memtester 500M &
 stress -c 6
-
 
 #glmark2 --size 1280x720 --annotate --run-forever &
