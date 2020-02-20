@@ -1,7 +1,7 @@
 
 KERNEL_GIT_URI = "git://github.com/ADVANTECH-Corp/linux-ti.git"
 BRANCH = "linux-ti-staging-05.03.00"
-SRCREV = "${AUTOREV}"
+SRCREV = "7c79bc795e66b5990167cf661ef2e71332beef08"
 
 RDEPENDS_kernel-base_append_am335xrom3310a1 = " prueth-fw"
 RDEPENDS_kernel-base_append_am335xrsb4220a1 = " prueth-fw"
