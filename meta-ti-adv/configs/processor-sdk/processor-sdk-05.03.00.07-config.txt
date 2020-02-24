@@ -1,0 +1,16 @@
+# This file takes repo entries in the format
+# repo name,repo uri,repo branch,repo commit[,layers=layer1:layer2...:layern]
+
+bitbake,git://git.openembedded.org/bitbake,1.36,582f1d7a8d150cf5917dfc1efa844f40131ae4bf,layers=
+meta-processor-sdk,http://arago-project.org/git/projects/meta-processor-sdk.git,master,f33a37ac6baa8155302fa1faea99f1be5461779e,layers=
+meta-ros,https://github.com/bmwcarit/meta-ros.git,master,e2566402ab108a19634354a934788109422cf409,layers=
+meta-arago,http://arago-project.org/git/meta-arago.git,rocko,d4bc00af838df7a77f4ddbd3546755c5bad5b880,layers=meta-arago-distro:meta-arago-extras
+meta-browser,git://github.com/OSSystems/meta-browser.git,master,26d50665e2f7223c5f4ad7481a8d2431e7cb55fb,layers=
+meta-qt5,git://github.com/meta-qt5/meta-qt5.git,rocko,d8b531530fa42b59aa0a5b123d87a30d749cbcc4,layers=
+meta-virtualization,git://git.yoctoproject.org/meta-virtualization,rocko,b704c689b67639214b9568a3d62e82df27e9434f,layers=
+meta-openembedded,git://git.openembedded.org/meta-openembedded,rocko,eae996301d9c097bcbeb8046f08041dc82bb62f8,layers=meta-networking:meta-python:meta-oe:meta-gnome:meta-multimedia:meta-filesystems
+meta-ti,git://git.yoctoproject.org/meta-ti,rocko,02e852b1a069463f937ea594e13fe5f88ce9b74d,layers=
+meta-linaro,https://git.linaro.org/openembedded/meta-linaro.git,rocko,cd9ee776044a2d8943be4cb019f063271e9c684d,layers=meta-linaro-toolchain:meta-optee
+oe-core,git://git.openembedded.org/openembedded-core,rocko,3638cb32ba9ba32b4d498fc31ab7fdf82f0d2495,layers=meta
+OECORELAYERCONF=./sample-files/bblayers.conf.sample
+OECORELOCALCONF=./sample-files/local-processor-sdk-64.conf.sample
