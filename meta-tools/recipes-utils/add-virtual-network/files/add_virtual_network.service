@@ -1,0 +1,13 @@
+[Unit]
+Description=Add virtual network
+
+
+[Service]
+Type=oneshot
+ExecStart=/tools/add_virtual_network.sh
+StandardOutput=kmsg+console
+
+
+[Install]
+WantedBy=multi-user.target
+

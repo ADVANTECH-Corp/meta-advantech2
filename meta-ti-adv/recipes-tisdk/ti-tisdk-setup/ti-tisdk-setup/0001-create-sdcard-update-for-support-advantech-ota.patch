@@ -1,5 +1,5 @@
 diff --git a/create-sdcard.sh b/create-sdcard.sh
-index 39d8af1..ee0e6a0 100644
+index 39d8af1..3e2ea04 100755
 --- a/create-sdcard.sh
 +++ b/create-sdcard.sh
 @@ -339,6 +339,9 @@ echo ""
@@ -152,7 +152,7 @@ index 39d8af1..ee0e6a0 100644
  
  echo ""
  echo "Syncing...."
-@@ -1095,6 +1208,50 @@ elif [ $ROOTFSPATHOPTION -eq 2  ] ; then
+@@ -1095,6 +1208,49 @@ elif [ $ROOTFSPATHOPTION -eq 2  ] ; then
  	untar_progress $ROOTFSUSERFILEPATH $PATH_TO_SDROOTFS
  fi
  
@@ -193,7 +193,6 @@ index 39d8af1..ee0e6a0 100644
 +	zcat *.cpio.gz | cpio -idmv  > /dev/zero 2>&1
 +	sync
 +	sudo rm *.cpio.gz
-+	sudo cp -r $START_DIR/$PATH_TO_SDROOTFS/boot $START_DIR/initramfstmp/
 +	cd $START_DIR/initramfstmp/
 +	tar -cJf ../initramfs.tar.xz *
 +	cd $START_DIR
@@ -203,7 +202,7 @@ index 39d8af1..ee0e6a0 100644
  echo ""
  echo ""
  echo "Syncing..."
-@@ -1138,10 +1295,64 @@ then
+@@ -1138,10 +1294,64 @@ then
  
  fi
  
@@ -268,7 +267,7 @@ index 39d8af1..ee0e6a0 100644
  
  
  echo " "
-@@ -1149,6 +1360,11 @@ echo "Remove created temp directories "
+@@ -1149,6 +1359,11 @@ echo "Remove created temp directories "
  sudo rm -rf $PATH_TO_TMP_DIR
  sudo rm -rf $PATH_TO_SDROOTFS
  sudo rm -rf $PATH_TO_SDBOOT
