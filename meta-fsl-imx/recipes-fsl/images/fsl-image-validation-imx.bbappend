@@ -1,11 +1,19 @@
 IMAGE_FEATURES += " package-management "
 IMAGE_INSTALL += " haveged "
+ADDON_FW_DIR:="${THISDIR}/files"
+
 
 #Advantech package
 require fsl-image-adv.inc
 
+add_mrvl_fw() {
+        mkdir -p ${IMAGE_ROOTFS}/lib/firmware/mrvl
+        install -m 0644 ${ADDON_FW_DIR}/sdsd8997_combo_v4.bin ${IMAGE_ROOTFS}/lib/firmware/mrvl/sd8997_uapsta.bin
+}
+
 ROOTFS_POSTPROCESS_COMMAND += "update_profile ;"
 ROOTFS_POSTPROCESS_COMMAND += "fix_haveged ;"
+ROOTFS_POSTPROCESS_COMMAND += "add_mrvl_fw ;"
 
 update_profile() {
 sed -i "\
