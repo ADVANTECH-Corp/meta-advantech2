@@ -1,19 +1,23 @@
 IMAGE_FEATURES += " package-management "
 IMAGE_INSTALL += " haveged "
-ADDON_FW_DIR:="${THISDIR}/files"
-
+ADDON_FILES_DIR:="${THISDIR}/files"
 
 #Advantech package
 require fsl-image-adv.inc
 
-add_mrvl_fw() {
-        mkdir -p ${IMAGE_ROOTFS}/lib/firmware/mrvl
-        install -m 0644 ${ADDON_FW_DIR}/sdsd8997_combo_v4.bin ${IMAGE_ROOTFS}/lib/firmware/mrvl/sd8997_uapsta.bin
+install_utils() {
+	mkdir -p ${IMAGE_ROOTFS}/usr/local/bin
+	install -m 0755 ${ADDON_FILES_DIR}/bt_pair.sh ${IMAGE_ROOTFS}/usr/local/bin
+	install -m 0755 ${ADDON_FILES_DIR}/bt_send.sh ${IMAGE_ROOTFS}/usr/local/bin
+	install -m 0755 ${ADDON_FILES_DIR}/bt_obexd_start.sh ${IMAGE_ROOTFS}/usr/local/bin
+	install -m 0755 ${ADDON_FILES_DIR}/bt_obexd_stop.sh ${IMAGE_ROOTFS}/usr/local/bin
+	install -m 0755 ${ADDON_FILES_DIR}/mlanutl ${IMAGE_ROOTFS}/usr/local/bin
+	mkdir -p ${IMAGE_ROOTFS}/lib/firmware/rtlwifi/rtl8821ae
+	install -m 0755 ${ADDON_FILES_DIR}/wifi_ant_isolation.txt ${IMAGE_ROOTFS}/lib/firmware/rtlwifi/rtl8821ae
+	mkdir -p ${IMAGE_ROOTFS}/lib/firmware/mrvl
+	install -m 0644 ${ADDON_FILES_DIR}/sdsd8997_combo_v4.bin ${IMAGE_ROOTFS}/lib/firmware/mrvl/sd8997_uapsta.bin
 }
 
-ROOTFS_POSTPROCESS_COMMAND += "update_profile ;"
-ROOTFS_POSTPROCESS_COMMAND += "fix_haveged ;"
-ROOTFS_POSTPROCESS_COMMAND += "add_mrvl_fw ;"
 
 update_profile() {
 sed -i "\
@@ -37,3 +41,7 @@ EOF
 fix_haveged() {
     sed -i "s/\(ExecStart=.*\)/\1 --data=16/" ${IMAGE_ROOTFS}/lib/systemd/system/haveged.service
 }
+
+ROOTFS_POSTPROCESS_COMMAND += "update_profile ;"
+ROOTFS_POSTPROCESS_COMMAND += "fix_haveged ;"
+ROOTFS_POSTPROCESS_COMMAND += "install_utils;"
