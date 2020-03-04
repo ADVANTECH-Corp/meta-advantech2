@@ -10,7 +10,7 @@ IMAGE_INSTALL += " linux-firmware-ralink "
 IMAGE_INSTALL += " linux-firmware-sd8897 "
 IMAGE_INSTALL += " linux-firmware-ar3k "
 IMAGE_INSTALL += " linux-firmware-rtl8821ae "
-IMAGE_INSTALL += " linux-firmware-rtl8723 "
+IMAGE_INSTALL += " linux-firmware-rtl8723 rtl8723bs-bt "
 
 # Native Compiler
 IMAGE_INSTALL += " packagegroup-sdk-target "
