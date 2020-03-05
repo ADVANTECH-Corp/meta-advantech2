@@ -1,0 +1,10 @@
+[Unit]
+Description=PMIC setup 
+
+[Service]
+Type=one shot
+ExecStart=/tools/pmic_setup.sh
+StandardOutput=kmsg+console
+
+[Install]
+WantedBy=multi-user.target
