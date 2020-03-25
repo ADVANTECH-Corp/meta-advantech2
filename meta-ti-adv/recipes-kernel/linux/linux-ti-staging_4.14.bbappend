@@ -7,6 +7,9 @@ RDEPENDS_kernel-base_append_am335xrom3310a1 = " prueth-fw"
 RDEPENDS_kernel-base_append_am335xrsb4220a1 = " prueth-fw"
 RDEPENDS_kernel-base_append_am335xrsb4221a1 = " prueth-fw"
 RDEPENDS_kernel-base_append_am335xepcr3220a1 = " prueth-fw"
+RDEPENDS_kernel-base_append_am57xxrom7510a1 = " pruhsr-fw pruprp-fw prueth-fw"
+
+CMEM_MACHINE_am57xxrom7510a1 = "am571x am572x am574x"
 
 do_configure_append() {
     # Always copy the defconfig file to .config to keep consistency
