@@ -40,4 +40,13 @@ EXTRA_LIBS_append_am335xepcr3220a1 = " \
     pru-icss-staticdev \
 "
 
+EXTRA_LIBS_append_am57xxrom7510a1 = " \
+    osal-dev \
+    osal-staticdev \
+    pruss-lld-dev \
+    pruss-lld-staticdev \
+    icss-emac-lld-dev \
+    icss-emac-lld-staticdev \
+"
+
 

@@ -1,0 +1,3 @@
+
+ALT_PLATFORM_am57xxrom7510a1 = "AM572X AM571X"
+
