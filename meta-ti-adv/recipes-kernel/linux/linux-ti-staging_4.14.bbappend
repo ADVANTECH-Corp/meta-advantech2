@@ -18,6 +18,7 @@ do_configure_append() {
 
     if [ "${SOC_FAMILY}" = "ti-soc:omap-a15:dra7xx" ] ; then
         cp ${S}/arch/arm/configs/am57xx-adv_defconfig ${B}/.config
+        cp ${S}/arch/arm/configs/am57xx-adv_defconfig ${WORKDIR}/defconfig
     elif [ "${SOC_FAMILY}" = "ti-soc:ti33x" ] ; then
         cp ${S}/arch/arm/configs/am335x-adv_defconfig ${B}/.config
     fi
