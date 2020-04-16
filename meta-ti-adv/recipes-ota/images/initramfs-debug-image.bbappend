@@ -4,7 +4,7 @@ mv_init_to_sbin() {
         mv ${IMAGE_ROOTFS}/init ${IMAGE_ROOTFS}/sbin
 }
 
-ROOTFS_POSTPROCESS_COMMAND += " mv_init_to_sbin;"
+ROOTFS_POSTPROCESS_COMMAND += "; mv_init_to_sbin;"
 
 
 PACKAGE_INSTALL += " kernel-image-zimage \
