@@ -1,0 +1,13 @@
+diff --git a/plat/imx/common/imx8_psci.c b/plat/imx/common/imx8_psci.c
+index 0702ef6..60093c1 100644
+--- a/plat/imx/common/imx8_psci.c
++++ b/plat/imx/common/imx8_psci.c
+@@ -21,7 +21,7 @@ void __dead2 imx_system_off(void)
+ 
+ void __dead2 imx_system_reset(void)
+ {
+-	sc_pm_reboot(ipc_handle, SC_PM_RESET_TYPE_COLD);
++	sc_pm_reset(ipc_handle, SC_PM_RESET_TYPE_BOARD);
+ 	wfi();
+ 	ERROR("system reset failed.\n");
+ 	panic();
