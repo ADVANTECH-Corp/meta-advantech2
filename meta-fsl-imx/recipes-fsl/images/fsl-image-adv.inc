@@ -30,7 +30,6 @@ IMAGE_INSTALL_append_imx6dlrom7421a1 = " ecuevent keyevent"
 IMAGE_INSTALL_append_imx6qrsb4410a1 = " lirc "
 IMAGE_INSTALL_append_imx6qrsb4410a2 = " lirc "
 IMAGE_INSTALL_append_mx8 = " si-script keyevent "
-IMAGE_INSTALL_append_imx8mqrom5720a1 = " pmic-setup-script "
 IMAGE_INSTALL_append_imx8qmrom7720a1 = " wdt-button "
 
 # Browser
