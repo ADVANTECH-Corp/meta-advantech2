@@ -16,7 +16,7 @@ IMAGE_INSTALL += " linux-firmware-rtl8723 rtl8723bs-bt "
 IMAGE_INSTALL += " packagegroup-sdk-target "
 
 # Tools
-IMAGE_INSTALL += " add-virtual-network advresize-script boottimes-script st quectel-script 3g-script stress-script xterm mdio-tool "
+IMAGE_INSTALL += " add-virtual-network advresize-script boottimes-script st quectel-script 3g-script stress-script xterm mdio-tool hwclock "
 
 # Depends on projects
 IMAGE_INSTALL_append_imx6qrom5420a1 = " ecuevent keyevent"
