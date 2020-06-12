@@ -772,10 +772,11 @@ EOM
 
 # Set mirror server
 ADVANTECH_MIRROR_SERVER="ftp://ess-downloads.advantech.com.tw/"
-MIRRORS_prepend = "\\
+MIRRORS_prepend = "\
     git://.*/.* \${ADVANTECH_MIRROR_SERVER} \n \\
+    gitsm://.*/.* \${ADVANTECH_MIRROR_SERVER} \n \\
     https?$://.*/.* \${ADVANTECH_MIRROR_SERVER} \n \\
-    ftp://.*/.* \${ADVANTECH_MIRROR_SERVER} \n \\"
+    ftp://.*/.* \${ADVANTECH_MIRROR_SERVER} \n "
 EOF
 }
 
