@@ -37,4 +37,7 @@ TOOLCHAIN_TARGET_TASK += "\
    glibc-staticdev \
 "
 
+INHERIT += "own-mirrors"
+SOURCE_MIRROR_URL = "http://software-dl.ti.com/processor-sdk-mirror/sources/"
+
 
