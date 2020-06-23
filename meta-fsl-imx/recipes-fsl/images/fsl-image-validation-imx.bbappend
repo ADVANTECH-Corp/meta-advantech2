@@ -15,7 +15,7 @@ install_utils() {
 	mkdir -p ${IMAGE_ROOTFS}/lib/firmware/rtlwifi/rtl8821ae
 	install -m 0755 ${ADDON_FILES_DIR}/wifi_ant_isolation.txt ${IMAGE_ROOTFS}/lib/firmware/rtlwifi/rtl8821ae
 	mkdir -p ${IMAGE_ROOTFS}/lib/firmware/mrvl
-	install -m 0644 ${ADDON_FILES_DIR}/sdsd8997_combo_v4.bin ${IMAGE_ROOTFS}/lib/firmware/mrvl/sd8997_uapsta.bin
+	install -m 0644 ${ADDON_FILES_DIR}/sdsd8997_combo_v4.bin ${IMAGE_ROOTFS}/lib/firmware/mrvl/sdsd8997_combo_v4.bin
 }
 
 

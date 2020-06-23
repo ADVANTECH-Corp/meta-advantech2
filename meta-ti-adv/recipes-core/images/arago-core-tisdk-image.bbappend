@@ -15,6 +15,11 @@ tisdk_image_build_add_initramfs () {
     cp ${DEPLOY_DIR_IMAGE}/initramfs-debug-image-${MACHINE}.cpio.gz ${IMAGE_ROOTFS}/filesystem/
 }
 
+tisdk_delete_uenv () {
+    rm ${IMAGE_ROOTFS}/board-support/prebuilt-images/uEnv.txt
+}
+
 ROOTFS_POSTPROCESS_COMMAND_append = "tisdk_add_mkemmc_script; tisdk_image_build_add_initramfs;"
 
+ROOTFS_POSTPROCESS_COMMAND_append_omap-a15 = "tisdk_delete_uenv;"
 

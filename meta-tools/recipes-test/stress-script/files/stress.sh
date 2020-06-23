@@ -29,5 +29,12 @@ export DISPLAY=:0
 /tools/log.sh &
 memtester 500M &
 stress -c 6
+#/tools/uart.sh 5 &
+#/tools/eth1.sh A &
+#/tools/eth0.sh B &
+#/tools/sd.sh mmcblk1 &
+#/tools/usb.sh 3 &
+#/tools/wifi.sh SSD PWD &
+#/tools/cpu-gpu-vpu.sh &
 
 #glmark2 --size 1280x720 --annotate --run-forever &
