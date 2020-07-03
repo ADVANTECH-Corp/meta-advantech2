@@ -21,7 +21,3 @@ RDEPENDS_${PN}-base = "\
    mosquitto mosquitto-dev libdmclient libdmclient-dev \
    mosquitto-clients libmosquitto1 libmosquittopp1 packagegroup-sdk-target "
 
-SUMMARY_${PN}-addon = "Advantech proprietary packages"
-RDEPENDS_${PN}-addon = "\
-   rmm susi4 susi-iot "
-
