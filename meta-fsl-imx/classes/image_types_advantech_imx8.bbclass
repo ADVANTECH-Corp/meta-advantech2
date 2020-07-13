@@ -2,6 +2,16 @@ inherit image_types
 
 IMAGE_BOOTLOADER ?= "u-boot"
 
+IMAGE_BOOTFILES ?= ""
+IMAGE_BOOTFILES_DEPENDS ?= ""
+
+IMAGE_BOOTFILES += \
+    "${@bb.utils.contains('COMBINED_FEATURES', 'xen', 'xen', '', d)}"
+IMAGE_BOOTFILES_DEPENDS += \
+    "${@bb.utils.contains('COMBINED_FEATURES', 'xen', 'imx-xen:do_deploy', '', d)}"
+
+IMX_BOOT_SEEK ?= "33"
+
 # Handle u-boot suffixes
 UBOOT_SUFFIX ?= "bin"
 UBOOT_SUFFIX_SDCARD ?= "${UBOOT_SUFFIX}"
@@ -11,10 +21,19 @@ UBOOT_SUFFIX_SDCARD ?= "${UBOOT_SUFFIX}"
 #
 MXSBOOT_NAND_ARGS ?= ""
 
+# Include required software for optee
+IMAGE_INSTALL_append = " ${@bb.utils.contains('COMBINED_FEATURES', 'optee', 'packagegroup-fsl-optee-imx', '', d)} "
+
+# Include userspace xen tools
+IMAGE_INSTALL_append = " ${@bb.utils.contains('COMBINED_FEATURES', 'xen', 'imx-xen-base imx-xen-hypervisor', '', d)} "
+
+# Include jailhouse kernel module and tools
+IMAGE_INSTALL_append = " ${@bb.utils.contains('COMBINED_FEATURES', 'jailhouse', 'jailhouse', '', d)} "
+
 # IMX Bootlets Linux bootstream
-do_image_linux.sb = "elftosb-native:do_populate_sysroot \
-                          imx-bootlets:do_deploy \
-                          virtual/kernel:do_deploy"
+do_image_linux.sb[depends] = "elftosb-native:do_populate_sysroot \
+                              imx-bootlets:do_deploy \
+                              virtual/kernel:do_deploy"
 IMAGE_LINK_NAME_linux.sb = ""
 IMAGE_CMD_linux.sb () {
 	kernel_bin="`readlink ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${MACHINE}.bin`"
@@ -39,10 +58,10 @@ IMAGE_CMD_linux.sb () {
 }
 
 # IMX Bootlets barebox bootstream
-do_image_barebox.mxsboot-sdcard = "elftosb-native:do_populate_sysroot \
-                                        u-boot-mxsboot-native:do_populate_sysroot \
-                                        imx-bootlets:do_deploy \
-                                        barebox:do_deploy"
+do_image_barebox-mxsboot-sdcard[depends] = "elftosb-native:do_populate_sysroot \
+                                            u-boot-mxsboot-native:do_populate_sysroot \
+                                            imx-bootlets:do_deploy \
+                                            barebox:do_deploy"
 IMAGE_CMD_barebox.mxsboot-sdcard () {
 	barebox_bd_file=imx-bootlets-barebox_ivt.bd-${MACHINE}
 
@@ -54,13 +73,13 @@ IMAGE_CMD_barebox.mxsboot-sdcard () {
 
 # U-Boot mxsboot generation to SD-Card
 UBOOT_SUFFIX_SDCARD_mxs ?= "mxsboot-sdcard"
-do_image_uboot.mxsboot-sdcard = "u-boot-mxsboot-native:do_populate_sysroot \
-                                      u-boot:do_deploy"
+do_image_uboot-mxsboot-sdcard[depends] = "u-boot-mxsboot-native:do_populate_sysroot \
+                                          u-boot:do_deploy"
 IMAGE_CMD_uboot.mxsboot-sdcard = "mxsboot sd ${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.${UBOOT_SUFFIX} \
                                              ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.uboot.mxsboot-sdcard"
 
-do_image_uboot.mxsboot-nand = "u-boot-mxsboot-native:do_populate_sysroot \
-                                      u-boot:do_deploy"
+do_image_uboot-mxsboot-nand[depends] = "u-boot-mxsboot-native:do_populate_sysroot \
+                                        u-boot:do_deploy"
 IMAGE_CMD_uboot.mxsboot-nand = "mxsboot ${MXSBOOT_NAND_ARGS} nand \
                                              ${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.${UBOOT_SUFFIX} \
                                              ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.uboot.mxsboot-nand"
@@ -83,18 +102,21 @@ CACHE_SPACE ?= "786432"
 # Barebox environment size [in KiB]
 BAREBOX_ENV_SPACE ?= "512"
 
-# Set alignment to 4MB [in KiB]
-IMAGE_ROOTFS_ALIGNMENT = "4096"
+# Set alignment in KiB
+IMAGE_ROOTFS_ALIGNMENT_mx6 ?= "4096"
+IMAGE_ROOTFS_ALIGNMENT_mx7 ?= "4096"
+IMAGE_ROOTFS_ALIGNMENT_mx8 ?= "8192"
 
-do_image_sdcard = "parted-native:do_populate_sysroot \
-                        dosfstools-native:do_populate_sysroot \
-                        mtools-native:do_populate_sysroot \
-                        virtual/kernel:do_deploy \
-                        ${@d.getVar('IMAGE_BOOTLOADER', True) and d.getVar('IMAGE_BOOTLOADER', True) + ':do_deploy' or ''}"
+do_image_sdcard[depends] = "parted-native:do_populate_sysroot \
+                            dosfstools-native:do_populate_sysroot \
+                            mtools-native:do_populate_sysroot \
+                            virtual/kernel:do_deploy \
+                            ${IMAGE_BOOTLOADER}:do_deploy \
+                            ${IMAGE_BOOTFILES_DEPENDS} \
+                           "
 
-SDCARD = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.sdcard"
-# [Advantech] Add ENG image
-ENG_SDCARD = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.eng.sdcard"
+SDCARD = "${IMGDEPLOYDIR}/${IMAGE_NAME}.rootfs.sdcard"
+
 MISC_IMAGE= "${DEPLOY_DIR_IMAGE}/misc"
 CACHE_IMAGE= "${DEPLOY_DIR_IMAGE}/cache"
 RECOVERY_IMAGE="${DEPLOY_DIR_IMAGE}/recovery"
@@ -103,8 +125,8 @@ SDCARD_GENERATION_COMMAND_mxs = "generate_mxs_sdcard"
 SDCARD_GENERATION_COMMAND_mx25 = "generate_imx_sdcard"
 SDCARD_GENERATION_COMMAND_mx5 = "generate_imx_sdcard"
 SDCARD_GENERATION_COMMAND_mx6 = "generate_imx_sdcard"
-SDCARD_GENERATION_COMMAND_mx6ul = "generate_imx_sdcard"
 SDCARD_GENERATION_COMMAND_mx7 = "generate_imx_sdcard"
+SDCARD_GENERATION_COMMAND_mx8 = "generate_imx_sdcard"
 SDCARD_GENERATION_COMMAND_vf = "generate_imx_sdcard"
 
 
@@ -115,9 +137,7 @@ _generate_boot_image() {
 	local boot_part=$1
 
 	# Create boot partition image
-	# [Advantech] Change name of SDCARD_FILE parameter
-	bbnote "_generate_boot_image() SDCARD_FILE:${SDCARD_FILE}"
-	BOOT_BLOCKS=$(LC_ALL=C parted -s ${SDCARD_FILE} unit b print \
+	BOOT_BLOCKS=$(LC_ALL=C parted -s ${SDCARD} unit b print \
 	                  | awk "/ $boot_part / { print substr(\$4, 1, length(\$4 -1)) / 1024 }")
 
 	# mkdosfs will sometimes use FAT16 when it is not appropriate,
@@ -156,20 +176,30 @@ _generate_boot_image() {
 		done
 	fi
 
-	# Copy normal u-boot file
-	bbnote "_generate_boot_image() SDCARD_IMAGE_TYPE=${SDCARD_IMAGE_TYPE}"
-	case "${SDCARD_IMAGE_TYPE}" in
-		eng)
-		bbnote "do nothing for eng mode"
-		;;
-		normal)
-		bbnote "copy normal u-boot file"
-		if [ -e "${DEPLOY_DIR_IMAGE}/u-boot_crc.bin.crc" ]; then
-			mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/u-boot_crc.bin.crc ::/u-boot_crc.bin.crc
-			mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/u-boot_crc.bin ::/u-boot_crc.bin
-		fi
-		;;
-	esac
+	# Copy extlinux.conf to images that have U-Boot Extlinux support.
+	if [ "${UBOOT_EXTLINUX}" = "1" ]; then
+		mmd -i ${WORKDIR}/boot.img ::/extlinux
+		mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/extlinux.conf ::/extlinux/extlinux.conf
+	fi
+
+        # Copy additional files to boot partition: such as m4 images and firmwares
+        if [ -n "${IMAGE_BOOTFILES}" ]; then
+            for IMAGE_FILE in ${IMAGE_BOOTFILES}; do
+                if [ -e "${DEPLOY_DIR_IMAGE}/${IMAGE_FILE}" ]; then
+                    mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${IMAGE_FILE} ::/${IMAGE_FILE}
+                else
+                    bbfatal "${IMAGE_FILE} does not exist."
+                fi
+            done
+        fi
+
+    # add tee to boot image
+    if ${@bb.utils.contains('COMBINED_FEATURES', 'optee', 'true', 'false', d)}; then
+        for UTEE_FILE_PATH in `find ${DEPLOY_DIR_IMAGE} -maxdepth 1 -type f -name 'uTee-*' -print -quit`; do
+            UTEE_FILE=`basename ${UTEE_FILE_PATH}`
+            mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${UTEE_FILE} ::/${UTEE_FILE}
+        done
+    fi
 }
 
 #
@@ -198,39 +228,23 @@ _generate_boot_image() {
 # |                        |            |                        |                               |
 # 0                      4096     4MiB +  8MiB       4MiB +  8Mib + SDIMG_ROOTFS   4MiB +  8MiB + SDIMG_ROOTFS + 4MiB
 generate_imx_sdcard () {
-	# [Advantech] Get image type
-	SDCARD_IMAGE_TYPE=$1
-	bbnote "generate_imx_sdcard() SDCARD_IMAGE_TYPE=${SDCARD_IMAGE_TYPE}"
-	case "${SDCARD_IMAGE_TYPE}" in
-		eng)
-		SDCARD_FILE="${ENG_SDCARD}"
-		;;
-		normal)
-		SDCARD_FILE="${SDCARD}"
-		;;
-	esac
-
-	bbnote "generate_imx_sdcard() ENG_SDCARD=${ENG_SDCARD}"
-	bbnote "generate_imx_sdcard() SDCARD=${SDCARD}"
-	bbnote "generate_imx_sdcard() SDCARD_FILE=${SDCARD_FILE}"
-
 	# Create partition table
-	# [Advantech] Change name of SDCARD_FILE parameter
+	# [Advantech] Change name of SDCARD parameter
 	bbnote "generate_imx_sdcard() Prepare mklabel"
-	parted -s ${SDCARD_FILE} mklabel msdos
+	parted -s ${SDCARD} mklabel msdos
 	# boot
-	parted -s ${SDCARD_FILE} unit KiB mkpart primary fat32 ${IMAGE_ROOTFS_ALIGNMENT} $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED})
+	parted -s ${SDCARD} unit KiB mkpart primary fat32 ${IMAGE_ROOTFS_ALIGNMENT} $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED})
 	# rootfs
-	parted -s ${SDCARD_FILE} unit KiB mkpart primary $(expr  ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${RECOVERY_SPACE_ALIGNED} \+ ${MISC_SPACE_ALIGNED} \+ ${CACHE_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${RECOVERY_SPACE_ALIGNED} \+ ${MISC_SPACE_ALIGNED} \+ ${CACHE_SPACE_ALIGNED} \+ $ROOTFS_SIZE)
+	parted -s ${SDCARD} unit KiB mkpart primary $(expr  ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${RECOVERY_SPACE_ALIGNED} \+ ${MISC_SPACE_ALIGNED} \+ ${CACHE_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${RECOVERY_SPACE_ALIGNED} \+ ${MISC_SPACE_ALIGNED} \+ ${CACHE_SPACE_ALIGNED} \+ $ROOTFS_SIZE)
 	# recovery
-	parted -s ${SDCARD_FILE} unit KiB mkpart primary ext4  $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${RECOVERY_SPACE_ALIGNED})
+	parted -s ${SDCARD} unit KiB mkpart primary ext4  $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${RECOVERY_SPACE_ALIGNED})
 	# extended
-	parted -s ${SDCARD_FILE} unit KiB mkpart extended $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${RECOVERY_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${RECOVERY_SPACE_ALIGNED} \+ ${MISC_SPACE_ALIGNED} \+ ${CACHE_SPACE_ALIGNED})
+	parted -s ${SDCARD} unit KiB mkpart extended $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${RECOVERY_SPACE_ALIGNED}) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${RECOVERY_SPACE_ALIGNED} \+ ${MISC_SPACE_ALIGNED} \+ ${CACHE_SPACE_ALIGNED})
 	# misc
-	parted -s ${SDCARD_FILE} unit KiB mkpart logical ext4 $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${RECOVERY_SPACE_ALIGNED} \+ 1) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${RECOVERY_SPACE_ALIGNED} \+ ${MISC_SPACE_ALIGNED})
+	parted -s ${SDCARD} unit KiB mkpart logical ext4 $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${RECOVERY_SPACE_ALIGNED} \+ 1) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${RECOVERY_SPACE_ALIGNED} \+ ${MISC_SPACE_ALIGNED})
 	# cache
-	parted -s ${SDCARD_FILE} unit KiB mkpart logical ext4 $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${RECOVERY_SPACE_ALIGNED} \+ ${MISC_SPACE_ALIGNED} \+ 1) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${RECOVERY_SPACE_ALIGNED} \+ ${MISC_SPACE_ALIGNED} \+ ${CACHE_SPACE_ALIGNED})
-	parted ${SDCARD_FILE} print
+	parted -s ${SDCARD} unit KiB mkpart logical ext4 $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${RECOVERY_SPACE_ALIGNED} \+ ${MISC_SPACE_ALIGNED} \+ 1) $(expr ${IMAGE_ROOTFS_ALIGNMENT} \+ ${BOOT_SPACE_ALIGNED} \+ ${RECOVERY_SPACE_ALIGNED} \+ ${MISC_SPACE_ALIGNED} \+ ${CACHE_SPACE_ALIGNED})
+	parted ${SDCARD} print
 
 	# Burn bootloader
 	case "${IMAGE_BOOTLOADER}" in
@@ -238,32 +252,21 @@ generate_imx_sdcard () {
 		bberror "The imx-bootlets is not supported for i.MX based machines"
 		exit 1
 		;;
-		u-boot)
-		# [Advantech] Burn bootloader for different image types
-		case "${SDCARD_IMAGE_TYPE}" in
-			eng)
-			bbnote "dd eng mode file"
-			dd if=${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.${UBOOT_SUFFIX_SDCARD} of=${SDCARD_FILE} conv=notrunc seek=2 bs=512
-			;;
-			normal)
-			bbnote "dd normal mode file"
-			if [ -e "${DEPLOY_DIR_IMAGE}/u-boot_crc.bin.crc" ]; then
-				dd if=${DEPLOY_DIR_IMAGE}/u-boot_crc.bin.crc of=${SDCARD_FILE} conv=notrunc seek=2 bs=512
-				dd if=${DEPLOY_DIR_IMAGE}/u-boot_crc.bin of=${SDCARD_FILE} conv=notrunc seek=3 bs=512
-			else
-				dd if=${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.${UBOOT_SUFFIX_SDCARD} of=${SDCARD_FILE} conv=notrunc seek=2 bs=512
-			fi
-			;;
-			*)
-			bbnote "dd other mode file"
-			if [ -n "${SPL_BINARY}" ]; then
-				dd if=${DEPLOY_DIR_IMAGE}/${SPL_BINARY} of=${SDCARD} conv=notrunc seek=2 bs=512
-				dd if=${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.${UBOOT_SUFFIX_SDCARD} of=${SDCARD} conv=notrunc seek=69 bs=1K
-			else
-				dd if=${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.${UBOOT_SUFFIX_SDCARD} of=${SDCARD} conv=notrunc seek=2 bs=512
-			fi
-			;;
-		esac
+                imx-boot)
+                dd if=${DEPLOY_DIR_IMAGE}/imx-boot-${MACHINE}-${UBOOT_CONFIG}.bin of=${SDCARD} conv=notrunc seek=${IMX_BOOT_SEEK} bs=1K
+                ;;
+                u-boot)
+		if [ -n "${SPL_BINARY}" ]; then
+                    if [ -n "${SPL_SEEK}" ]; then
+                        dd if=${DEPLOY_DIR_IMAGE}/${SPL_BINARY} of=${SDCARD} conv=notrunc seek=${SPL_SEEK} bs=1K
+                        dd if=${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.${UBOOT_SUFFIX_SDCARD} of=${SDCARD} conv=notrunc seek=${UBOOT_SEEK} bs=1K
+                    else
+                        dd if=${DEPLOY_DIR_IMAGE}/${SPL_BINARY} of=${SDCARD} conv=notrunc seek=2 bs=512
+                        dd if=${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.${UBOOT_SUFFIX_SDCARD} of=${SDCARD} conv=notrunc seek=69 bs=1K
+                    fi
+		else
+                    dd if=${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.${UBOOT_SUFFIX_SDCARD} of=${SDCARD} conv=notrunc seek=2 bs=512
+		fi
 		;;
 		barebox)
 		dd if=${DEPLOY_DIR_IMAGE}/barebox-${MACHINE}.bin of=${SDCARD} conv=notrunc seek=1 skip=1 bs=512
@@ -280,13 +283,13 @@ generate_imx_sdcard () {
 	_generate_boot_image 1
 
 	# Burn Partition
-	# [Advantech] Change name of SDCARD_FILE parameter
-	dd if=${WORKDIR}/boot.img of=${SDCARD_FILE} conv=notrunc,fsync seek=1 bs=$(expr ${IMAGE_ROOTFS_ALIGNMENT} \* 1024)
-	dd if=${RECOVERY_IMAGE} of=${SDCARD_FILE} conv=notrunc,fsync seek=1 bs=$(expr ${BOOT_SPACE_ALIGNED} \* 1024 + ${IMAGE_ROOTFS_ALIGNMENT} \* 1024)
-	dd if=${MISC_IMAGE} of=${SDCARD_FILE} conv=notrunc,fsync seek=1 bs=$(expr ${BOOT_SPACE_ALIGNED} \* 1024 + ${IMAGE_ROOTFS_ALIGNMENT} \* 1024 + ${RECOVERY_SPACE_ALIGNED} \* 1024 + 1024)
-	dd if=${CACHE_IMAGE} of=${SDCARD_FILE} conv=notrunc,fsync seek=1 bs=$(expr ${BOOT_SPACE_ALIGNED} \* 1024 + ${IMAGE_ROOTFS_ALIGNMENT} \* 1024 + ${RECOVERY_SPACE_ALIGNED} \* 1024 + ${MISC_SPACE_ALIGNED} \* 1024 + 1024)
+	# [Advantech] Change name of SDCARD parameter
+	dd if=${WORKDIR}/boot.img of=${SDCARD} conv=notrunc,fsync seek=1 bs=$(expr ${IMAGE_ROOTFS_ALIGNMENT} \* 1024)
+	dd if=${RECOVERY_IMAGE} of=${SDCARD} conv=notrunc,fsync seek=1 bs=$(expr ${BOOT_SPACE_ALIGNED} \* 1024 + ${IMAGE_ROOTFS_ALIGNMENT} \* 1024)
+	dd if=${MISC_IMAGE} of=${SDCARD} conv=notrunc,fsync seek=1 bs=$(expr ${BOOT_SPACE_ALIGNED} \* 1024 + ${IMAGE_ROOTFS_ALIGNMENT} \* 1024 + ${RECOVERY_SPACE_ALIGNED} \* 1024 + 1024)
+	dd if=${CACHE_IMAGE} of=${SDCARD} conv=notrunc,fsync seek=1 bs=$(expr ${BOOT_SPACE_ALIGNED} \* 1024 + ${IMAGE_ROOTFS_ALIGNMENT} \* 1024 + ${RECOVERY_SPACE_ALIGNED} \* 1024 + ${MISC_SPACE_ALIGNED} \* 1024 + 1024)
 	e2label ${SDCARD_ROOTFS} rootfs
-	dd if=${SDCARD_ROOTFS} of=${SDCARD_FILE} conv=notrunc,fsync seek=1 bs=$(expr ${BOOT_SPACE_ALIGNED} \* 1024 + ${IMAGE_ROOTFS_ALIGNMENT} \* 1024 + ${RECOVERY_SPACE_ALIGNED} \* 1024 + ${MISC_SPACE_ALIGNED} \* 1024 + ${CACHE_SPACE_ALIGNED} \* 1024)
+	dd if=${SDCARD_ROOTFS} of=${SDCARD} conv=notrunc,fsync seek=1 bs=$(expr ${BOOT_SPACE_ALIGNED} \* 1024 + ${IMAGE_ROOTFS_ALIGNMENT} \* 1024 + ${RECOVERY_SPACE_ALIGNED} \* 1024 + ${MISC_SPACE_ALIGNED} \* 1024 + ${CACHE_SPACE_ALIGNED} \* 1024)
 }
 
 #
@@ -393,6 +396,7 @@ IMAGE_CMD_sdcard () {
 		bberror "SDCARD_ROOTFS is undefined. To use sdcard image from Freescale's BSP it needs to be defined."
 		exit 1
 	fi
+
 	# Align boot partition and calculate total SD card image size
 	BOOT_SPACE_ALIGNED=$(expr ${BOOT_SPACE} + ${IMAGE_ROOTFS_ALIGNMENT} - 1)
 	BOOT_SPACE_ALIGNED=$(expr ${BOOT_SPACE_ALIGNED} - ${BOOT_SPACE_ALIGNED} % ${IMAGE_ROOTFS_ALIGNMENT})
@@ -406,8 +410,6 @@ IMAGE_CMD_sdcard () {
 
 	# Initialize a sparse file
 	dd if=/dev/zero of=${SDCARD} bs=1 count=0 seek=$(expr 1024 \* ${SDCARD_SIZE})
-	# [Advantech] Initialize for ENG image
-	dd if=/dev/zero of=${ENG_SDCARD} bs=1 count=0 seek=$(expr 1024 \* ${SDCARD_SIZE})
 
 	# [Advantech] Add partitions and format
 	bbnote "[ADV] misc image"
@@ -419,18 +421,21 @@ IMAGE_CMD_sdcard () {
 	bbnote "[ADV] recovery image"
 	dd if=/dev/zero of=${RECOVERY_IMAGE} bs=1 count=0 seek=$(expr 1024 \* ${RECOVERY_SPACE_ALIGNED} - 1024)
 	mkfs.ext4 -L recovery ${RECOVERY_IMAGE}
-	if [ -e ${DEPLOY_DIR_IMAGE}/recovery.img ];then	
+	if [ -e ${DEPLOY_DIR_IMAGE}/recovery.img ];then
 		dd if=${DEPLOY_DIR_IMAGE}/recovery.img of=${RECOVERY_IMAGE}
 	fi
-	
-	# [Advantech] Prepare both normal & eng images
-	${SDCARD_GENERATION_COMMAND} normal
-	${SDCARD_GENERATION_COMMAND} eng
-	
-	rm -f ${IMGDEPLOYDIR}/*
-	mv ${SDCARD} ${IMGDEPLOYDIR}
+
+
+	${SDCARD_GENERATION_COMMAND}
 }
 
 # The sdcard requires the rootfs filesystem to be built before using
 # it so we must make this dependency explicit.
-IMAGE_TYPEDEP_sdcard = "${@d.getVar('SDCARD_ROOTFS', 1).split('.')[-1]}"
+IMAGE_TYPEDEP_sdcard += "${@d.getVar('SDCARD_ROOTFS', 1).split('.')[-1]}"
+
+# In case we are building for i.MX23 or i.MX28 we need to have the
+# image stream built before the sdcard generation
+IMAGE_TYPEDEP_sdcard += " \
+    ${@bb.utils.contains('IMAGE_FSTYPES', 'uboot.mxsboot-sdcard', 'uboot.mxsboot-sdcard', '', d)} \
+    ${@bb.utils.contains('IMAGE_FSTYPES', 'barebox.mxsboot-sdcard', 'barebox.mxsboot-sdcard', '', d)} \
+"
