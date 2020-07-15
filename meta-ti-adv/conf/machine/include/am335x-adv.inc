@@ -5,9 +5,6 @@ IMAGE_INSTALL += "\
 IMAGE_INSTALL += "\
    ppp"
 
-# Wise-PaaS
-IMAGE_INSTALL += "\
-   susi4 susi-iot"
 
 # timezone
 IMAGE_INSTALL += "\
@@ -36,5 +33,8 @@ TOOLCHAIN_TARGET_TASK += "\
    openobex obexd \
    glibc-staticdev \
 "
+
+INHERIT += "own-mirrors"
+SOURCE_MIRROR_URL = "http://software-dl.ti.com/processor-sdk-mirror/sources/"
 
 
