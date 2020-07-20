@@ -2,6 +2,7 @@
 # Suitable for initramfs
 
 IMAGE_INSTALL += " ota-script "
+IMAGE_INSTALL_remove = " libxmu "
 OTA_CONFIGS_DIR:="${THISDIR}/files"
 CACHE_PARTITION = "/dev/disk/by-label/cache"
 

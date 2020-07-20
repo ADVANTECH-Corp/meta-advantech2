@@ -1,6 +1,7 @@
 # Arago TI SDK base image with test tools
 # Suitable for initramfs
 
+IMAGE_INSTALL_remove = " libxmu "
 ADDON_TEST_FILES_DIR:="${THISDIR}/files/tests"
 ADDON_3G_PROVIDER_DIR:="${THISDIR}/files/peers"
 ADDON_MRVL_FW_DIR:="${THISDIR}/files/mrvl"
