@@ -10,11 +10,5 @@ do_install_append() {
         install -m 755 ${WORKDIR}/adv-ota_TI.sh ${D}/tools/adv-ota.sh
     fi
 
-    if [ -e ${WORKDIR}/adv-reboot-TI ] ; then
-        if [ -f ${D}/tools/adv-reboot ] ; then
-            rm ${D}/tools/adv-reboot
-        fi
-        install -m 755 ${WORKDIR}/adv-reboot-TI ${D}/tools/adv-reboot
-    fi
 }
 

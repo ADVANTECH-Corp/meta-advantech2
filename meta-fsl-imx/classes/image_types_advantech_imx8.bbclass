@@ -91,7 +91,7 @@ BOOTDD_VOLUME_ID = "boot"
 BOOT_SPACE ?= "8192"
 
 # Recovery partition size [in KiB]
-RECOVERY_SPACE ?= "32768"
+RECOVERY_SPACE ?= "49152"
 
 # Misc partition size [in KiB]
 MISC_SPACE ?= "1024"
@@ -417,10 +417,9 @@ IMAGE_CMD_sdcard () {
 	mkfs.ext2 -L misc ${MISC_IMAGE}
 	bbnote "[ADV] cache image"
 	dd if=/dev/zero of=${CACHE_IMAGE} bs=1 count=0 seek=$(expr 1024 \* ${CACHE_SPACE_ALIGNED} - 1024)
-	mkfs.ext2 -L cache ${CACHE_IMAGE}
+	mkfs.ext4 -L cache ${CACHE_IMAGE}
 	bbnote "[ADV] recovery image"
 	dd if=/dev/zero of=${RECOVERY_IMAGE} bs=1 count=0 seek=$(expr 1024 \* ${RECOVERY_SPACE_ALIGNED} - 1024)
-	mkfs.ext4 -L recovery ${RECOVERY_IMAGE}
 	if [ -e ${DEPLOY_DIR_IMAGE}/recovery.img ];then
 		dd if=${DEPLOY_DIR_IMAGE}/recovery.img of=${RECOVERY_IMAGE}
 	fi
