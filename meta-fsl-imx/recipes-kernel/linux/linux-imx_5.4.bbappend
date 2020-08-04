@@ -1,7 +1,7 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
-SRCBRANCH = "imx_4.14.98_2.0.0_ga"
+SRCBRANCH = "adv_5.4.24_2.1.0"
 LOCALVERSION = "-${SRCBRANCH}"
-KERNEL_SRC = "git://github.com/ADVANTECH-Corp/linux-imx6.git;protocol=https;branch=${SRCBRANCH}"
+KERNEL_SRC = "git://github.com/ADVANTECH-Corp/linux-imx.git;protocol=https"
 SRC_URI = "${KERNEL_SRC};branch=${SRCBRANCH}"
 SRCREV = "${AUTOREV}"
 SCMVERSION = "n"
@@ -17,7 +17,7 @@ do_copy_defconfig_mx7 () {
 }
 
 do_copy_defconfig_mx8 () {
-    cp ${S}/arch/arm64/configs/imx8_adv_defconfig ${B}/.config
-    cp ${S}/arch/arm64/configs/imx8_adv_defconfig ${B}/../defconfig
+    cp ${S}/arch/arm64/configs/imx_v8_adv_defconfig ${B}/.config
+    cp ${S}/arch/arm64/configs/imx_v8_adv_defconfig ${B}/../defconfig
 }
 
