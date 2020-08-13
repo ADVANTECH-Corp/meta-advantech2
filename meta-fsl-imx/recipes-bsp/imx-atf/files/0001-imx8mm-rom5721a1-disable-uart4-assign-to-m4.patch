@@ -1,12 +1,14 @@
-diff --git a/plat/imx/imx8mm/imx8mm_bl31_setup.c b/plat/imx/imx8mm/imx8mm_bl31_setup.c
-index aa1c336..011f6fe 100644
---- a/plat/imx/imx8mm/imx8mm_bl31_setup.c
-+++ b/plat/imx/imx8mm/imx8mm_bl31_setup.c
-@@ -310,7 +310,6 @@ void bl31_early_platform_setup2(u_register_t arg0, u_register_t arg1,
+diff --git a/plat/imx/imx8m/imx8mm/imx8mm_bl31_setup.c b/plat/imx/imx8m/imx8mm/imx8mm_bl31_setup.c
+index 0491928..43f54a3 100644
+--- a/plat/imx/imx8m/imx8mm/imx8mm_bl31_setup.c
++++ b/plat/imx/imx8m/imx8mm/imx8mm_bl31_setup.c
+@@ -58,7 +58,9 @@ static const struct imx_rdc_cfg rdc[] = {
+ 	RDC_MDAn(RDC_MDA_M4, DID1),
  
- 	/* Assign M4 to domain 1 */
- 	mmio_write_32(IMX_RDC_BASE + 0x204, 0x1);
--	mmio_write_32(IMX_RDC_BASE + 0x518, 0xfc);
- 	mmio_write_32(IMX_RDC_BASE + 0x5A4, 0xf3);
+ 	/* peripherals domain permission */
++#if 0
+ 	RDC_PDAPn(RDC_PDAP_UART4, D1R | D1W),
++#endif
+ 	RDC_PDAPn(RDC_PDAP_UART2, D0R | D0W),
  
- #if defined (CSU_RDC_TEST)
+ 	/* memory region */
