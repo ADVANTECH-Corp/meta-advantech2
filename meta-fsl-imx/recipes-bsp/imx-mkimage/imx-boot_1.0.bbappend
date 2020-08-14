@@ -10,6 +10,9 @@ do_compile_prepend () {
     imx8mm*)
         cp ${DEPLOY_DIR_IMAGE}/${BOOT_TOOLS}/${UBOOT_DTB_NAME}   ${BOOT_STAGING}/imx8mm-evk.dtb
         ;;
+    imx8mp*)
+        cp ${DEPLOY_DIR_IMAGE}/${BOOT_TOOLS}/${UBOOT_DTB_NAME}   ${BOOT_STAGING}/imx8mp-evk.dtb
+        ;;
     esac
 }
 do_compile_append () {
