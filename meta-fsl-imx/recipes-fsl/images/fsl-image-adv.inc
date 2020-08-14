@@ -5,11 +5,11 @@ IMAGE_INSTALL += " giflib stress fuse-exfat exfat-utils "
 IMAGE_INSTALL += " ppp ntp e2fsprogs cronie e2fsprogs-e2fsck e2fsprogs-resize2fs inetutils inetutils-telnet inetutils-telnetd "
 IMAGE_INSTALL += " packagegroup-core-eclipse-debug "
 
-IMAGE_INSTALL += " linux-firmware-rtl8188ee "
+#IMAGE_INSTALL += " linux-firmware-rtl8188ee "
 IMAGE_INSTALL += " linux-firmware-ralink "
 IMAGE_INSTALL += " linux-firmware-sd8897 "
 IMAGE_INSTALL += " linux-firmware-ar3k "
-IMAGE_INSTALL += " linux-firmware-rtl8821ae "
+#IMAGE_INSTALL += " linux-firmware-rtl8821ae "
 IMAGE_INSTALL += " linux-firmware-rtl8723 rtl8723bs-bt "
 
 # Native Compiler
