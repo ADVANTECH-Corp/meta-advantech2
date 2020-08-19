@@ -45,6 +45,7 @@ mk_recovery_img_imx() {
                   --cmdline ""
 
         ln -sf recovery-${MACHINE}.img ${DEPLOY_DIR_IMAGE}/recovery.img
+        rm ${DEPLOY_DIR_IMAGE}/${PN}-${MACHINE}.cpio
     fi
 }
 
