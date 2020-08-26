@@ -5,4 +5,5 @@ SRC_URI_append = " \
 "
 
 UBOOT_ENV_am57xxrom7510a1 = "setup-uboot-env-am57xx-evm.sh"
+UBOOT_ENV_am57xxrom7510a2 = "setup-uboot-env-am57xx-evm.sh"
 

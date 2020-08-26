@@ -82,9 +82,9 @@ doUpdate()
     OUT_FILE=$2
 
     printMsg "dd if=${IN_FILE} of=${OUT_FILE} ..."
-    dd if=${IN_FILE} of=${OUT_FILE}
-    [ "$?" -ne 0 ] && exitRecovery "Err: 'dd' command failed!" true
-    sync
+    unzip -p $PACKAGE_FILE ${UPDATE_DIR}/${IN_FILE} | dd of=${OUT_FILE} bs=1M
+    [ "$?" -ne 0 ] && exitRecovery "Err: update ${IN_FILE} failed!" true
+    sync; sync
     printMsg "Update done!"
 }
 
@@ -97,11 +97,11 @@ updateBoot()
 {
     IMAGE_BT=`grep update-kernel $UPDATE_SCRIPT | cut -d ',' -f 2`
     IMAGE_DTB=`grep update-dtb $UPDATE_SCRIPT | cut -d ',' -f 2`
-    DISK_BT="${DISK_DIR}/${BOOT_LABEL}"
+    IMAGE_ML=`grep update-module $UPDATE_SCRIPT | cut -d ',' -f 2`
 
     BOOT_TYPE="zImage"
     if [ -z ${IMAGE_DTB} ] ; then
-        BOOT_HEADER=`hexdump -C ${IMAGE_BT} -n 16 | grep ANDROID | cut -d '|' -f 2`
+        BOOT_HEADER=`unzip -p $PACKAGE_FILE ${UPDATE_DIR}/${IMAGE_BT} | hexdump -C -n 16 | grep ANDROID | cut -d '|' -f 2`
         if [ ! -z ${BOOT_HEADER} ] ; then
             BOOT_TYPE="boot"
         fi
@@ -111,11 +111,19 @@ updateBoot()
     if [ -e ${DISK_BT} ] ; then
         case $BOOT_TYPE in
         "zImage")
+            umount $DISK_BT
             mount $DISK_BT /mnt/
             [ "$?" -ne 0 ] && exitRecovery "Err: 'mount' command failed!"
-            rm /mnt/*
-            cp ${IMAGE_BT} ${IMAGE_DTB} /mnt/
-            [ "$?" -ne 0 ] && exitRecovery "Err: 'cp' command failed!" true
+            if [ -n ${IMAGE_BT} ]; then
+                unzip -o $PACKAGE_FILE ${UPDATE_DIR}/${IMAGE_BT}
+                [ "$?" -ne 0 ] && exitRecovery "Err: update ${IMAGE_BT} failed!" true
+                mv ${UPDATE_DIR}/${IMAGE_BT} /mnt/
+            fi
+            if [ -n ${IMAGE_DTB} ]; then
+                unzip -o $PACKAGE_FILE ${UPDATE_DIR}/${IMAGE_DTB}
+                [ "$?" -ne 0 ] && exitRecovery "Err: update ${IMAGE_DTB} failed!" true
+                mv ${UPDATE_DIR}/${IMAGE_DTB} /mnt/
+            fi
             umount /mnt
             printMsg "Update done!"
             ;;
@@ -126,20 +134,53 @@ updateBoot()
     else
         exitRecovery "Err: Cannot find boot partition in ${DISK_BT}"
     fi
+
+    printMsg "Update kernel modules ..."
+    if [ -e ${DISK_RF} ] ; then
+        umount $DISK_RF
+        mount $DISK_RF /mnt/
+        [ "$?" -ne 0 ] && exitRecovery "Err: 'mount' command failed!"
+        if [ -n ${IMAGE_ML} ]; then
+            unzip -p $PACKAGE_FILE ${UPDATE_DIR}/${IMAGE_ML} | tar zxf - -C ./
+            [ "$?" -ne 0 ] && exitRecovery "Err: update ${IMAGE_ML} failed!" true
+            ML_VERSION=`ls ./lib/modules/`
+            rm -rf /mnt/lib/modules/*.old
+            mv /mnt/lib/modules/${ML_VERSION} /mnt/lib/modules/${ML_VERSION}.old
+            mv ./lib/modules/${ML_VERSION} /mnt/lib/modules/
+            chroot /mnt << EOF
+                depmod -a ${ML_VERSION}
+                chown -R root:root lib/modules/${ML_VERSION}/
+                exit
+EOF
+        fi
+        umount /mnt
+        printMsg "Update done!"
+    else
+        exitRecovery "Err: Cannot find rootfs partition in ${DISK_RF}"
+    fi
 }
 
 updateRootfs()
 {
     IMAGE_RF=`grep update-rootfs $UPDATE_SCRIPT | cut -d ',' -f 2`
-    DISK_RF="${DISK_DIR}/${ROOTFS_LABEL}"
 
     printMsg "Update rootfs partition ..."
     if [ -e ${DISK_RF} ] ; then
         umount ${DISK_RF}
+        # Backup kernel module
+        mount $DISK_RF /mnt/
+        cp -a /mnt/lib/modules .modules
+        umount /mnt
+        # Update Rootfs
         doUpdate ${IMAGE_RF} ${DISK_RF}
         e2label ${DISK_RF} ${ROOTFS_LABEL}
         e2fsck -f -y ${DISK_RF}
         resize2fs ${DISK_RF}
+        # Restore kernel module
+        mount $DISK_RF /mnt/
+        rm -rf /mnt/lib/modules
+        mv .modules /mnt/lib/modules
+        umount /mnt
     else
         exitRecovery "Err: Cannot find rootfs partition in ${DISK_RF}"
     fi
@@ -170,20 +211,22 @@ fi
 
 # [2] Check OTA package
 printMsg "Check OTA package ..."
-if [ -e /dev/disk/by-partlabel ] ; then
+if [ -e /dev/disk/by-partlabel/misc ] ; then
     DISK_DIR="/dev/disk/by-partlabel"
-elif [ -e /dev/disk/by-label ] ; then
+elif [ -e /dev/disk/by-label/misc ] ; then
     DISK_DIR="/dev/disk/by-label"
 else
-    exitRecovery "Err: cannot find /dev/disk/by-partlabel or /dev/disk/by-label" true
+    exitRecovery "Err: cannot find valid /dev/disk/by-partlabel or /dev/disk/by-label" true
 fi
+DISK_BT="${DISK_DIR}/${BOOT_LABEL}"
+DISK_RF="${DISK_DIR}/${ROOTFS_LABEL}"
 
 if [ ! -e ${PACKAGE_FILE} ] ; then
     exitRecovery "Err: ${PACKAGE_FILE} does not exist!"
 fi
 
-printMsg "Unzip $PACKAGE_FILE ..."
-unzip -o $PACKAGE_FILE -d $CACHE_ROOT
+printMsg "Unzip script from $PACKAGE_FILE ..."
+unzip -o $PACKAGE_FILE ${UPDATE_DIR}/${UPDATE_SCRIPT} -d $CACHE_ROOT
 cd ${CACHE_ROOT}/${UPDATE_DIR}
 if [ ! -e ${UPDATE_SCRIPT} ] ; then
     exitRecovery "Err: ${UPDATE_SCRIPT} does not exist in ${PACKAGE_FILE}"
@@ -191,12 +234,12 @@ fi
 
 IMAGE_LIST=`cut $UPDATE_SCRIPT -d ',' -f 2`
 for IMAGE in $IMAGE_LIST ; do
-    if [ ! -e $IMAGE ] ; then
-        exitRecovery "Err: ${IMAGE} listed in ${UPDATE_SCRIPT} does not exist!"
-    fi
+    #if [ ! -e $IMAGE ] ; then
+    #    exitRecovery "Err: ${IMAGE} listed in ${UPDATE_SCRIPT} does not exist!"
+    #fi
 
     MD5_P=`grep $IMAGE $UPDATE_SCRIPT | cut -d ',' -f 3`
-    MD5_Q=`md5sum -b $IMAGE | cut -d ' ' -f 1`
+    MD5_Q=`unzip -p $PACKAGE_FILE ${UPDATE_DIR}/$IMAGE | md5sum -b | cut -d ' ' -f 1`
     if [ $MD5_P != $MD5_Q ] ; then
         exitRecovery "Err: MD5 of ${IMAGE} does not match!"
     fi
@@ -216,6 +259,9 @@ for OTA_CMD in $OTA_CMD_LIST ; do
     "update-dtb")
         OTA_CMD_DTB="true"
         ;;
+    "update-module")
+        OTA_CMD_ML="true"
+        ;;
     "update-rootfs")
         updateRootfs
         ;;
@@ -225,7 +271,7 @@ for OTA_CMD in $OTA_CMD_LIST ; do
     esac
 done
 
-if [ ! -z ${OTA_CMD_KL} ] || [ ! -z ${OTA_CMD_DTB} ] ; then
+if [ ! -z ${OTA_CMD_KL} ] || [ ! -z ${OTA_CMD_DTB} ] || [ ! -z ${OTA_CMD_ML} ] ; then
     updateBoot
 fi
 

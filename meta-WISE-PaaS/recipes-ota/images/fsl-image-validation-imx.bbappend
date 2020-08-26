@@ -1,12 +1,3 @@
-IMAGE_INSTALL_append = " ota-script "
-IMAGE_INSTALL_append = " python-paho-mqtt libxmu "
+DESCRIPTION = "FSL validation image with Advantech OTA feature"
 
-OTA_CONFIGS_DIR:="${THISDIR}/files"
-CACHE_PARTITION = "/dev/disk/by-label/cache"
-
-modify_fstab() {
-	echo "${CACHE_PARTITION}      /cache               ext4       nosuid,nodev,nomblk_io_submit 0 0" >> ${IMAGE_ROOTFS}/etc/fstab
-}
-
-ROOTFS_POSTPROCESS_COMMAND += "modify_fstab"
-
+require ota.inc

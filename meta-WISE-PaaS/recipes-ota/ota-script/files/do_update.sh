@@ -35,11 +35,11 @@ fi
 
 
 if [ -e /dev/disk/by-partlabel ] ; then
-    DISK_DIR="/dev/disk/by-partlabel"
+    MISC_DIR="/dev/disk/by-partlabel/misc"
 elif [ -e /dev/disk/by-label ] ; then
-    DISK_DIR="/dev/disk/by-label"
+    MISC_DIR="/dev/disk/by-label/misc"
 else
-    echo "Err: cannot find /dev/disk/by-partlabel or /dev/disk/by-label"
+    echo "Err: cannot find misc in /dev/disk/by-partlabel or /dev/disk/by-label"
     exit 0;
 fi
 
@@ -53,7 +53,7 @@ if [ -e $FILE_PATH ] ; then
 
     echo "Write BCB ..."
     echo -ne "\x62\x6f\x6f\x74\x2d\x72\x65\x63\x6f\x76\x65\x72\x79\x00" > /cache/boot-recovery
-    dd if=/cache/boot-recovery of=${DISK_DIR}/misc
+    dd if=/cache/boot-recovery of=${MISC_DIR}
 
     echo "Setup OK. Reboot to recovery image!"
     sync; sync

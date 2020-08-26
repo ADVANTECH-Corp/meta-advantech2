@@ -5,9 +5,6 @@ IMAGE_INSTALL += "\
 IMAGE_INSTALL += "\
    ppp"
 
-# Wise-PaaS
-IMAGE_INSTALL += "\
-   susi4 susi-iot"
 
 # timezone
 IMAGE_INSTALL += "\
