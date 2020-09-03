@@ -12,6 +12,7 @@ add_test_tools() {
 	install -m 0755 ${ADDON_TEST_FILES_DIR}/obexpushd ${IMAGE_ROOTFS}/usr/sbin
 	install -m 0755 ${ADDON_TEST_FILES_DIR}/ussp-push ${IMAGE_ROOTFS}/usr/sbin
 	install -m 0755 ${ADDON_TEST_FILES_DIR}/wwatb ${IMAGE_ROOTFS}/usr/sbin
+	install -m 0755 ${ADDON_TEST_FILES_DIR}/uart-mode-config.sh ${IMAGE_ROOTFS}/usr/sbin
 }
 
 add_3G_provider() {
