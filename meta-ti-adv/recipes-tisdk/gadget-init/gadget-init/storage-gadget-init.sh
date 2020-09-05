@@ -4,6 +4,7 @@
 # https://github.com/RobertCNelson/boot-scripts/blob/master/boot/am335x_evm.sh
 
 # Assume some defaults
+sleep 10
 SERIAL_NUMBER="1234BBBK5678"
 PRODUCT="am335x_adv"
 manufacturer="Advantech"
