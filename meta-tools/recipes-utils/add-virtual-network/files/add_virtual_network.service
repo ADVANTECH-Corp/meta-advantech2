@@ -1,9 +1,8 @@
 [Unit]
 Description=Add virtual network
 
-
 [Service]
-Type=oneshot
+Type=idle
 ExecStart=/tools/add_virtual_network.sh
 StandardOutput=kmsg+console
 
