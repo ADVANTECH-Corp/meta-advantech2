@@ -1,6 +1,6 @@
 [Unit]
 Description=lan to wifi
-After=systemd-resolved.service
+After=storage-gadget-init.service
 ConditionPathExists=/usr/sbin/lan-to-wifi
 
 [Service]
