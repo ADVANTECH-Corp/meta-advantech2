@@ -47,9 +47,13 @@ fi
 FILE_PATH=$ROOTDIR/$1
 
 if [ -e $FILE_PATH ] ; then
+    echo "Move ${FILE_PATH} to /cache/"
+    rm -rf /cache/*; sync; sync
+    mv ${FILE_PATH} /cache/; sync; sync
+
     echo "Write recovery command ..."
     mkdir -p /cache/recovery/
-    echo "--update_package=${FILE_PATH}" > /cache/recovery/command
+    echo "--update_package=/cache/$1" > /cache/recovery/command
 
     echo "Write BCB ..."
     echo -ne "\x62\x6f\x6f\x74\x2d\x72\x65\x63\x6f\x76\x65\x72\x79\x00" > /cache/boot-recovery
