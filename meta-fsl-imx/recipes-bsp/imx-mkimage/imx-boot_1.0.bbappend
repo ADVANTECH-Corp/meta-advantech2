@@ -16,6 +16,10 @@ do_compile_prepend () {
     esac
 }
 do_compile_append () {
-	rm ${BOOT_STAGING}/mkimage_uboot
-	cp -f ${STAGING_DIR_NATIVE}${bindir}/mkimage            ${BOOT_STAGING}/mkimage_uboot
+    case ${MACHINE} in
+    imx8mm*)
+        rm ${BOOT_STAGING}/mkimage_uboot
+        cp -f ${STAGING_DIR_NATIVE}${bindir}/mkimage            ${BOOT_STAGING}/mkimage_uboot
+        ;;
+    esac
 }
