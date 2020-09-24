@@ -485,7 +485,7 @@ IMAGE_CMD_sdcard () {
 	${SDCARD_GENERATION_COMMAND} normal
 	${SDCARD_GENERATION_COMMAND} eng
 	
-	rm -f ${IMGDEPLOYDIR}/*
+	# rm -f ${IMGDEPLOYDIR}/*
 	mv ${SDCARD} ${IMGDEPLOYDIR}
 }
 

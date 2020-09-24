@@ -46,4 +46,5 @@ ROOTFS_POSTPROCESS_COMMAND += "update_profile ;"
 ROOTFS_POSTPROCESS_COMMAND += "fix_haveged ;"
 ROOTFS_POSTPROCESS_COMMAND += "install_utils;"
 
+CORE_IMAGE_EXTRA_INSTALL += "chromium-ozone-wayland"
 IMAGE_INSTALL_append = "packagegroup-qt5-webengine"

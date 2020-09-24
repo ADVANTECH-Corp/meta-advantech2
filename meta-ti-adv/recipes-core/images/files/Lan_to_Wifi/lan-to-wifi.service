@@ -1,0 +1,10 @@
+[Unit]
+Description=lan to wifi
+After=storage-gadget-init.service
+ConditionPathExists=/usr/sbin/lan-to-wifi
+
+[Service]
+ExecStart=/usr/sbin/lan-to-wifi eth0
+
+[Install]
+WantedBy=multi-user.target
