@@ -7,4 +7,5 @@ do_deploy_append_mx6() {
     install -d ${DEPLOYDIR}
     install ${B}/${config}/u-boot_crc.bin.crc ${DEPLOYDIR}/u-boot_crc.bin.crc
     install ${B}/${config}/u-boot_crc.bin ${DEPLOYDIR}/u-boot_crc.bin
+    install ${B}/${config}/u-boot_crc_adv.bin ${DEPLOYDIR}/u-boot_crc_adv.bin
 }
