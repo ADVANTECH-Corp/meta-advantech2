@@ -16,7 +16,7 @@ EOT
 HEXV=""
 case "$@" in
   ""|-h|--help) usage ;;
-  -p) HEXV=0x0A000340 ;;
+  -p) HEXV=0x0A000350 ;;
   *) usage 1 ;;
 esac
 (( $DEBUG > 0 )) && { echo "HEXV=$HEXV"; exit 0; }
