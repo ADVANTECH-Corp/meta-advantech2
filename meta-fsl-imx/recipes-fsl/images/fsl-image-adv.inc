@@ -31,6 +31,10 @@ IMAGE_INSTALL_append_imx6qrsb4410a1 = " lirc "
 IMAGE_INSTALL_append_imx6qrsb4410a2 = " lirc "
 IMAGE_INSTALL_append_mx8 = " si-script keyevent "
 IMAGE_INSTALL_append_imx8qmrom7720a1 = " wdt-button "
-
+IMAGE_INSTALL_append_imx8mprsb3720a1 = " xauth \
+                                   pylon \
+                                   python3-pypylon \
+                                   gentl-producer \
+                                   "
 # Browser
 #IMAGE_INSTALL += " firefox "
