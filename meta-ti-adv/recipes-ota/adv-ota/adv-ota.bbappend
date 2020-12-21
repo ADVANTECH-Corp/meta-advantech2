@@ -1,5 +1,7 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 
+SRC_URI_append_arago = "file://adv-ota_TI.sh "
+
 do_install_append() {
 
     if [ -e ${D}/tools/adv-ota.sh ] ; then
