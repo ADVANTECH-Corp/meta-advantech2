@@ -1,7 +1,7 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRCBRANCH = "adv_v2020.04_5.4.24_2.1.0"
 UBOOT_SRC = "git://github.com/ADVANTECH-Corp/uboot-imx.git;protocol=https"
-SRCREV = "${AUTOREV}"
+SRCREV = "b7acc53765cc5f9540e71e3554174f5bc8ec63e3"
 
 do_deploy_append_mx6() {
     install -d ${DEPLOYDIR}
