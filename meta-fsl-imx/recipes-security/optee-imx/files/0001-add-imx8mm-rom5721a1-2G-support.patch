@@ -1,0 +1,38 @@
+diff --git a/core/arch/arm/plat-imx/conf.mk b/core/arch/arm/plat-imx/conf.mk
+index 7dd1d7e2..7176bc0f 100644
+--- a/core/arch/arm/plat-imx/conf.mk
++++ b/core/arch/arm/plat-imx/conf.mk
+@@ -15,7 +15,7 @@ mx7d-flavorlist = mx7dsabresd
+ mx7s-flavorlist = mx7swarp7
+ mx7ulp-flavorlist = mx7ulpevk
+ mx8m-flavorlist = mx8mqevk
+-mx8mm-flavorlist = mx8mmevk
++mx8mm-flavorlist = mx8mmevk mx8mmrom5721a1
+ mx8qm-flavorlist = mx8qmmek mx8qmlpddr4arm2
+ mx8qx-flavorlist = mx8qxpmek mx8qxplpddr4arm2
+ 
+@@ -442,6 +442,11 @@ CFG_DDR_SIZE ?= 0x80000000
+ CFG_UART_BASE ?= UART2_BASE
+ endif
+ 
++ifneq (,$(filter $(PLATFORM_FLAVOR),mx8mmrom5721a1))
++CFG_DDR_SIZE ?= 0x80000000
++CFG_UART_BASE ?= UART2_BASE
++endif
++
+ ifneq (,$(filter $(PLATFORM_FLAVOR),mx8qmmek))
+ CFG_DDR_SIZE ?= 0x80000000
+ CFG_UART_BASE ?= UART0_BASE
+diff --git a/core/arch/arm/plat-imx/tzasc.c b/core/arch/arm/plat-imx/tzasc.c
+index b2b76530..7d79530a 100644
+--- a/core/arch/arm/plat-imx/tzasc.c
++++ b/core/arch/arm/plat-imx/tzasc.c
+@@ -362,7 +362,7 @@ static int board_imx_tzasc_configure(vaddr_t addr)
+ 
+ 	return 0;
+ }
+-#elif defined(PLATFORM_FLAVOR_mx8mmevk)
++#elif defined(PLATFORM_FLAVOR_mx8mmevk) || defined(PLATFORM_FLAVOR_mx8mmrom5721a1)
+ static int board_imx_tzasc_configure(vaddr_t addr)
+ {
+ 	tzc_init(addr);
