@@ -1,0 +1,26 @@
+diff --git a/core/arch/arm/plat-imx/conf.mk b/core/arch/arm/plat-imx/conf.mk
+index c1907500..a8d50fa9 100644
+--- a/core/arch/arm/plat-imx/conf.mk
++++ b/core/arch/arm/plat-imx/conf.mk
+@@ -63,7 +63,8 @@ mx8mq-flavorlist = \
+ 	mx8mqevk
+ 
+ mx8mm-flavorlist = \
+-	mx8mmevk
++	mx8mmevk \
++	mx8mmrom5721a1
+ 
+ mx8mn-flavorlist = \
+ 	mx8mnevk
+@@ -342,6 +343,11 @@ CFG_DDR_SIZE ?= 0x80000000
+ CFG_UART_BASE ?= UART2_BASE
+ endif
+ 
++ifneq (,$(filter $(PLATFORM_FLAVOR),mx8mmrom5721a1))
++CFG_DDR_SIZE ?= 0x80000000
++CFG_UART_BASE ?= UART2_BASE
++endif
++
+ ifneq (,$(filter $(PLATFORM_FLAVOR),mx8mnevk))
+ CFG_DDR_SIZE ?= 0x80000000
+ CFG_UART_BASE ?= UART2_BASE
