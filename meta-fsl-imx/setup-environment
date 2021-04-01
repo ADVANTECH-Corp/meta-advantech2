@@ -180,8 +180,9 @@ EOF
         -e "s,DISTRO ?=.*,DISTRO ?= '$DISTRO',g" \
         -e "s,PACKAGE_CLASSES ?=.*,PACKAGE_CLASSES ?= '$PACKAGE_CLASSES',g" \
         -i conf/local.conf
-
-    echo "UBOOT_CONFIG=\"$UBOOT_CONFIG\"" >> conf/local.conf
+    if [ -n "$UBOOT_CONFIG" ]; then
+    	echo "UBOOT_CONFIG=\"$UBOOT_CONFIG\"" >> conf/local.conf
+    fi
     cp $TEMPLATES/* conf/
 
     for s in $HOME/.oe $HOME/.yocto; do
