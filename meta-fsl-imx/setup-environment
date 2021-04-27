@@ -171,8 +171,10 @@ EOF
         -e "s,SDKMACHINE ??=.*,SDKMACHINE ??= '$SDKMACHINE',g" \
         -e "s,DISTRO ?=.*,DISTRO ?= '$DISTRO',g" \
         -i conf/local.conf
-
-    echo "UBOOT_CONFIG=\"$UBOOT_CONFIG\"" >> conf/local.conf
+   
+    if [ -n "$UBOOT_CONFIG" ]; then
+    	echo "UBOOT_CONFIG=\"$UBOOT_CONFIG\"" >> conf/local.conf
+    fi
     cp $TEMPLATES/* conf/
 
     for s in $HOME/.oe $HOME/.yocto; do
