@@ -5,6 +5,11 @@ ADDON_FILES_DIR:="${THISDIR}/files"
 #Advantech package
 require fsl-image-adv.inc
 
+fbi_rootfs_postprocess() {
+        crond_conf=${IMAGE_ROOTFS}/var/spool/cron/root
+        echo '0 0-23/12 * * * /sbin/hwclock --hctosys' >> $crond_conf
+}
+
 install_utils() {
 	mkdir -p ${IMAGE_ROOTFS}/usr/local/bin
 	install -m 0755 ${ADDON_FILES_DIR}/bt_pair.sh ${IMAGE_ROOTFS}/usr/local/bin
@@ -45,3 +50,4 @@ fix_haveged() {
 ROOTFS_POSTPROCESS_COMMAND += "update_profile ;"
 ROOTFS_POSTPROCESS_COMMAND += "fix_haveged ;"
 ROOTFS_POSTPROCESS_COMMAND += "install_utils;"
+ROOTFS_POSTPROCESS_COMMAND += "fbi_rootfs_postprocess;"
