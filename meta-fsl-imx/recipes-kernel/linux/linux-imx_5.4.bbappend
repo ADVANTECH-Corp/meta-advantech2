@@ -2,7 +2,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 KERNEL_BRANCH = "adv_5.4.24_2.1.0"
 KERNEL_SRC = "git://github.com/ADVANTECH-Corp/linux-imx.git;protocol=https"
 SRC_URI = "${KERNEL_SRC};branch=${KERNEL_BRANCH}"
-SRCREV = "${AUTOREV}"
+SRCREV = "752f9d60e72ee83fddfb2d611f154513b04067d3"
 SCMVERSION = "n"
 
 do_copy_defconfig_mx6 () {
