@@ -1,0 +1,26 @@
+diff --git a/plat/imx/imx8m/imx8mq/include/platform_def.h b/plat/imx/imx8m/imx8mq/include/platform_def.h
+index 6d838fc3c..a0ca288e2 100644
+--- a/plat/imx/imx8m/imx8mq/include/platform_def.h
++++ b/plat/imx/imx8m/imx8mq/include/platform_def.h
+@@ -84,7 +84,7 @@
+ #define IMX_DDR_IPS_BASE		U(0x3d000000)
+ #define IMX_DDR_IPS_SIZE		U(0x1800000)
+ #define IMX_DRAM_BASE			U(0x40000000)
+-#define IMX_DRAM_SIZE			U(0xc0000000)
++#define IMX_DRAM_SIZE			U(0x80000000)
+ #define IMX_NS_OCRAM_BASE		U(0x900000)
+ #define IMX_NS_OCRAM_SIZE		U(0x20000)
+ #define IMX_CAAM_RAM_BASE		U(0x100000)
+diff --git a/plat/imx/imx8m/imx8mq/platform.mk b/plat/imx/imx8m/imx8mq/platform.mk
+index dd8accd1d..5c3281e21 100644
+--- a/plat/imx/imx8m/imx8mq/platform.mk
++++ b/plat/imx/imx8m/imx8mq/platform.mk
+@@ -65,7 +65,7 @@ ERRATA_A53_835769	:=	1
+ ERRATA_A53_843419	:=	1
+ ERRATA_A53_855873	:=	1
+ 
+-BL32_BASE		?=	0xfe000000
++BL32_BASE		?=	0xbe000000
+ $(eval $(call add_define,BL32_BASE))
+ 
+ BL32_SIZE		?=	0x2000000
