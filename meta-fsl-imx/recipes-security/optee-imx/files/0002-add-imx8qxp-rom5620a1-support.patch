@@ -1,27 +1,17 @@
-From 34d83ddb148c71fae34534fe0de39b16f8b49aa4 Mon Sep 17 00:00:00 2001
-From: Your Name <you@example.com>
-Date: Tue, 16 Jul 2019 02:33:15 +0000
-Subject: [PATCH 2/2] add-imx8qxp-rom5620a1-support
-
----
- core/arch/arm/plat-imx/conf.mk | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
 diff --git a/core/arch/arm/plat-imx/conf.mk b/core/arch/arm/plat-imx/conf.mk
-index ef55937..4e5ff13 100644
+index c190750..13a4128 100644
 --- a/core/arch/arm/plat-imx/conf.mk
 +++ b/core/arch/arm/plat-imx/conf.mk
-@@ -17,7 +17,7 @@ mx7ulp-flavorlist = mx7ulpevk
- mx8m-flavorlist = mx8mqevk mx8mqrom5720a1
- mx8mm-flavorlist = mx8mmevk
- mx8qm-flavorlist = mx8qmmek mx8qmlpddr4arm2
--mx8qx-flavorlist = mx8qxpmek mx8qxplpddr4arm2
-+mx8qx-flavorlist = mx8qxpmek mx8qxplpddr4arm2 mx8qxprom5620a1
+@@ -77,6 +77,7 @@ mx8qm-flavorlist = \
+ mx8qx-flavorlist = \
+ 	mx8qxpmek \
+ 	mx8dxmek \
++	mx8qxprom5620a1 \
  
- ifneq (,$(filter $(PLATFORM_FLAVOR),$(mx6ul-flavorlist)))
- $(call force,CFG_MX6,y)
-@@ -467,6 +467,11 @@ CFG_DDR_SIZE ?= 0x80000000
- CFG_UART_BASE ?= UART0_BASE
+ mx8dxl-flavorlist = \
+ 	mx8dxlevk \
+@@ -360,6 +361,11 @@ CFG_UART_BASE ?= UART0_BASE
+ $(call force,CFG_TZC380,n)
  endif
  
 +ifneq (,$(filter $(PLATFORM_FLAVOR),mx8qxprom5620a1))
@@ -29,9 +19,6 @@ index ef55937..4e5ff13 100644
 +CFG_UART_BASE ?= UART0_BASE
 +endif
 +
- ifeq ($(filter y, $(CFG_PSCI_ARM32)), y)
- CFG_HWSUPP_MEM_PERM_WXN = n
- CFG_IMX_WDOG ?= y
--- 
-2.7.4
-
+ ifneq (,$(filter $(PLATFORM_FLAVOR),mx8dxmek))
+ CFG_DDR_SIZE ?= 0x40000000
+ CFG_UART_BASE ?= UART0_BASE
