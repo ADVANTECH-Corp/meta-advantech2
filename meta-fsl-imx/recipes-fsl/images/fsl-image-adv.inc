@@ -9,8 +9,9 @@ IMAGE_INSTALL += " packagegroup-core-eclipse-debug "
 IMAGE_INSTALL += " linux-firmware-ralink "
 IMAGE_INSTALL += " linux-firmware-sd8897 "
 IMAGE_INSTALL += " linux-firmware-ar3k "
-#IMAGE_INSTALL += " linux-firmware-rtl8821ae "
+IMAGE_INSTALL += " linux-firmware-rtl8821 "
 IMAGE_INSTALL += " linux-firmware-rtl8723 rtl8723bs-bt "
+IMAGE_INSTALL += " linux-firmware-rtl8168 "
 
 # Native Compiler
 IMAGE_INSTALL += " packagegroup-sdk-target "
