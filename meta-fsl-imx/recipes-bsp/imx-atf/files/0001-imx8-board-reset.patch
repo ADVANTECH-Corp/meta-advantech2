@@ -1,8 +1,8 @@
 diff --git a/plat/imx/common/imx8_psci.c b/plat/imx/common/imx8_psci.c
-index 0702ef6..60093c1 100644
+index 5b53e62..d4f6723 100644
 --- a/plat/imx/common/imx8_psci.c
 +++ b/plat/imx/common/imx8_psci.c
-@@ -21,7 +21,7 @@ void __dead2 imx_system_off(void)
+@@ -23,7 +23,7 @@ void __dead2 imx_system_off(void)
  
  void __dead2 imx_system_reset(void)
  {
