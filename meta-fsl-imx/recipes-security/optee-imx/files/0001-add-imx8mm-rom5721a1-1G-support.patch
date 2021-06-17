@@ -1,5 +1,5 @@
 diff --git a/core/arch/arm/plat-imx/conf.mk b/core/arch/arm/plat-imx/conf.mk
-index c1907500..1b16ce26 100644
+index c190750..1b16ce2 100644
 --- a/core/arch/arm/plat-imx/conf.mk
 +++ b/core/arch/arm/plat-imx/conf.mk
 @@ -63,7 +63,8 @@ mx8mq-flavorlist = \
@@ -24,3 +24,15 @@ index c1907500..1b16ce26 100644
  ifneq (,$(filter $(PLATFORM_FLAVOR),mx8mnevk))
  CFG_DDR_SIZE ?= 0x80000000
  CFG_UART_BASE ?= UART2_BASE
+diff --git a/scripts/nxp_build.sh b/scripts/nxp_build.sh
+index 3819893..95701d4 100755
+--- a/scripts/nxp_build.sh
++++ b/scripts/nxp_build.sh
+@@ -32,6 +32,7 @@ boards_list=(
+ 	mx8dxmek \
+ 	mx8mqevk \
+ 	mx8mmevk \
++	mx8mmrom5721a1 \
+ 	mx8mnevk \
+ 	mx8mpevk \
+ 	mx8qxpmek \

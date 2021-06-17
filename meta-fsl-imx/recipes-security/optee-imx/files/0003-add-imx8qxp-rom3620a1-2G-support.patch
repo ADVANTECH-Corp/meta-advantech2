@@ -6,7 +6,7 @@ index c190750..13a4128 100644
  mx8qx-flavorlist = \
  	mx8qxpmek \
  	mx8dxmek \
-+	mx8qxprom5620a1 \
++	mx8qxprom3620a1 \
  
  mx8dxl-flavorlist = \
  	mx8dxlevk \
@@ -14,7 +14,7 @@ index c190750..13a4128 100644
  $(call force,CFG_TZC380,n)
  endif
  
-+ifneq (,$(filter $(PLATFORM_FLAVOR),mx8qxprom5620a1))
++ifneq (,$(filter $(PLATFORM_FLAVOR),mx8qxprom3620a1))
 +CFG_DDR_SIZE ?= 0x80000000
 +CFG_UART_BASE ?= UART0_BASE
 +endif
@@ -22,3 +22,15 @@ index c190750..13a4128 100644
  ifneq (,$(filter $(PLATFORM_FLAVOR),mx8dxmek))
  CFG_DDR_SIZE ?= 0x40000000
  CFG_UART_BASE ?= UART0_BASE
+diff --git a/scripts/nxp_build.sh b/scripts/nxp_build.sh
+index 3819893..29f48d3 100755
+--- a/scripts/nxp_build.sh
++++ b/scripts/nxp_build.sh
+@@ -35,6 +35,7 @@ boards_list=(
+ 	mx8mnevk \
+ 	mx8mpevk \
+ 	mx8qxpmek \
++	mx8qxprom3620a1 \
+ 	mx8qmmek \
+ 	mx8dxlevk \
+ 	ls1021atwr \
