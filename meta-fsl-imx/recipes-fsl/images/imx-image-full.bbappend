@@ -23,6 +23,7 @@ install_utils() {
 	mkdir -p ${IMAGE_ROOTFS}/lib/firmware/qca
 	install -m 0644 ${ADDON_FILES_DIR}/nvm_usb_00000302.bin ${IMAGE_ROOTFS}/lib/firmware/qca/nvm_usb_00000302.bin
 	install -m 0644 ${ADDON_FILES_DIR}/rampatch_usb_00000302.bin ${IMAGE_ROOTFS}/lib/firmware/qca/rampatch_usb_00000302.bin
+	install -m 0644 ${ADDON_FILES_DIR}/libGAL.so ${IMAGE_ROOTFS}/usr/lib
 }
 
 
