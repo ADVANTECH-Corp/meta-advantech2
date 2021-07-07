@@ -53,8 +53,10 @@ add_system_backup() {
 }
 
 add_wifi_relink() {
+	mkdir -p ${IMAGE_ROOTFS}/etc/wifi
 	install -m 0644 ${WIFI_RELINK_DIR}/wifi-relink.service ${IMAGE_ROOTFS}/lib/systemd/system
 	install -m 0755 ${WIFI_RELINK_DIR}/relink3220.sh ${IMAGE_ROOTFS}/usr/bin
+	install -m 0644 ${WIFI_RELINK_DIR}/wpa.conf ${IMAGE_ROOTFS}/etc/wifi
 }
 
 ROOTFS_POSTPROCESS_COMMAND_append_ti33x = "add_test_tools;add_3G_provider;add_mrvl_fw;modify_fstab;modify_modules_load_service;add_4G_to_Lan;add_Lan_to_Wifi;add_system_backup;add_wifi_relink;"
