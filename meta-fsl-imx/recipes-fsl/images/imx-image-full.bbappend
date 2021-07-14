@@ -23,9 +23,11 @@ install_utils() {
 	mkdir -p ${IMAGE_ROOTFS}/lib/firmware/qca
 	install -m 0644 ${ADDON_FILES_DIR}/nvm_usb_00000302.bin ${IMAGE_ROOTFS}/lib/firmware/qca/nvm_usb_00000302.bin
 	install -m 0644 ${ADDON_FILES_DIR}/rampatch_usb_00000302.bin ${IMAGE_ROOTFS}/lib/firmware/qca/rampatch_usb_00000302.bin
-	install -m 0644 ${ADDON_FILES_DIR}/libGAL.so ${IMAGE_ROOTFS}/usr/lib
 }
 
+update_gpu() {
+        install -m 0644 ${ADDON_FILES_DIR}/libGAL.so ${IMAGE_ROOTFS}/usr/lib
+}
 
 update_profile() {
 sed -i "\
@@ -54,3 +56,4 @@ ROOTFS_POSTPROCESS_COMMAND += "update_profile ;"
 ROOTFS_POSTPROCESS_COMMAND += "fix_haveged ;"
 ROOTFS_POSTPROCESS_COMMAND += "install_utils;"
 ROOTFS_POSTPROCESS_COMMAND += "fbi_rootfs_postprocess;"
+ROOTFS_POSTPROCESS_COMMAND_append_mx8 += "update_gpu;"
