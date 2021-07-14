@@ -1,7 +1,16 @@
 diff --git a/plat/imx/imx8mm/imx8mm_bl31_setup.c b/plat/imx/imx8mm/imx8mm_bl31_setup.c
-index aa1c336..011f6fe 100644
+index aa1c336e2..b13961fb8 100644
 --- a/plat/imx/imx8mm/imx8mm_bl31_setup.c
 +++ b/plat/imx/imx8mm/imx8mm_bl31_setup.c
+@@ -300,7 +300,7 @@ void bl31_early_platform_setup2(u_register_t arg0, u_register_t arg1,
+ #endif
+ 	/* TEE size + RDC reserved memory = 0x2000000 + 0x2000000 + 0x30000000 */
+ #ifdef DECRYPTED_BUFFER_START
+-	bl33_image_ep_info.args.arg2 = 0xC0000000 - DECRYPTED_BUFFER_START;
++	bl33_image_ep_info.args.arg2 = 0x80000000 - DECRYPTED_BUFFER_START;
+ #else
+ 	bl33_image_ep_info.args.arg2 = 0x2000000;
+ #endif
 @@ -310,7 +310,6 @@ void bl31_early_platform_setup2(u_register_t arg0, u_register_t arg1,
  
  	/* Assign M4 to domain 1 */

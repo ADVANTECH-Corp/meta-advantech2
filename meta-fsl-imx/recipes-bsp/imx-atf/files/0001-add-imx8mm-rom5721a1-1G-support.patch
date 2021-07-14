@@ -1,0 +1,39 @@
+diff --git a/plat/imx/imx8mm/imx8mm_bl31_setup.c b/plat/imx/imx8mm/imx8mm_bl31_setup.c
+index aa1c336e2..d001d1583 100644
+--- a/plat/imx/imx8mm/imx8mm_bl31_setup.c
++++ b/plat/imx/imx8mm/imx8mm_bl31_setup.c
+@@ -296,11 +296,11 @@ void bl31_early_platform_setup2(u_register_t arg0, u_register_t arg1,
+ 	bl32_image_ep_info.args.arg1 = BL32_BASE;
+ #else
+ 	/* Pass TEE base and size to uboot */
+-	bl33_image_ep_info.args.arg1 = 0xBE000000;
++	bl33_image_ep_info.args.arg1 = 0x7E000000;
+ #endif
+ 	/* TEE size + RDC reserved memory = 0x2000000 + 0x2000000 + 0x30000000 */
+ #ifdef DECRYPTED_BUFFER_START
+-	bl33_image_ep_info.args.arg2 = 0xC0000000 - DECRYPTED_BUFFER_START;
++	bl33_image_ep_info.args.arg2 = 0x40000000 - DECRYPTED_BUFFER_START;
+ #else
+ 	bl33_image_ep_info.args.arg2 = 0x2000000;
+ #endif
+@@ -310,7 +310,6 @@ void bl31_early_platform_setup2(u_register_t arg0, u_register_t arg1,
+ 
+ 	/* Assign M4 to domain 1 */
+ 	mmio_write_32(IMX_RDC_BASE + 0x204, 0x1);
+-	mmio_write_32(IMX_RDC_BASE + 0x518, 0xfc);
+ 	mmio_write_32(IMX_RDC_BASE + 0x5A4, 0xf3);
+ 
+ #if defined (CSU_RDC_TEST)
+diff --git a/plat/imx/imx8mm/include/platform_def.h b/plat/imx/imx8mm/include/platform_def.h
+index 9f1f1fa5a..a13e2a9da 100644
+--- a/plat/imx/imx8mm/include/platform_def.h
++++ b/plat/imx/imx8mm/include/platform_def.h
+@@ -36,7 +36,7 @@
+ #define BL32_SIZE			0x02000000
+ #define BL32_LIMIT			0xC0000000
+ #endif
+-#define BL32_BASE			0xbe000000
++#define BL32_BASE			0x7e000000
+ 
+ /* non-secure uboot base */
+ #define PLAT_NS_IMAGE_OFFSET		0x40200000

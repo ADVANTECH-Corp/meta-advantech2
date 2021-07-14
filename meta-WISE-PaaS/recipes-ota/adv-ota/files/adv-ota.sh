@@ -81,10 +81,23 @@ doUpdate()
     IN_FILE=$1
     OUT_FILE=$2
 
+    DEV_NODE=`readlink ${OUT_FILE}`
+
     printMsg "dd if=${IN_FILE} of=${OUT_FILE} ..."
     unzip -p $PACKAGE_FILE ${UPDATE_DIR}/${IN_FILE} | dd of=${OUT_FILE} bs=1M
     [ "$?" -ne 0 ] && exitRecovery "Err: update ${IN_FILE} failed!" true
     sync; sync
+
+    # Re-assign labels
+    if [ -z "${OUT_FILE##*$BOOT_LABEL*}" ]; then
+        e2label $DISK_DIR/$DEV_NODE $BOOT_LABEL
+        echo "e2label $DISK_DIR/$DEV_NODE $BOOT_LABEL"
+    elif [ -z "${OUT_FILE##*$ROOTFS_LABEL*}" ]; then
+        e2label $DISK_DIR/$DEV_NODE $ROOTFS_LABEL
+        echo "e2label $DISK_DIR/$DEV_NODE $ROOTFS_LABEL"
+    fi
+    sleep 2
+
     printMsg "Update done!"
 }
 
@@ -173,7 +186,6 @@ updateRootfs()
         umount /mnt
         # Update Rootfs
         doUpdate ${IMAGE_RF} ${DISK_RF}
-        e2label ${DISK_RF} ${ROOTFS_LABEL}
         e2fsck -f -y ${DISK_RF}
         resize2fs ${DISK_RF}
         # Restore kernel module
