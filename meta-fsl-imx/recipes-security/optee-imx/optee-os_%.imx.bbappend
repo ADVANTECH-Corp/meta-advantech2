@@ -5,6 +5,7 @@ DESCRIPTION = "OPTEE OS"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 
+PLATFORM_FLAVOR_mx6q   = "${@d.getVar('MACHINE')[1:]}"
 PLATFORM_FLAVOR_mx8mq   = "${@d.getVar('MACHINE')[1:]}"
 PLATFORM_FLAVOR_mx8mm   = "${@d.getVar('MACHINE')[1:]}"
 PLATFORM_FLAVOR_mx8mp   = "${@d.getVar('MACHINE')[1:]}"
@@ -20,3 +21,5 @@ SRC_URI_append_imx8qmrom7720a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '4G 
 SRC_URI_append_imx8mprsb3720a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '4G FSPI_4G', 'file://0005-add-imx8mp-rsb372a1-4G-support.patch', '', d)}"
 SRC_URI_append_imx8mprsb3720a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '6G FSPI_6G', 'file://0005-add-imx8mp-rsb372a1-6G-support.patch', '', d)}"
 SRC_URI_append_imx8mprom5722a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '6G FSPI_6G', 'file://0006-add-imx8mp-rom5722a1-6G-support.patch', '', d)}"
+SRC_URI_append_imx6qrsb4411a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '1G', 'file://0001-add-imx6q-rsb4411a1-1G-support.patch', '', d)}"
+SRC_URI_append_imx6qrsb4411a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '2G', 'file://0001-add-imx6q-rsb4411a1-2G-support.patch', '', d)}"
