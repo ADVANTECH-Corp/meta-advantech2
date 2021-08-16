@@ -1,0 +1,15 @@
+diff --git a/board/freescale/imx8mp_rsb3720a1/imx8mp_rsb3720a1.c b/board/freescale/imx8mp_rsb3720a1/imx8mp_rsb3720a1.c
+index 520dd7a9aa..c882db1b86 100755
+--- a/board/freescale/imx8mp_rsb3720a1/imx8mp_rsb3720a1.c
++++ b/board/freescale/imx8mp_rsb3720a1/imx8mp_rsb3720a1.c
+@@ -459,6 +459,10 @@ int board_init(void)
+ 
+ #ifdef CONFIG_USB_TCPC
+ 	setup_typec();
++
++	/* Enable USB power default */
++	imx8m_usb_power(0, true);
++	imx8m_usb_power(1, true);
+ #endif
+ 
+ 	if (CONFIG_IS_ENABLED(FEC_MXC)) {
