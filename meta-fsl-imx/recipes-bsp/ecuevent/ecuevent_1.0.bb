@@ -1,6 +1,6 @@
 SUMMARY = "Advantech key_event for i.MX platform"
 SECTION = "base"
-iLICENSE = "GPLv2+"
+LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0-or-later;md5=fed54355545ffd980b814dab4a3b312c"
 
 SRC_URI = "https://github.com/ADVANTECH-Corp/RISC_tools_source/raw/master/${BPN}-${PV}.tar.gz"
