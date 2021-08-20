@@ -1,7 +1,7 @@
 SUMMARY = "Mdio Tool"
 SECTION = "base"
-LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=e8c1458438ead3c34974bc0be3a03ed6"
+LICENSE = "GPLv2+"
+LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0-or-later;md5=fed54355545ffd980b814dab4a3b312c"
 
 SRC_URI = "git://github.com/PieVo/mdio-tool.git;protocol=git;branch=master"
 SRCREV = "${AUTOREV}"
