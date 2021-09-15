@@ -9,6 +9,8 @@ SRC_URI_append_imx8mmebcrs08a1 += " ${@bb.utils.contains_any('UBOOT_CONFIG', '1G
 # SRC_URI_append_imx8mmebcrs08a1 += " ${@bb.utils.contains_any('UBOOT_CONFIG', '2G FSPI_2G', 'file://0002-add-imx8mm-ebcrs08a1-2G-support.patch', '', d)} "
 SRC_URI_append_imx8mmebcrs08a1 += " ${@bb.utils.contains_any('UBOOT_CONFIG', '2G FSPI_2G', 'file://0002-add-imx8mm-ebcrs08a1-2G-support-new.patch', '', d)} "
 SRC_URI_append_imx8mmebcrs08a1 += " file://0003-change_console_to_uart4.patch "
+SRC_URI_append_imx8mmebcrs08a2 += " ${@bb.utils.contains_any('UBOOT_CONFIG', '1G FSPI_1G', 'file://0001-add-imx8mm-ebcrs08a2-1G-support.patch', '', d)} "
+SRC_URI_append_imx8mmebcrs08a2 += " ${@bb.utils.contains_any('UBOOT_CONFIG', '2G FSPI_2G', 'file://0002-add-imx8mm-ebcrs08a2-2G-support.patch', '', d)} "
 
 
 

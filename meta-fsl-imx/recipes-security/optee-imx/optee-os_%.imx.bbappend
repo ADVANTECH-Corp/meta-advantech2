@@ -15,4 +15,6 @@ SRC_URI_append_imx8mmrom5721a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '1G 
 SRC_URI_append_imx8mmrom5721a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '2G FSPI_2G', 'file://0001-add-imx8mm-rom5721a1-2G-support.patch', '', d)}"
 SRC_URI_append_imx8mmebcrs08a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '1G FSPI_1G', 'file://0001-add-imx8mm-ebcrs08a1-1G-support.patch', '', d)}"
 SRC_URI_append_imx8mmebcrs08a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '2G FSPI_2G', 'file://0001-add-imx8mm-ebcrs08a1-2G-support.patch', '', d)}"
+SRC_URI_append_imx8mmebcrs08a2 += "${@bb.utils.contains_any('UBOOT_CONFIG', '1G FSPI_1G', 'file://0001-add-imx8mm-ebcrs08a2-1G-support.patch', '', d)}"
+SRC_URI_append_imx8mmebcrs08a2 += "${@bb.utils.contains_any('UBOOT_CONFIG', '2G FSPI_2G', 'file://0001-add-imx8mm-ebcrs08a2-2G-support.patch', '', d)}"
 

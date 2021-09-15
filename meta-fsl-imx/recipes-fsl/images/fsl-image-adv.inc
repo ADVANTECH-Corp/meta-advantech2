@@ -19,6 +19,7 @@ IMAGE_INSTALL += " packagegroup-sdk-target "
 # Tools
 IMAGE_INSTALL += " enable485 add-virtual-network advresize-script boottimes-script st quectel-script 3g-script stress-script xterm mdio-tool hwclock "
 IMAGE_INSTALL_remove_imx8mmebcrs08a1 = " enable485 "
+IMAGE_INSTALL_remove_imx8mmebcrs08a2 = " enable485 "
 
 # Depends on projects
 IMAGE_INSTALL_append_imx6qrom5420a1 = " ecuevent keyevent"
