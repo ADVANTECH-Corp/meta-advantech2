@@ -20,14 +20,13 @@ sstate_task_postfunc_append() {
 # [i.MX]
 DEPENDS_imx += "android-tools-native"
 BASE_ADDR_mx6 = "0x14000000"
-BASE_ADDR_mx8 = "0x86400000"
+BASE_ADDR_mx8 = "${@bb.utils.contains_any('UBOOT_CONFIG', '1G FSPI_1G', '0x46400000', '0x86400000', d)}"
 SEC_OFFSET_mx6 = "0x00f00000"
 SEC_OFFSET_mx8 = "0x01f00000"
 RAMDISK_OFFSET_mx6 = "0x01000000"
 RAMDISK_OFFSET_mx8 = "0x02000000"
 
 # If DDR is less then 2G , BASE_ADDR need to be modified
-BASE_ADDR_mx8 = "${@bb.utils.contains_any('UBOOT_CONFIG', '1G FSPI_1G', '0x46400000', '', d)}"
 
 mk_recovery_img_imx() {
     if [ -e ${DEPLOY_DIR_IMAGE}/${PN}-${MACHINE}.cpio.gz ]; then
