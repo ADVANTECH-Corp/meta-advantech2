@@ -39,7 +39,7 @@ mk_recovery_img_imx() {
         mkbootimg --kernel ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE} \
                   --ramdisk ${DEPLOY_DIR_IMAGE}/${PN}-${MACHINE}.cpio \
                   --output ${DEPLOY_DIR_IMAGE}/recovery-${MACHINE}.img \
-                  --second ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${FIRST_DTS_FILE} \
+                  --second ${DEPLOY_DIR_IMAGE}/${FIRST_DTS_FILE} \
                   --pagesize ${BOOTIMG_PAGE_SIZE} \
                   --base ${BASE_ADDR} \
                   --second_offset ${SEC_OFFSET} \
@@ -54,4 +54,6 @@ mk_recovery_img_imx() {
 RECOVERY_POSTPROCESS_COMMAND_imx += " mk_recovery_img_imx;"
 
 # Utilities
-PACKAGE_INSTALL += " adv-ota android-tools base-files boottimes e2fsprogs-tune2fs udev-extraconf util-linux e2fsprogs-resize2fs e2fsprogs-e2fsck"
+# PACKAGE_INSTALL += " adv-ota android-tools base-files boottimes e2fsprogs-tune2fs udev-extraconf util-linux e2fsprogs-resize2fs e2fsprogs-e2fsck"
+PACKAGE_INSTALL += " adv-ota android-tools base-files e2fsprogs-tune2fs udev-extraconf util-linux e2fsprogs-resize2fs e2fsprogs-e2fsck"
+
