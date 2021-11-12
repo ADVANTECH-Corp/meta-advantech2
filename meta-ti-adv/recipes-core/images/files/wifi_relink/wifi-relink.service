@@ -1,0 +1,17 @@
+[Unit]
+Description=Wifi relink service
+# Requires=storage-gadget-init.service
+# Wants=serial-getty@ttyGS0.service
+# Wants=busybox-udhcp.service
+
+After=storage-gadget-init.service
+# Before=serial-getty@ttyGS0.service
+# Before=busybox-udhcp.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/relink3220.sh
+
+[Install]
+WantedBy=basic.target

@@ -1,0 +1,33 @@
+diff --git a/meta-fsl-imx/conf/machine/imx8qmrom7720a1.conf b/meta-fsl-imx/conf/machine/imx8qmrom7720a1.conf
+index 9812449..92fe742 100644
+--- a/meta-fsl-imx/conf/machine/imx8qmrom7720a1.conf
++++ b/meta-fsl-imx/conf/machine/imx8qmrom7720a1.conf
+@@ -36,7 +36,9 @@ KERNEL_DEVICETREE = "freescale/adv-imx8qm-rom7720-a1.dtb \
+ UBOOT_MAKE_TARGET = "u-boot.bin"
+ UBOOT_SUFFIX = "bin"
+ UBOOT_CONFIG ??= "4G"
++UBOOT_CONFIG[2G] = "imx8qm_rom7720a1_2G_config,sdcard"
+ UBOOT_CONFIG[4G] = "imx8qm_rom7720a1_4G_config,sdcard"
++UBOOT_CONFIG[FSPI_2G] = "imx8qm_rom7720a1_2G_fspi_config"
+ UBOOT_CONFIG[FSPI_4G] = "imx8qm_rom7720a1_4G_fspi_config"
+ 
+ BOOT_SPACE = "131072"
+@@ -53,5 +55,5 @@ IMXBOOT_TARGETS_SD = \
+ IMXBOOT_TARGETS_FSPI = \
+     "flash_flexspi"
+ IMXBOOT_TARGETS = \
+-    "${@bb.utils.contains_any('UBOOT_CONFIG', 'FSPI_4G', '${IMXBOOT_TARGETS_FSPI}', \
++    "${@bb.utils.contains_any('UBOOT_CONFIG', 'SPI_2G FSPI_4G', '${IMXBOOT_TARGETS_FSPI}', \
+                                                 '${IMXBOOT_TARGETS_SD}' , d)}"
+diff --git a/meta-fsl-imx/recipes-bsp/imx-sc-firmware/imx-sc-firmware_1.2.bbappend b/meta-fsl-imx/recipes-bsp/imx-sc-firmware/imx-sc-firmware_1.2.bbappend
+index 79eb888..394234d 100644
+--- a/meta-fsl-imx/recipes-bsp/imx-sc-firmware/imx-sc-firmware_1.2.bbappend
++++ b/meta-fsl-imx/recipes-bsp/imx-sc-firmware/imx-sc-firmware_1.2.bbappend
+@@ -1,6 +1,6 @@
+ ADDON_FILES_DIR:="${THISDIR}/files"
+ 
+-SC_FIRMWARE_NAME_imx8qmrom7720a1 = "mx8qm-rom7720-scfw-tcm.bin"
++SC_FIRMWARE_NAME_imx8qmrom7720a1 = "${@bb.utils.contains_any('UBOOT_CONFIG', '2G FSPI_2G', 'mx8qm-rom7720-2G-scfw-tcm.bin', 'mx8qm-rom7720-4G-scfw-tcm.bin', d)}"
+ SC_FIRMWARE_NAME_imx8qxprom5620a1 = "${@bb.utils.contains_any('UBOOT_CONFIG', '2G FSPI_2G', 'mx8qx-rom5620-2G-scfw-tcm.bin', 'mx8qx-rom5620-4G-scfw-tcm.bin', d)}"
+ SC_FIRMWARE_NAME_imx8qxprom3620a1 = "mx8qx-rom3620-scfw-tcm.bin"
+ 

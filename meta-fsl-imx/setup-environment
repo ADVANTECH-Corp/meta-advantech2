@@ -26,9 +26,10 @@ PROGNAME="setup-environment"
 usage()
 {
     echo -e "
-Usage: MACHINE=<machine> DISTRO=<distro> source $PROGNAME <build-dir>
+Usage: MACHINE=<machine> UBOOT_CONFIG=<uboot-config> DISTRO=<distro> source $PROGNAME <build-dir>
 Usage:                                   source $PROGNAME <build-dir>
     <machine>    machine name
+    <uboot-config> 1G,2G,FSPI_1G...
     <distro>     distro name
     <build-dir>  build directory
 
@@ -58,7 +59,7 @@ Available Poky's distros: `echo; ls sources/poky/meta-poky/conf/distro/*.conf \
 Examples:
 
 - To create a new Yocto build directory:
-  $ MACHINE=imx6qdlsabresd DISTRO=fslc-framebuffer source $PROGNAME build
+  $ MACHINE=imx6qdlsabresd UBOOT_CONFIG=2G DISTRO=fslc-framebuffer source $PROGNAME build
 
 - To use an existing Yocto build directory:
   $ source $PROGNAME build
@@ -71,7 +72,7 @@ clean_up()
    unset EULA LIST_MACHINES VALID_MACHINE
    unset CWD TEMPLATES SHORTOPTS LONGOPTS ARGS PROGNAME
    unset generated_config updated
-   unset MACHINE SDKMACHINE DISTRO OEROOT
+   unset MACHINE SDKMACHINE DISTRO OEROOT UBOOT_CONFIG
 }
 
 # get command line options
@@ -170,7 +171,10 @@ EOF
         -e "s,SDKMACHINE ??=.*,SDKMACHINE ??= '$SDKMACHINE',g" \
         -e "s,DISTRO ?=.*,DISTRO ?= '$DISTRO',g" \
         -i conf/local.conf
-
+   
+    if [ -n "$UBOOT_CONFIG" ]; then
+    	echo "UBOOT_CONFIG=\"$UBOOT_CONFIG\"" >> conf/local.conf
+    fi
     cp $TEMPLATES/* conf/
 
     for s in $HOME/.oe $HOME/.yocto; do
@@ -262,6 +266,7 @@ if [ -n "$generated_config" ]; then
 Your build environment has been configured with:
 
     MACHINE=$MACHINE
+    UBOOT_CONFIG=$UBOOT_CONFIG
     SDKMACHINE=$SDKMACHINE
     DISTRO=$DISTRO
     EULA=$EULA
