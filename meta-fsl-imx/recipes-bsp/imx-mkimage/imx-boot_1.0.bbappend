@@ -19,7 +19,7 @@ do_compile_prepend () {
 }
 do_compile_append () {
     case ${MACHINE} in
-    imx8mm*)
+    imx8m*)
         rm ${BOOT_STAGING}/mkimage_uboot
         cp -f ${STAGING_DIR_NATIVE}${bindir}/mkimage            ${BOOT_STAGING}/mkimage_uboot
         ;;
