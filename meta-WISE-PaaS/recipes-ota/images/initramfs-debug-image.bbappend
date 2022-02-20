@@ -39,7 +39,7 @@ mk_recovery_img_imx() {
         mkbootimg --kernel ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE} \
                   --ramdisk ${DEPLOY_DIR_IMAGE}/${PN}-${MACHINE}.cpio \
                   --output ${DEPLOY_DIR_IMAGE}/recovery-${MACHINE}.img \
-                  --second ${DEPLOY_DIR_IMAGE}/${FIRST_DTS_FILE} \
+                  --second ${DEPLOY_DIR_IMAGE}/recovery-${FIRST_DTS_FILE} \
                   --pagesize ${BOOTIMG_PAGE_SIZE} \
                   --base ${BASE_ADDR} \
                   --second_offset ${SEC_OFFSET} \
