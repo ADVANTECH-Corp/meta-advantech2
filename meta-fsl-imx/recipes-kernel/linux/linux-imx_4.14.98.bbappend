@@ -3,7 +3,7 @@ SRCBRANCH = "imx_4.14.98_2.0.0_ga"
 LOCALVERSION = "-${SRCBRANCH}"
 KERNEL_SRC = "git://github.com/ADVANTECH-Corp/linux-imx6.git;protocol=https;branch=${SRCBRANCH}"
 SRC_URI = "${KERNEL_SRC};branch=${SRCBRANCH}"
-SRCREV = "${AUTOREV}"
+SRCREV = "a3c98c8b2862ed4f2029c77e5f7e4fcb713dd8d6"
 SCMVERSION = "n"
 
 do_copy_defconfig_mx6 () {
