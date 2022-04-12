@@ -37,5 +37,10 @@ IMAGE_INSTALL_append_imx8mprsb3720a1 = " xauth \
                                    python3-pypylon \
                                    gentl-producer \
                                    "
+IMAGE_INSTALL_append_imx8mpepcr5710a1 = " xauth \
+                                   pylon \
+                                   python3-pypylon \
+                                   gentl-producer \
+                                   "
 # Browser
 #IMAGE_INSTALL += " firefox "
