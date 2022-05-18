@@ -41,6 +41,14 @@ IMAGE_INSTALL_append_imx8mpepcr5710a1 = " xauth \
                                    pylon \
                                    python3-pypylon \
                                    gentl-producer \
+				   libhailort \
+				   hailortcli \
+				   pyhailort \
+				   libgsthailo \
+				   hailo-pci \
+				   hailo-firmware \
+				   libgsthailotools \
+				   tappas-apps \
                                    "
 # Browser
 #IMAGE_INSTALL += " firefox "
