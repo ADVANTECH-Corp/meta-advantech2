@@ -16,6 +16,8 @@ install_utils() {
 	install -m 0755 ${ADDON_FILES_DIR}/wifi_ant_isolation.txt ${IMAGE_ROOTFS}/lib/firmware/rtlwifi/rtl8821ae
 	mkdir -p ${IMAGE_ROOTFS}/lib/firmware/mrvl
 	install -m 0644 ${ADDON_FILES_DIR}/sdsd8997_combo_v4.bin ${IMAGE_ROOTFS}/lib/firmware/mrvl/sdsd8997_combo_v4.bin
+	mkdir -p ${IMAGE_ROOTFS}/lib/firmware/nxp
+	install -m 0644 ${ADDON_FILES_DIR}/pcieuart9098_combo_v1.bin ${IMAGE_ROOTFS}/lib/firmware/nxp/pcieuart9098_combo_v1.bin
 }
 
 
