@@ -10,7 +10,7 @@ MACHINE_FEATURES += "pci wifi bluetooth jailhouse"
 MACHINE_FEATURES_append_use-nxp-bsp = " optee mrvl8997"
 
 # Mainline kernel contains only one DTB file for
-# imx8mp_rsb3720a1 machine
+# Advantech imx8mp machine
 KERNEL_DEVICETREE = " \
     freescale/${KERNEL_DEVICETREE_BASENAME}.dtb \
     freescale/${KERNEL_DEVICETREE_BASENAME}-lvds0-auo.dtb \
