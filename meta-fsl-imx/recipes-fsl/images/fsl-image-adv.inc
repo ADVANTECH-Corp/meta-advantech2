@@ -41,6 +41,8 @@ IMAGE_INSTALL_append_imx8mpepcr5710a1 = " xauth \
                                    pylon \
                                    python3-pypylon \
                                    gentl-producer \
+                                   add-router \
+                                   dhcp-server \
 				   libhailort \
 				   hailortcli \
 				   pyhailort \
@@ -50,5 +52,8 @@ IMAGE_INSTALL_append_imx8mpepcr5710a1 = " xauth \
 				   libgsthailotools \
 				   tappas-apps \
                                    "
+
+IMAGE_INSTALL_remove_imx8mpepcr5710a1 = " add-virtual-network "
+
 # Browser
 #IMAGE_INSTALL += " firefox "
