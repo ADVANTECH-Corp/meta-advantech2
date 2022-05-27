@@ -57,6 +57,8 @@ install_utils() {
 	mkdir -p ${IMAGE_ROOTFS}/lib/firmware/qca
 	install -m 0644 ${ADDON_FILES_DIR}/nvm_usb_00000302.bin ${IMAGE_ROOTFS}/lib/firmware/qca/nvm_usb_00000302.bin
 	install -m 0644 ${ADDON_FILES_DIR}/rampatch_usb_00000302.bin ${IMAGE_ROOTFS}/lib/firmware/qca/rampatch_usb_00000302.bin
+	mkdir -p ${IMAGE_ROOTFS}/lib/firmware/nxp
+	install -m 0644 ${ADDON_FILES_DIR}/pcieuart9098_combo_v1.bin ${IMAGE_ROOTFS}/lib/firmware/nxp/pcieuart9098_combo_v1.bin
 }
 
 update_gpu() {
