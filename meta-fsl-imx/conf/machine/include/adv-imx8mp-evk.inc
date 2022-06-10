@@ -18,7 +18,6 @@ KERNEL_DEVICETREE = " \
     freescale/${KERNEL_DEVICETREE_BASENAME}-lvds-dual.dtb \
     freescale/${KERNEL_DEVICETREE_BASENAME}-adv7535.dtb \
     freescale/${KERNEL_DEVICETREE_BASENAME}-basler.dtb \
-    freescale/${KERNEL_DEVICETREE_BASENAME}-dual-basler.dtb \
     freescale/${KERNEL_DEVICETREE_BASENAME}-auog101uan02.dtb \
 "
 
