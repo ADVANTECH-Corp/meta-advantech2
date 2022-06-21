@@ -10,9 +10,9 @@ S = "${WORKDIR}/git/key_event_3.0"
 
 inherit autotools pkgconfig
 
-EXTRA_OECONF_append_mx6 = "--host arm-poky-linux-gnueabi CFLAGS=-lpthread"
-EXTRA_OECONF_append_mx7 = "--host arm-poky-linux-gnueabi CFLAGS=-lpthread"
-EXTRA_OECONF_append_mx8 = "--host aarch64-poky-linux CFLAGS=-lpthread"
+EXTRA_OECONF_append_mx6 = "--host arm-poky-linux-gnueabi"
+EXTRA_OECONF_append_mx7 = "--host arm-poky-linux-gnueabi"
+EXTRA_OECONF_append_mx8 = "--host aarch64-poky-linux"
 
 # We overwrite do_configure() to avoid perform autoreconf again
 do_configure() {
