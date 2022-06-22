@@ -1,14 +1,14 @@
 PACKAGES =+ "${PN}-rtl8188ee \
              ${PN}-rtl8821ae \
              "
-LICENSE_${PN}-rtl8188ee = "Firmware-rtlwifi"
+LICENSE_${PN}-rtl8188ee = "Firmware-rtlwifi_firmware"
 FILES_${PN}-rtl8188ee = " \
   /lib/firmware/rtlwifi/rtl8188efw.bin \
 "
 RDEPENDS_${PN}-rtl8188ee += "${PN}-rtl-license"
 
 
-LICENSE_${PN}-rtl8821ae = "Firmware-rtlwifi"
+LICENSE_${PN}-rtl8821ae = "Firmware-rtlwifi_firmware"
 FILES_${PN}-rtl8821ae = " \
   /lib/firmware/rtl_bt/rtl8821a_fw.bin \
 "
