@@ -1,5 +1,5 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
-KERNEL_BRANCH = "adv_5.10.35_2.0.0"
+KERNEL_BRANCH = "adv_5.10.72_2.2.0"
 KERNEL_SRC = "git://github.com/ADVANTECH-Corp/linux-imx.git;protocol=https"
 SRC_URI = "${KERNEL_SRC};branch=${KERNEL_BRANCH}"
 SRCREV = "${AUTOREV}"
