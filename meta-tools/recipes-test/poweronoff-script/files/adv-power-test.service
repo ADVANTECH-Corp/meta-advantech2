@@ -1,0 +1,10 @@
+[Unit]
+Description=Advantech Power Test
+After=systemd-logind
+
+[Service]
+Type=oneshot
+ExecStart=/tools/power-test.sh
+
+[Install]
+WantedBy=multi-user.target
