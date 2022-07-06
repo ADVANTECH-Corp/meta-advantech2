@@ -20,5 +20,6 @@ do_install() {
 }
 
 SYSTEMD_SERVICE_${PN} = "adv-power-test.service"
+SYSTEMD_AUTO_ENABLE_${PN} = "disable"
 
 FILES_${PN} = "/tools"
