@@ -9,10 +9,8 @@ SRC_URI = "file://adv-router.service \
 inherit systemd
 
 do_install() {
-	install -d ${D}/lib/systemd/system
 	install -d ${D}/usr/sbin
 	install -d ${D}/etc/systemd/network
-	install -m 644 ${WORKDIR}/adv-router.service ${D}/lib/systemd/system/adv-router.service
 	install -m 755 ${WORKDIR}/adv-router ${D}/usr/sbin/adv-router
 	install -m 644 ${WORKDIR}/10-eth0-static.network ${D}/etc/systemd/network/10-eth0-static.network
 
