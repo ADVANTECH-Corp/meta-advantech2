@@ -1,0 +1,57 @@
+diff --git a/meta-WISE-PaaS/recipes-ota/adv-ota/files/adv-ota.sh b/meta-WISE-PaaS/recipes-ota/adv-ota/files/adv-ota.sh
+index d614b23..6033997 100755
+--- a/meta-WISE-PaaS/recipes-ota/adv-ota/files/adv-ota.sh
++++ b/meta-WISE-PaaS/recipes-ota/adv-ota/files/adv-ota.sh
+@@ -81,7 +81,8 @@ doUpdate()
+     IN_FILE=$1
+     OUT_FILE=$2
+ 
+-    DEV_NODE=`readlink ${OUT_FILE}`
++#    DEV_NODE=`readlink ${OUT_FILE}`
++    DEV_NODE="../../../${OUT_FILE}"
+ 
+     printMsg "dd if=${IN_FILE} of=${OUT_FILE} ..."
+     unzip -p $PACKAGE_FILE ${UPDATE_DIR}/${IN_FILE} | dd of=${OUT_FILE} bs=1M
+@@ -124,7 +125,8 @@ updateBoot()
+     if [ -e ${DISK_BT} ] ; then
+         case $BOOT_TYPE in
+         "zImage")
+-            umount $DISK_BT
++            #umount $DISK_BT
++	    umount /run/media/mmcblk2p1
+             mount $DISK_BT /mnt/
+             [ "$?" -ne 0 ] && exitRecovery "Err: 'mount' command failed!"
+             if [ -n ${IMAGE_BT} ]; then
+@@ -150,7 +152,8 @@ updateBoot()
+ 
+     printMsg "Update kernel modules ..."
+     if [ -e ${DISK_RF} ] ; then
+-        umount $DISK_RF
++        #umount $DISK_RF
++	umount /run/media/mmcblk2p2
+         mount $DISK_RF /mnt/
+         [ "$?" -ne 0 ] && exitRecovery "Err: 'mount' command failed!"
+         if [ -n ${IMAGE_ML} ]; then
+@@ -179,7 +182,8 @@ updateRootfs()
+ 
+     printMsg "Update rootfs partition ..."
+     if [ -e ${DISK_RF} ] ; then
+-        umount ${DISK_RF}
++        #umount ${DISK_RF}
++	umount /run/media/mmcblk2p2
+         # Backup kernel module
+         mount $DISK_RF /mnt/
+         cp -a /mnt/lib/modules .modules
+@@ -230,8 +234,10 @@ elif [ -e /dev/disk/by-label/misc ] ; then
+ else
+     exitRecovery "Err: cannot find valid /dev/disk/by-partlabel or /dev/disk/by-label" true
+ fi
+-DISK_BT="${DISK_DIR}/${BOOT_LABEL}"
+-DISK_RF="${DISK_DIR}/${ROOTFS_LABEL}"
++DISK_BT="/dev/mmcblk2p1"
++DISK_RF="/dev/mmcblk2p2"
++#DISK_BT="${DISK_DIR}/${BOOT_LABEL}"
++#DISK_RF="${DISK_DIR}/${ROOTFS_LABEL}"
+ 
+ if [ ! -e ${PACKAGE_FILE} ] ; then
+     exitRecovery "Err: ${PACKAGE_FILE} does not exist!"
