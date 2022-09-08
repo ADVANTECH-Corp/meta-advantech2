@@ -54,6 +54,7 @@ IMAGE_INSTALL_append_imx8mpepcr5710a1 = " xauth \
 				   libgsthailotools \
 				   tappas-apps \
 				   add-led-ctrl \
+				   hailo-post-processes \
                                    "
 
 IMAGE_INSTALL_remove_imx8mpepcr5710a1 = " add-virtual-network "
