@@ -56,6 +56,7 @@ IMAGE_INSTALL_append_imx8mpepcr5710a1 = " xauth \
 				   add-led-ctrl \
 				   hailo-post-processes \
                                    "
+#docker-ce \
 
 IMAGE_INSTALL_remove_imx8mpepcr5710a1 = " add-virtual-network "
 
