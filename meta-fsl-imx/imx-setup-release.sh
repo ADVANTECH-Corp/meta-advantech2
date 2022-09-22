@@ -182,9 +182,12 @@ echo "BBLAYERS += \"\${BSPDIR}/sources/meta-openembedded/meta-filesystems\"" >> 
 
 echo "BBLAYERS += \"\${BSPDIR}/sources/meta-qt5\"" >> $BUILD_DIR/conf/bblayers.conf
 echo "BBLAYERS += \"\${BSPDIR}/sources/meta-python2\"" >> $BUILD_DIR/conf/bblayers.conf
+# Enable docker for mx8 machines 5.10.72
+echo "BBLAYERS += \"\${BSPDIR}/sources/meta-virtualization\"" >> $BUILD_DIR/conf/bblayers.conf
+
 echo "BBLAYERS += \"\${BSPDIR}/sources/meta-advantech/meta-fsl-imx \"" >> $BUILD_DIR/conf/bblayers.conf
 echo "BBLAYERS += \"\${BSPDIR}/sources/meta-advantech/meta-tools \"" >> $BUILD_DIR/conf/bblayers.conf
-echo "BBLAYERS += \"\${BSPDIR}/sources/meta-advantech/meta-WISE-PaaS \"" >> $BUILD_DIR/conf/bblayers.conf
+# echo "BBLAYERS += \"\${BSPDIR}/sources/meta-advantech/meta-WISE-PaaS \"" >> $BUILD_DIR/conf/bblayers.conf
 
 if [ -d ../sources/meta-ivi ]; then
     echo -e "\n## Genivi layers" >> $BUILD_DIR/conf/bblayers.conf
