@@ -13,8 +13,6 @@ BTMAC=${1^^}
 FILE=$2
 
 
-
-
 #bt_obexd_start.sh
 . /tmp/dbus-session.out
 sleep 3

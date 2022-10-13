@@ -2,11 +2,11 @@
 UNPAIR=0
 if [ "$1" == "-u" ]; then UNPAIR=1; shift 1; fi
 
-if [ $# != 2 ]; then
+if [ $# != 1 ]; then
 	cat <<-EOF
 	
 	Usage:
-	    $0 {BT device's MAC} {sending file}
+	    $0 [-u] {BT device's MAC}
 
 	EOF
 	exit 1
@@ -19,9 +19,9 @@ BTMAC=${1^^}
 echo "pairing now..."
 
 
-bt_obexd_start.sh
+$DIR/bt_obexd_start_imx8.sh
 sleep 1
-bt_obexd_start.sh
+$DIR/bt_obexd_start_imx8.sh
 . /tmp/dbus-session.out
 
 cat <<-EOF | expect
@@ -50,4 +50,3 @@ cat <<-EOF | expect
 	send "quit\r"
 EOF
 
-$DIR/bt_send_imx8.sh $BTMAC $2
