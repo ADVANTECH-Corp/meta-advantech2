@@ -4,7 +4,7 @@ SOC_FAMILY_append = ":keystone"
 DEFAULTTUNE ?= "armv7athf-neon"
 require conf/machine/include/tune-cortexa15.inc
 
-PREFERRED_PROVIDER_virtual/kernel = "linux-ti-staging"
+PREFERRED_PROVIDER_virtual/kernel ?= "linux-ti-staging"
 PREFERRED_PROVIDER_virtual/bootloader = "u-boot-ti-staging"
 PREFERRED_PROVIDER_u-boot = "u-boot-ti-staging"
 
@@ -15,6 +15,9 @@ KERNEL_IMAGETYPE = "zImage"
 
 UBOOT_ENTRYPOINT = "0x80008000"
 UBOOT_LOADADDRESS = "0x80008000"
+
+SPL_BINARY = "MLO"
+UBOOT_SUFFIX = "bin"
 
 # Use the expected value of the ubifs filesystem's volume name in the kernel
 # and u-boot.
