@@ -1,0 +1,13 @@
+# This file takes repo entries in the format
+# repo name,repo uri,repo branch,repo commit[,layers=layer1:layer2...:layern]
+
+bitbake,git://git.openembedded.org/bitbake,1.40,7c1eb51d1e8a4c5f39bf9dddf05fb0b3598da72b
+meta-arago,git://arago-project.org/git/meta-arago.git,thud,ti2019.00,layers=meta-arago-distro:meta-arago-extras
+meta-browser,git://github.com/OSSystems/meta-browser.git,master,26d50665e2f7223c5f4ad7481a8d2431e7cb55fb,layers=
+meta-qt5,git://github.com/meta-qt5/meta-qt5.git,thud,3b4b9398154d301a8e39501189da0ad7eee740f7,layers=
+meta-openembedded,git://git.openembedded.org/meta-openembedded,thud,4cd3a39f22a2712bfa8fc657d09fe2c7765a4005,layers=meta-networking:meta-python:meta-oe:meta-gnome
+meta-ti,git://git.yoctoproject.org/meta-ti,thud,ti2019.00,layers=
+meta-linaro,git://git.linaro.org/openembedded/meta-linaro.git,thud,81060b70e104b4d050b7d2948a4253cf6a6d8203,layers=meta-linaro-toolchain:meta-optee
+oe-core,git://git.openembedded.org/openembedded-core,thud,45032e30be70503faeee468159b216031b729309,layers=meta
+OECORELAYERCONF=./sample-files/bblayers.conf.sample
+OECORELOCALCONF=./sample-files/local-arago64.conf.sample

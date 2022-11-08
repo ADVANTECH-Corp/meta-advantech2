@@ -1,0 +1,31 @@
+diff --git a/init b/init
+index 461b078..6c5501a 100644
+--- a/init
++++ b/init
+@@ -13,6 +13,8 @@ killproc() {
+         [ "$pid" != "" ] && kill $pid
+ }
+ 
++rootdrive=`mount | grep 'on / ' | awk {'print $1'} |  cut -c6-12`
++
+ read CMDLINE < /proc/cmdline
+ for x in $CMDLINE; do
+         case $x in
+@@ -61,7 +63,7 @@ case "$1" in
+         fi
+ 
+         # Check if SD card is mounted
+-        mount | grep /run/media/mmcblk0p1 | grep vfat > /dev/null 2>&1
++        mount | grep /run/media/${rootdrive}p1 | grep vfat > /dev/null 2>&1
+         if [ "$?" = "0" ] ; then
+             SD_MOUNTED="1"
+         else
+@@ -69,7 +71,7 @@ case "$1" in
+         fi
+ 
+         # Check if SD card has a calibration rules file
+-        SD_CALUDEV_FILE=/run/media/mmcblk0p1/ws-calibrate.rules
++        SD_CALUDEV_FILE=/run/media/${rootdrive}p1/ws-calibrate.rules
+         if [ "$SD_MOUNTED" = "1" -a -f "$SD_CALUDEV_FILE" ] ; then
+             # Copy it over to udev location
+             cp "$SD_CALUDEV_FILE" "$WS_CALUDEV_FILE"

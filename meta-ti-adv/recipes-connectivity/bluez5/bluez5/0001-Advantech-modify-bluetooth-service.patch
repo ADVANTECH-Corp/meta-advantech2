@@ -1,0 +1,13 @@
+diff --git a/src/bluetooth.service.in b/src/bluetooth.service.in
+index f799f65..c9ed402 100644
+--- a/src/bluetooth.service.in
++++ b/src/bluetooth.service.in
+@@ -6,7 +6,7 @@ ConditionPathIsDirectory=/sys/class/bluetooth
+ [Service]
+ Type=dbus
+ BusName=org.bluez
+-ExecStart=@libexecdir@/bluetoothd
++ExecStart=@libexecdir@/bluetoothd -C
+ NotifyAccess=main
+ #WatchdogSec=10
+ #Restart=on-failure

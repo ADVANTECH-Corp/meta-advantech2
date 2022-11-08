@@ -1,0 +1,8 @@
+# /etc/ppp/peers/Neoway-chat-disconnect
+ABORT "ERROR"
+ABORT "NO DIALTONE"
+SAY "\nSending break to the modem\n"
+""+++
+""+++
+""+++
+SAY "\nGood bye!\n"
