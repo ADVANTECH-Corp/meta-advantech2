@@ -18,6 +18,7 @@ FILE=$2
 sleep 3
 
 cat <<-EOF | expect
+	set timeout -1
 	spawn "obexctl"
 	expect "# "
 	send "help\r"
