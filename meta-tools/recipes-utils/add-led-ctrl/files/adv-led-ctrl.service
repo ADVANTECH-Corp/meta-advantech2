@@ -1,0 +1,9 @@
+[Unit]
+Description=ADV LED ctrl Daemon
+After=network.target rc-local.service
+
+[Service]
+ExecStart=/tools/adv-led-ctrl.sh
+
+[Install]
+WantedBy=multi-user.target

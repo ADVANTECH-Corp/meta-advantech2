@@ -17,9 +17,12 @@ IMAGE_INSTALL += " linux-firmware-rtl8168 "
 IMAGE_INSTALL += " packagegroup-sdk-target "
 
 # Tools
-IMAGE_INSTALL += " enable485 add-virtual-network advresize-script boottimes-script st quectel-script 3g-script stress-script xterm mdio-tool hwclock "
+IMAGE_INSTALL += " enable485 add-virtual-network advresize-script boottimes-script st \
+		   quectel-script 3g-script stress-script xterm mdio-tool hwclock \
+		   poweronoff-script "
 
 # Depends on projects
+IMAGE_INSTALL_append = " tcpdump "
 IMAGE_INSTALL_append_imx6qrom5420a1 = " ecuevent keyevent"
 IMAGE_INSTALL_append_imx6qrom5420b1 = " ecuevent keyevent"
 IMAGE_INSTALL_append_imx6dlrom5420b1 = " ecuevent keyevent"
@@ -41,6 +44,22 @@ IMAGE_INSTALL_append_imx8mpepcr5710a1 = " xauth \
                                    pylon \
                                    python3-pypylon \
                                    gentl-producer \
+                                   add-router \
+                                   dhcp-server \
+				   libhailort \
+				   hailortcli \
+				   pyhailort \
+				   libgsthailo \
+				   hailo-pci \
+				   hailo-firmware \
+				   libgsthailotools \
+				   tappas-apps \
+				   add-led-ctrl \
+				   hailo-post-processes \
                                    "
+#docker-ce 
+
+IMAGE_INSTALL_remove_imx8mpepcr5710a1 = " add-virtual-network "
+
 # Browser
 #IMAGE_INSTALL += " firefox "

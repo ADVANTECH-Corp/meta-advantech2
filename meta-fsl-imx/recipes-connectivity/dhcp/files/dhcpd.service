@@ -1,0 +1,17 @@
+[Unit]
+Description=DHCPv4 Server Daemon
+Documentation=man:dhcpd(8) man:dhcpd.conf(5)
+After=network.target rc-local.service user@.service
+After=time-sync.target
+
+[Service]
+PIDFile=/var/run/dhcpd.pid
+EnvironmentFile=/etc/default/dhcp-server
+EnvironmentFile=-/etc/sysconfig/dhcp-server
+ExecStartPre=/bin/touch /var/lib/dhcp/dhcpd.leases
+ExecStart=/usr/sbin/dhcpd -f -cf /etc/dhcp/dhcpd.conf -pf /var/run/dhcpd.pid $DHCPDARGS -q $INTERFACES
+Restart=on-failure
+RestartSec=15s
+
+[Install]
+WantedBy=multi-user.target

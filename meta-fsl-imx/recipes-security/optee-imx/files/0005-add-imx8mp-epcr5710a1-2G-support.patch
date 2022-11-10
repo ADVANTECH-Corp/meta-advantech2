@@ -1,5 +1,5 @@
 diff --git a/core/arch/arm/plat-imx/conf.mk b/core/arch/arm/plat-imx/conf.mk
-index c190750..a510564 100644
+index c190750..787398e 100644
 --- a/core/arch/arm/plat-imx/conf.mk
 +++ b/core/arch/arm/plat-imx/conf.mk
 @@ -69,7 +69,8 @@ mx8mn-flavorlist = \
@@ -17,7 +17,7 @@ index c190750..a510564 100644
  endif
  
 +ifneq (,$(filter $(PLATFORM_FLAVOR),mx8mpepcr5710a1))
-+CFG_DDR_SIZE ?= 0x180000000ULL
++CFG_DDR_SIZE ?= 0x80000000ULL
 +CFG_UART_BASE ?= UART2_BASE
 +$(call force,CFG_CORE_LARGE_PHYS_ADDR,y)
 +$(call force,CFG_CORE_ARM64_PA_BITS,36)
