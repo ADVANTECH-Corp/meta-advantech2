@@ -1,0 +1,11 @@
+[Unit]
+Description=Cellular Guard service
+After=ModemManager.service
+
+[Service]
+ExecStart=/tools/cellular-guard.sh
+
+
+[Install]
+WantedBy=multi-user.target
+
