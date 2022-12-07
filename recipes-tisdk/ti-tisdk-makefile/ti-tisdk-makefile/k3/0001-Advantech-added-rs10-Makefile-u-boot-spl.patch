@@ -1,7 +1,7 @@
 diff --git a/Makefile_u-boot-spl b/Makefile_u-boot-spl
 index 4b210d1c..70564028 100644
---- a/meta-arago-distro/recipes-tisdk/ti-tisdk-makefile/ti-tisdk-makefile/k3/Makefile_u-boot-spl
-+++ b/meta-arago-distro/recipes-tisdk/ti-tisdk-makefile/ti-tisdk-makefile/k3/Makefile_u-boot-spl
+--- a/Makefile_u-boot-spl
++++ b/Makefile_u-boot-spl
 @@ -21,7 +21,7 @@ u-boot-a53:
         @echo ===================================
         $(MAKE) -j $(MAKE_JOBS) -C $(TI_SDK_PATH)/board-support/u-boot-* CROSS_COMPILE=$(CROSS_COMPILE) \
