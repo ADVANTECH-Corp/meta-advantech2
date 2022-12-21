@@ -1,7 +1,3 @@
-SRCREV = "ef3f2cfc6010c13feb40cfb7fd7490832cf86f45"
-
-LINUX_VERSION = "5.10.35"
-
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 KERNEL_BRANCH = "adv_5.10.35_2.0.0"
 KERNEL_SRC = "git://github.com/ADVANTECH-Corp/linux-imx.git;protocol=https"
