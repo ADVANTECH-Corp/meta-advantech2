@@ -1,0 +1,38 @@
+diff --git a/core/arch/arm/plat-imx/conf.mk b/core/arch/arm/plat-imx/conf.mk
+index 264f06f0f..24002f81f 100644
+--- a/core/arch/arm/plat-imx/conf.mk
++++ b/core/arch/arm/plat-imx/conf.mk
+@@ -64,7 +64,8 @@ mx8mq-flavorlist = \
+ 
+ mx8mm-flavorlist = \
+ 	mx8mmevk \
+-	mx8mm_cl_iot_gate
++	mx8mm_cl_iot_gate \
++	mx8mmrom5721a1
+ 
+ mx8mn-flavorlist = \
+ 	mx8mnevk
+@@ -387,6 +388,11 @@ CFG_NSEC_DDR_1_BASE ?= 0x80000000UL
+ CFG_NSEC_DDR_1_SIZE ?= 0x40000000UL
+ endif
+ 
++ifneq (,$(filter $(PLATFORM_FLAVOR),mx8mmrom5721a1))
++CFG_DDR_SIZE ?= 0x40000000
++CFG_UART_BASE ?= UART2_BASE
++endif
++
+ ifneq (,$(filter $(PLATFORM_FLAVOR),mx8mnevk))
+ CFG_DDR_SIZE ?= 0x80000000
+ CFG_UART_BASE ?= UART2_BASE
+diff --git a/scripts/nxp_build.sh b/scripts/nxp_build.sh
+index 73b60fbde..479c5b62c 100755
+--- a/scripts/nxp_build.sh
++++ b/scripts/nxp_build.sh
+@@ -35,6 +35,7 @@ boards_list=(
+ 	imx-mx8dxmek \
+ 	imx-mx8mqevk \
+ 	imx-mx8mmevk \
++	imx-mx8mmrom5721a1 \
+ 	imx-mx8mnevk \
+ 	imx-mx8mpevk \
+ 	imx-mx8qxpmek \
