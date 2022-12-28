@@ -1,4 +1,5 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+RM_WORK_EXCLUDE += "${PN}"
 
 UBOOT_SRC = "git://github.com/ADVANTECH-Corp/uboot-imx.git;protocol=https"
 SRCBRANCH = "adv_v2021.04_5.10.72_2.2.0"
