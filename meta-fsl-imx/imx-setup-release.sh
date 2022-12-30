@@ -208,6 +208,9 @@ if [ -d ../sources/meta-freescale ]; then
     sed -e "s,\$.BSPDIR./sources/meta-fsl-arm-extra\s,,g" -i conf/bblayers.conf
 fi
 
+# Modify qt5-git.inc . Fixed the Fetcher failure for URL qtbase and qtdeclarative branch=5.15.2
+sed -i 's/QT_GIT_PROTOCOL\}/QT_GIT_PROTOCOL\};nobranch=1/g' ../sources/meta-qt5/recipes-qt/qt5/qt5-git.inc
+
 cd  $BUILD_DIR
 clean_up
 unset FSLDISTRO
