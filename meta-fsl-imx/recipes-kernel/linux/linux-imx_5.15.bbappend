@@ -20,3 +20,7 @@ do_copy_defconfig_mx8 () {
     cp ${S}/arch/arm64/configs/imx_v8_adv_defconfig ${B}/../defconfig
 }
 
+do_copy_defconfig () {
+    cp ${S}/arch/arm64/configs/imx_v8_adv_defconfig ${B}/.config
+    cp ${S}/arch/arm64/configs/imx_v8_adv_defconfig ${B}/../defconfig
+}
