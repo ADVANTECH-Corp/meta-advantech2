@@ -22,6 +22,7 @@ IMAGE_INSTALL_remove_imx8mmebcrs08a1 = " enable485 "
 IMAGE_INSTALL_remove_imx8mmebcrs08a2 = " enable485 "
 IMAGE_INSTALL_remove_imx8mmebcrs08a2 = " add-virtual-network "
 IMAGE_INSTALL_append_imx8mmebcrs08a2 = " modemmanager cellular-guard "
+IMAGE_INSTALL_append_imx8mmebcrs08a2 = " imx8-gpio "
 
 # Depends on projects
 IMAGE_INSTALL_append_imx6qrom5420a1 = " ecuevent keyevent"
