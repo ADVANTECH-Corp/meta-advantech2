@@ -1,0 +1,62 @@
+diff --git key_event_3.1/src/key_event.c key_event_3.1/src/key_event.c
+index 13b0c1e..14fc662 100644
+--- key_event_3.1/src/key_event.c
++++ key_event_3.1/src/key_event.c
+@@ -11,8 +11,8 @@
+ 
+ #define TRUE		1
+ #define FALSE		0
+-#define	GPIO_NAME	"gpio-keys"
+-#define MCU		"MCU"
++#define	GPIO_NAME	"snvs-powerkey"
++#define MCU		"SNVS"
+ #define TIME_COUNT_DEFAULT 1
+ 
+ int time_count = TIME_COUNT_DEFAULT;
+@@ -102,11 +102,31 @@ int Check_Label(char *label)
+ {
+         FILE* fp;
+         char cmd[64],buf[64];
+-        sprintf(cmd, "cat /sys/firmware/devicetree/base/gpio-keys/*/label | grep %s -c -i", label);
+-        fp = popen(cmd , "r");
++	int i=0;
++
++	memset(buf ,'\0', sizeof(buf));
++		while (1) {
++			sprintf(cmd, "cat /sys/class/input/input%d/name", i);
++			fp = popen(cmd , "r");
++			fgets(buf, sizeof(buf), fp);
++			pclose(fp);
++			if(strstr(buf, GPIO_NAME ) != NULL) {
++				break;
++			} else {
++				i++;
+         memset(buf ,'\0', sizeof(buf));
++				sprintf(cmd, "test -d /sys/class/input/input%d && echo Exist",i);
++				printf("cmd:%s\n",cmd);
++				fp = popen(cmd , "r");
+         fgets(buf, sizeof(buf), fp);
+         pclose(fp);
++				if ( strstr(buf, "Exist" ) == NULL ) {
++					memset(buf, '\0', sizeof(buf)); 
++					break;
++				}
++			}
++		}
++
+         if (atoi(buf))
+                 return TRUE;
+         else
+@@ -246,11 +266,7 @@ int main(int argc, char **argv)
+ 									//printf("end   time = %d.%d\n",end_time.tv_sec, end_time.tv_usec);
+ 									printf("Time interval is %llu usecs\n",interval_time);
+ 									if ( interval_time < 1000000) {
+-										if(Check_CPU()){ /*if cpu core > 2 , then we should enabel susepnd flag*/
+-											printf("\n------suspend flag enable------\n");
+-											suspend_flag = 1;
+-											}
+-										SuspendProcess(os_distro);
++										printf("do nothing\n");
+ 									} else
+ 										PowerOffProcess();
+ 								}

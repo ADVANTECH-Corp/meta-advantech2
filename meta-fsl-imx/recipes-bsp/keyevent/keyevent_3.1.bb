@@ -5,6 +5,7 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/GPL-2.0;md5=80
 
 SRC_URI = "git://github.com/ADVANTECH-Corp/RISC_tools_source;module=key_event_3.1;protocol=https"
 SRCREV = "${AUTOREV}"
+SRC_URI_append_imx8mmrsb3730a2 = " file://0001-support-snvs_pwrkey.patch "
 
 S = "${WORKDIR}/git/key_event_3.1"
 
