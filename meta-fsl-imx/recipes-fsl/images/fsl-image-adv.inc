@@ -20,6 +20,9 @@ IMAGE_INSTALL += " packagegroup-sdk-target "
 IMAGE_INSTALL += " enable485 add-virtual-network advresize-script boottimes-script st \
 		   quectel-script 3g-script stress-script xterm mdio-tool hwclock \
 		   poweronoff-script "
+IMAGE_INSTALL_append_imx8mpepcr5710a1 = " ecsd "
+IMAGE_INSTALL_append_imx8mmrsb3730a2 = " ecsd "
+
 
 # Depends on projects
 IMAGE_INSTALL_append = " tcpdump "
