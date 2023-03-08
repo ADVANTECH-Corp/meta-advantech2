@@ -1,5 +1,5 @@
 
-K3_UBOOT_MACHINE_R5_am62xx-rs10 = "am62x_evm_r5_config"
+K3_UBOOT_MACHINE_R5_am62xx-rs10 = "am62x_rs10_r5_config"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
