@@ -7,3 +7,4 @@ DL_PACKAGES_am62xx-rs10 = " \
 
 PYTHON_PACKAGES_am62xx-rs10 = " \
     python3-tensorflow-lite \
+"

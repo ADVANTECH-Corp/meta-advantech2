@@ -1,7 +1,7 @@
 diff --git a/kernel-rdepends.inc b/kernel-rdepends.inc
 index 86d678ee..748d1e43 100644
---- a/recipes-kernel/linux/kernel-rdepends.inc
-+++ b/recipes-kernel/linux/kernel-rdepends.inc
+--- a/kernel-rdepends.inc
++++ b/kernel-rdepends.inc
 @@ -57,6 +57,7 @@ RDEPENDS_${KERNEL_PACKAGE_NAME}-base_append_am62axx = " cnm-wave-fw"
  
  # Add run-time dependency for TIFS Low Power Module stub
