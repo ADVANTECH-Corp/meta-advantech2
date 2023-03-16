@@ -18,7 +18,7 @@ declare -r STATUS_FILE_PATH='/mnt/data/cellular_guard/status'
 declare -r LOG_FILE_PATH='/mnt/data/cellular_guard/cellular_guard.log'
 
 # default not log to file
-PERSISTENT_LOGGING=${PERSISTENT_LOGGING:-n}
+PERSISTENT_LOGGING=${PERSISTENT_LOGGING:-y}
 # max log file size, unit KiB
 MAX_LOG_SIZE=${MAX_LOG_SIZE:-100}
 
@@ -83,7 +83,10 @@ log_to_file() {
 # both output message to console and file
 tee_log() {
     while IFS='' read -r line; do
-        echo "$line"
+        if [ -n "$DEBUG" ]; then
+            echo "$line"
+        fi
+
         log_to_file "$line"
     done
 }
@@ -134,6 +137,11 @@ truncate_log() {
 
 # hardware reset 4G module
 hard_reset() {
+    if [ -e /sys/bus/platform/devices/misc-adv-gpio/minipcie_reset ]; then
+        echo 1 >/sys/bus/platform/devices/misc-adv-gpio/minipcie_reset
+        sleep 5
+        return 0
+    fi
     # Valid time: 150ms -- 460 ms, If it is greater than 460ms, the module will enter the second reset
     gpio 1 0
     # sleep 200ms
@@ -294,6 +302,17 @@ get_signal_quality() {
     return "$(echo "$result" | cut -d, -f1)"
 }
 
+# get modem firmware revision like: EC21EUXGAR08A04M1G
+get_modem_firmware_revision() {
+    get_modem_index || return 0
+    local result
+    if ! result=$(AT_send 'ATI'); then
+        return 0
+    fi
+    debug "ATI result:$result"
+    echo "$result" | tail -1 | cut -d' ' -f2 | tr -d '\n'
+}
+
 # Network resident of 4G module
 check_registration() {
     local result
@@ -325,6 +344,17 @@ check_registration() {
 restart_module() {
     get_modem_index
     AT_send 'AT+CFUN=1,1' &>/dev/null
+    # wait for modem restart
+    sleep 5
+}
+
+# Airplane mode switch
+cfun01() {
+    get_modem_index
+    AT_send 'AT+CFUN=0' &>/dev/null
+    # wait for modem restart
+    sleep 3
+    AT_send 'AT+CFUN=1' &>/dev/null
     # wait for modem restart
     sleep 5
 }
@@ -501,6 +531,7 @@ network_check_loop() {
                     fi
 
                     echo "can't access network via cellular reach max:${MAX_PING_ERROR_COUNT_ARRAY[$current_interval_index]}, restart modem module"
+
                     restart_module
                     current_ping_error_count=0
 
@@ -511,6 +542,10 @@ network_check_loop() {
                     current_sleep_interval=${PING_INTERVALS_ARRAY[$current_interval_index]}
                     echo "will ping network again in$(humanize_interval "$current_sleep_interval")"
                 else
+                    # do cfun01 start from second time
+                    if [ "$current_ping_error_count" -ge 2 ]; then
+                        cfun01
+                    fi
                     current_sleep_interval=${PING_INTERVALS_ARRAY[$current_interval_index]}
                     echo "can't access network via cellular $current_ping_error_count times," \
                         "will ping network again in$(humanize_interval "$current_sleep_interval")"
@@ -644,6 +679,28 @@ leave() {
     log_to_file "cellular guard exited"
 }
 
+check_board() {
+    local board_name
+    if [ -e /proc/board ]; then
+        board_name=$(cat /proc/board)
+        revision=$(get_modem_firmware_revision)
+        debug "board name: $board_name, revision: $revision"
+        if [[ "$board_name" =~ ^(EBC-RS08|EBC-RS10) ]]; then
+            # current list:
+            # EC21EUXGAR08A06M1G EC21EUXGAR08A07M1G EC21EUXGAR08A04M1G
+            if [[ "$revision" =~ ^EC21EU ]]; then
+                return 0
+            else
+                echo "modem revision not match, current is '$revision'"
+                return 1
+            fi
+        else
+            echo "board name not match, current is '$board_name'"
+        fi
+    fi
+    return 1
+}
+
 usage() {
     echo "Cellular guard script
     Usage: $0 [OPTIONS]
@@ -700,6 +757,21 @@ if [ "$DEBUG" = '1' ]; then
 fi
 
 if [ "$SOURCE_MODE" != y ]; then
+
+    # Check if cellular guard is enabled through env variable.
+    # If not, sleep for an hour (container does not exit that way)
+    # This is mainly used so it does not run on mistake on wrong hardware
+    # and needs to be enabled per device.
+    while [ "$ENABLE_CELLULAR_GUARD" = n ]; do
+        echo 'ENABLE_CELLULAR_GUARD is set to "n". Sleeping for an hour and doing nothing.'
+        sleep 3600
+    done
+
+    if ! check_board; then
+        echo "suspended due to not Advantech board"
+        sleep infinity
+    fi
+
     if [ "$PERSISTENT_LOGGING" = y ]; then
         # redirect log to file
         if mkdir -p "$(dirname $LOG_FILE_PATH)"; then
@@ -710,8 +782,12 @@ if [ "$SOURCE_MODE" != y ]; then
                 exec &> >(tee_log)
             fi
         else
-            echo "can't create log file path $(dirname $LOG_FILE_PATH), log to stdout only"
+            echo "can't create log file path $(dirname $LOG_FILE_PATH), no output"
+            exec &>/dev/null
         fi
+    else
+        # silence output
+        exec &>/dev/null
     fi
 
     print_time_settings
