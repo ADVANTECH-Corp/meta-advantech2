@@ -3,7 +3,7 @@ Description=Cellular Guard service
 After=ModemManager.service
 
 [Service]
-ExecStart=/tools/cellular-guard.sh
+ExecStart=/tools/cellular-guard.sh -x 0
 
 
 [Install]
