@@ -26,6 +26,7 @@ IMAGE_INSTALL_append_imx8mmrsb3730a2 = " ecsd "
 
 # Depends on projects
 IMAGE_INSTALL_append = " tcpdump "
+IMAGE_INSTALL_append = " iperf3 bridge-utils "
 IMAGE_INSTALL_append_imx6qrom5420a1 = " ecuevent keyevent"
 IMAGE_INSTALL_append_imx6qrom5420b1 = " ecuevent keyevent"
 IMAGE_INSTALL_append_imx6dlrom5420b1 = " ecuevent keyevent"
