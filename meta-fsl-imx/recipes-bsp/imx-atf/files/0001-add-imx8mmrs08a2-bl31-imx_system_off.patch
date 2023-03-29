@@ -1,0 +1,13 @@
+diff --git a/plat/imx/imx8m/imx8m_psci_common.c b/plat/imx/imx8m/imx8m_psci_common.c
+index 4c84557ba..a917268cc 100644
+--- a/plat/imx/imx8m/imx8m_psci_common.c
++++ b/plat/imx/imx8m/imx8m_psci_common.c
+@@ -249,7 +249,7 @@ int imx_system_reset2(int is_vendor, int reset_type, u_register_t cookie)
+ void __dead2 imx_system_off(void)
+ {
+ 	mmio_write_32(IMX_SNVS_BASE + SNVS_LPCR, SNVS_LPCR_SRTC_ENV |
+-			SNVS_LPCR_DP_EN | SNVS_LPCR_TOP | SNVS_LPCR_LPTA_EN | SNVS_LPCR_LPWUI_EN);
++			SNVS_LPCR_DP_EN | SNVS_LPCR_TOP );
+ 
+ 	while (1)
+ 		;
