@@ -28,3 +28,5 @@ do_image_tar[mcdepends] += "mc::k3r5-hs-se:ti-sci-fw:do_deploy"
 TFA_BOARD = "lite"
 OPTEEMACHINE = "k3-am62x"
 OPTEEOUTPUTMACHINE = "k3"
+
+WKS_FILE = "adv-sdimage-2part.wks"
