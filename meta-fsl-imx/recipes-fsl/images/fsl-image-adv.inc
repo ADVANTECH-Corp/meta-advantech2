@@ -64,6 +64,7 @@ IMAGE_INSTALL_append_imx8mpepcr5710a1 = " xauth \
 #docker-ce 
 
 IMAGE_INSTALL_remove_imx8mpepcr5710a1 = " add-virtual-network "
+IMAGE_INSTALL_remove_imx8mmrsb3730a2 = " add-virtual-network "
 
 # Browser
 #IMAGE_INSTALL += " firefox "
