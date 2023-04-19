@@ -8,17 +8,17 @@ SCMVERSION = "n"
 # Fix Linux Kernel Localversion
 LOCALVERSION = ""
 
-do_copy_defconfig_mx6 () {
+do_copy_defconfig:mx6-nxp-bsp () {
     cp ${S}/arch/arm/configs/imx_v7_adv_defconfig ${B}/.config
     cp ${S}/arch/arm/configs/imx_v7_adv_defconfig ${B}/../defconfig
 }
 
-do_copy_defconfig_mx7 () {
+do_copy_defconfig:mx7-nxp-bsp () {
     cp ${S}/arch/arm/configs/imx_v7_adv_imx7_defconfig ${B}/.config
     cp ${S}/arch/arm/configs/imx_v7_adv_imx7_defconfig ${B}/../defconfig
 }
 
-do_copy_defconfig_mx8 () {
+do_copy_defconfig:mx8-nxp-bsp () {
     cp ${S}/arch/arm64/configs/imx_v8_adv_defconfig ${B}/.config
     cp ${S}/arch/arm64/configs/imx_v8_adv_defconfig ${B}/../defconfig
 }
