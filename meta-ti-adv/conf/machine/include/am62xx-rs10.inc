@@ -1,7 +1,8 @@
 require conf/machine/include/k3.inc
 SOC_FAMILY_append = ":am62xx"
 
-MACHINE_FEATURES += "screen touchscreen"
+DISTRO_FEATURES_remove = "x11 wayland opengl opencl opencv openmp"
+MACHINE_FEATURES_remove = "gpu"
 
 SERIAL_CONSOLES = "115200;ttyS2"
 SERIAL_CONSOLES_CHECK = "${SERIAL_CONSOLES}"
