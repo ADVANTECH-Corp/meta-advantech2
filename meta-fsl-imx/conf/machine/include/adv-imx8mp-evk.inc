@@ -33,8 +33,12 @@ IMX_DEFAULT_BOOTLOADER:use-mainline-bsp = "u-boot-fslc"
 UBOOT_SUFFIX = "bin"
 
 UBOOT_CONFIG ??= "6G"
-UBOOT_CONFIG[6G] = "${UBOOT_CONFIG_BASENAME}_6G_defconfig,sdcard"
-UBOOT_CONFIG[FSPI_6G] = "${UBOOT_CONFIG_BASENAME}_6G_defconfig"
+UBOOT_CONFIG[6G] = "imx8mp_rsb3720a1_6G_defconfig,sdcard"
+UBOOT_CONFIG[4G] = "imx8mp_rsb3720a1_4G_defconfig,sdcard"
+UBOOT_CONFIG[2G] = "imx8mp_rsb3720a1_2G_defconfig,sdcard"
+UBOOT_CONFIG[FSPI_6G] = "imx8mp_rsb3720a1_6G_defconfig"
+UBOOT_CONFIG[FSPI_4G] = "imx8mp_rsb3720a1_4G_defconfig"
+UBOOT_CONFIG[FSPI_2G] = "imx8mp_rsb3720a1_2G_defconfig"
 UBOOT_CONFIG[mfgtool] = "${UBOOT_CONFIG_BASENAME}_6G_defconfig"
 
 
@@ -43,12 +47,12 @@ SPL_BINARY = "spl/u-boot-spl.bin"
 ATF_PLATFORM = "imx8mp"
 
 IMXBOOT_TARGETS = \
-    "${@bb.utils.contains('UBOOT_CONFIG', 'FSPI_6G', '${IMXBOOT_TARGETS_BASENAME}_flexspi', \
+    "${@bb.utils.contains('UBOOT_CONFIG', 'FSPI_6G FSPI_4G FSPI_2G', '${IMXBOOT_TARGETS_BASENAME}_flexspi', \
                                                   '${IMXBOOT_TARGETS_BASENAME}', d)}"
 
 IMX_BOOT_SOC_TARGET = "iMX8MP"
 
-SERIAL_CONSOLES = "115200;ttymxc1"
+SERIAL_CONSOLES = "115200;ttymxc2"
 
 # Add support for Syslinux to mainline BSP.
 # U-Boot has the Distro Boot mode enabled by default, which
