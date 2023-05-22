@@ -13,7 +13,7 @@ index 264f06f0f..2fad097e9 100644
  mx8mp-flavorlist = \
  	mx8mpevk \
 -	mx8mp_rsb3720_6g
-+	mx8mp_rsb3720_2g \
++	mx8mp_rsb3720_6g \
 +	mx8mprsb3720a1 \
  
  mx8qm-flavorlist = \
