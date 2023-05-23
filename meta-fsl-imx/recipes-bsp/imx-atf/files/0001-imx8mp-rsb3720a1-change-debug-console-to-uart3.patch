@@ -1,0 +1,39 @@
+From 5df582ca7b035a82d23ee672b046ba8b327b8218 Mon Sep 17 00:00:00 2001
+From: clayderhua <clayderhua@gmail.com>
+Date: Tue, 23 May 2023 14:34:14 +0800
+Subject: [PATCH] rsb3720
+
+---
+ plat/imx/imx8m/imx8mp/imx8mp_bl31_setup.c | 2 +-
+ plat/imx/imx8m/imx8mp/platform.mk         | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/plat/imx/imx8m/imx8mp/imx8mp_bl31_setup.c b/plat/imx/imx8m/imx8mp/imx8mp_bl31_setup.c
+index 348f90045..3d0f864e1 100644
+--- a/plat/imx/imx8m/imx8mp/imx8mp_bl31_setup.c
++++ b/plat/imx/imx8m/imx8mp/imx8mp_bl31_setup.c
+@@ -73,7 +73,7 @@ static const struct imx_rdc_cfg rdc[] = {
+ 
+ 
+ 	/* peripherals domain permission */
+-	RDC_PDAPn(RDC_PDAP_UART2, D0R | D0W),
++	RDC_PDAPn(RDC_PDAP_UART3, D0R | D0W),
+ 	RDC_PDAPn(RDC_PDAP_WDOG1, D0R | D0W),
+ 	RDC_PDAPn(RDC_PDAP_RDC, D0R | D0W | D1R),
+ 
+diff --git a/plat/imx/imx8m/imx8mp/platform.mk b/plat/imx/imx8m/imx8mp/platform.mk
+index fd63d257d..df0337a89 100644
+--- a/plat/imx/imx8m/imx8mp/platform.mk
++++ b/plat/imx/imx8m/imx8mp/platform.mk
+@@ -154,7 +154,7 @@ $(eval $(call add_define,BL32_BASE))
+ BL32_SIZE		?=	0x2000000
+ $(eval $(call add_define,BL32_SIZE))
+ 
+-IMX_BOOT_UART_BASE	?=	0x30890000
++IMX_BOOT_UART_BASE	?=	0x30880000
+ $(eval $(call add_define,IMX_BOOT_UART_BASE))
+ 
+ $(eval $(call add_define,IMX8M_DDR4_DVFS))
+-- 
+2.17.1
+
