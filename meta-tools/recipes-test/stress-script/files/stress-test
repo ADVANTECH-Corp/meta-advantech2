@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Source function library.
+. /etc/init.d/functions
+
+case "$1" in
+    start)
+        echo -n "Starting Stress Test: "
+        /tools/stress.sh &
+        echo "OK"
+        ;;
+    *)
+        echo "Usage: $0 {start}"
+        exit 1
+        ;;
+esac
+
+exit 0
