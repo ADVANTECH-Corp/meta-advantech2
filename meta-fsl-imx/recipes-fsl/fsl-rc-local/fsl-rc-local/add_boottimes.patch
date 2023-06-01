@@ -1,0 +1,15 @@
+Index: fsl-rc-local/rc.local.etc
+===================================================================
+--- fsl-rc-local/rc.local.etc	(revision 1067)
++++ fsl-rc-local/rc.local.etc	(working copy)
+@@ -24,6 +24,11 @@
+ key_event &
+ fi
+
++if [ -e /usr/bin/boot_times ];then
++  echo ""
++  /usr/bin/boot_times 180
++fi
++
+ #For IR Application
+ mkdir -p /var/run/lirc
