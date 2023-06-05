@@ -38,11 +38,20 @@ IMX_DEFAULT_BOOTLOADER:use-mainline-bsp = "u-boot-fslc"
 
 UBOOT_SUFFIX = "bin"
 
+WKS_FILE_DEPENDS:append = " imx-m7-demos"
+IMAGE_BOOT_FILES += "imx8mp_m7_TCM_hello_world.bin \
+    imx8mp_m7_TCM_low_power_voice.bin \
+    imx8mp_m7_TCM_low_power_wakeword.bin \
+    imx8mp_m7_TCM_rpmsg_lite_pingpong_rtos_linux_remote.bin \
+    imx8mp_m7_TCM_rpmsg_lite_str_echo_rtos.bin \
+    imx8mp_m7_TCM_sai_low_power_audio.bin \
+"
+
 UBOOT_CONFIG ??= "2G"
-UBOOT_CONFIG[2G] = "imx8mp_rsb3720a1_2G_defconfig,sdcard"
-UBOOT_CONFIG[6G] = "imx8mp_rsb3720a1_6G_defconfig,sdcard"
-UBOOT_CONFIG[FSPI_2G] = "imx8mp_rsb3720a1_2G_defconfig"
-UBOOT_CONFIG[FSPI_6G] = "imx8mp_rsb3720a1_6G_defconfig"
+UBOOT_CONFIG[2G] = "${UBOOT_CONFIG_BASENAME}_2G_defconfig,sdcard"
+UBOOT_CONFIG[6G] = "${UBOOT_CONFIG_BASENAME}_6G_defconfig,sdcard"
+UBOOT_CONFIG[FSPI_2G] = "${UBOOT_CONFIG_BASENAME}_2G_defconfig"
+UBOOT_CONFIG[FSPI_6G] = "${UBOOT_CONFIG_BASENAME}_6G_defconfig"
 UBOOT_CONFIG[mfgtool] = "${UBOOT_CONFIG_BASENAME}_6G_defconfig"
 
 
@@ -56,7 +65,7 @@ IMXBOOT_TARGETS = \
 
 IMX_BOOT_SOC_TARGET = "iMX8MP"
 
-SERIAL_CONSOLES = "115200;ttymxc2"
+SERIAL_CONSOLES = "115200;ttymxc1"
 
 # Add support for Syslinux to mainline BSP.
 # U-Boot has the Distro Boot mode enabled by default, which
