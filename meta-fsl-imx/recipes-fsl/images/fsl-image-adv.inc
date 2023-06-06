@@ -22,6 +22,7 @@ IMAGE_INSTALL += " enable485 add-virtual-network advresize-script boottimes-scri
 		   poweronoff-script "
 IMAGE_INSTALL_append_imx8mpepcr5710a1 = " ecsd "
 IMAGE_INSTALL_append_imx8mmrsb3730a2 = " ecsd "
+IMAGE_INSTALL_append_imx8mprm02a1 = " ecsd "
 
 
 # Depends on projects
@@ -65,6 +66,8 @@ IMAGE_INSTALL_append_imx8mpepcr5710a1 = " xauth \
 
 IMAGE_INSTALL_remove_imx8mpepcr5710a1 = " add-virtual-network "
 IMAGE_INSTALL_remove_imx8mmrsb3730a2 = " add-virtual-network "
+IMAGE_INSTALL_remove_imx8mprm02a1 = " add-virtual-network "
+IMAGE_INSTALL_append_imx8mprm02a1 = " qtcharts qtserialbus "
 
 # Browser
 #IMAGE_INSTALL += " firefox "

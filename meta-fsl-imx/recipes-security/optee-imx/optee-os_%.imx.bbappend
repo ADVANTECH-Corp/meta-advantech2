@@ -30,3 +30,4 @@ SRC_URI_append_imx8mprom5722a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '6G 
 SRC_URI_append_imx8mmrsb3730a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '2G FSPI_2G', 'file://0001-add-imx8mm-rsb3730a1-2G-support.patch', '', d)}"
 SRC_URI_append_imx8mmrsb3730a2 += "${@bb.utils.contains_any('UBOOT_CONFIG', '2G FSPI_2G', 'file://0007-add-imx8mm-rsb3730a2-2G-support.patch', '', d)}"
 SRC_URI_append_imx8mmrsb3730a2 += "${@bb.utils.contains_any('UBOOT_CONFIG', '4G FSPI_4G', 'file://0007-add-imx8mm-rsb3730a2-4G-support.patch', '', d)}"
+SRC_URI_append_imx8mprm02a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '4G FSPI_4G', 'file://0008-add-imx8mp-rm02a1-4G-support.patch', '', d)}"
