@@ -40,10 +40,6 @@ SPL_BINARY = "spl/u-boot-spl.bin"
 
 ATF_PLATFORM = "imx8mp"
 
-IMXBOOT_TARGETS = \
-    "${@bb.utils.contains('UBOOT_CONFIG', 'FSPI_2G FSPI_6G', '${IMXBOOT_TARGETS_BASENAME}_flexspi', \
-                                                  '${IMXBOOT_TARGETS_BASENAME}', d)}"
-
 IMX_BOOT_SOC_TARGET = "iMX8MP"
 
 SERIAL_CONSOLES = "115200;ttymxc1"
