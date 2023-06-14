@@ -22,8 +22,11 @@ SPL_BINARY = "spl/u-boot-spl.bin"
 
 UBOOT_CONFIG ??= "2G"
 UBOOT_CONFIG[2G]   = "${UBOOT_CONFIG_BASENAME}_2G_defconfig,sdcard"
+UBOOT_CONFIG[1G]   = "${UBOOT_CONFIG_BASENAME}_1G_defconfig,sdcard"
 UBOOT_CONFIG[FSPI_2G] = "${UBOOT_CONFIG_BASENAME}_2G_defconfig"
+UBOOT_CONFIG[FSPI_1G] = "${UBOOT_CONFIG_BASENAME}_1G_defconfig"
 UBOOT_CONFIG[ND_2G]   = "${UBOOT_CONFIG_BASENAME}_2G_nd_defconfig"
+UBOOT_CONFIG[ND_1G]   = "${UBOOT_CONFIG_BASENAME}_1G_nd_defconfig"
 
 # Set ATF platform name
 ATF_PLATFORM = "imx8ulp"
@@ -32,8 +35,8 @@ IMXBOOT_TARGETS_SD   = "flash_singleboot_m33 flash_singleboot flash_dualboot_m33
 IMXBOOT_TARGETS_FSPI = "flash_singleboot_m33_flexspi flash_dualboot_flexspi"
 IMXBOOT_TARGETS_ND   = "flash_singleboot_m33"
 
-IMXBOOT_TARGETS = "${@bb.utils.contains('UBOOT_CONFIG',   '2G', '${IMXBOOT_TARGETS_SD}', \
-                      bb.utils.contains('UBOOT_CONFIG', 'FSPI_2G', '${IMXBOOT_TARGETS_FSPI}', \
+IMXBOOT_TARGETS = "${@bb.utils.contains('UBOOT_CONFIG',   '2G 1G', '${IMXBOOT_TARGETS_SD}', \
+                      bb.utils.contains('UBOOT_CONFIG', 'FSPI_2G FSPI_1G', '${IMXBOOT_TARGETS_FSPI}', \
                                                                 '${IMXBOOT_TARGETS_ND}', d), d)}"
 
 IMX_BOOT_SOC_TARGET = "iMX8ULP"
