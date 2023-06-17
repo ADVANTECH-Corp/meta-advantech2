@@ -24,6 +24,15 @@ MACHINE_FEATURES:append:use-nxp-bsp = " optee jailhouse bcm4359"
 
 KERNEL_DEVICETREE = " \
     freescale/${KERNEL_DEVICETREE_BASENAME}.dtb \
+    freescale/${KERNEL_DEVICETREE_BASENAME}-dsi2lvds-g150xgel05.dtb \
+    freescale/${KERNEL_DEVICETREE_BASENAME}-dsi2lvds-g215hvn01.dtb \
+    freescale/${KERNEL_DEVICETREE_BASENAME}-dsi2lvds-lp097x02.dtb \
+    freescale/${KERNEL_DEVICETREE_BASENAME}-dsi2dp.dtb \
+    freescale/${KERNEL_DEVICETREE_BASENAME}-auog101uan02.dtb \
+    freescale/${KERNEL_DEVICETREE_BASENAME}-adv7535.dtb \
+    freescale/${KERNEL_DEVICETREE_BASENAME}-m2-i2s.dtb \
+    freescale/${KERNEL_DEVICETREE_BASENAME}-m2-sdio.dtb \
+    freescale/${KERNEL_DEVICETREE_BASENAME}-rpmsg.dtb \
 "
 
 UBOOT_DTB_NAME = "${KERNEL_DEVICETREE_BASENAME}.dtb"
