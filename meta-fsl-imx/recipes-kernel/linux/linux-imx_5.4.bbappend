@@ -3,7 +3,8 @@ KERNEL_BRANCH = "adv_5.4.70_2.3.0_DTOS"
 KERNEL_SRC = "git://github.com/ADVANTECH-Corp/linux-imx.git;protocol=https"
 SRC_URI = "${KERNEL_SRC};branch=${KERNEL_BRANCH}"
 
-SRCREV = "c1a1aa4693da48b0ec8e36f1565f1ee2a1b9450c"
+SRCREV = "49e17097255136aa96de2f44619be753a6457d9c"
+#SRCREV = "c1a1aa4693da48b0ec8e36f1565f1ee2a1b9450c"
 
 do_copy_defconfig_mx6 () {
     cp ${S}/arch/arm/configs/imx_v7_adv_defconfig ${B}/.config
