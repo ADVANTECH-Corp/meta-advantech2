@@ -1,0 +1,10 @@
+[Unit]
+Description=close_systemd_resolved_service
+After=hwclock.service
+
+[Service]
+Type=forking
+ExecStart=/tools/close_resolved_service.sh &
+
+[Install]
+WantedBy=multi-user.target
