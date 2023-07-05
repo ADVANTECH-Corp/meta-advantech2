@@ -1,0 +1,12 @@
+[Unit]
+Description=AppHub-Edge
+After=systemd-udevd.service network.target lxdm.service
+
+[Service]
+ExecStart=/media/recovery/AppHub-Edge/startup_AppHub-Edge.sh
+ExecReload=/bin/kill -HUP $MAINPID
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
