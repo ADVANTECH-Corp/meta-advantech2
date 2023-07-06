@@ -8,7 +8,8 @@ SRC_URI = "file://adv-router.service \
 	   file://adv-wwan0.sh \
 	   file://close_resolved_service.sh \
 	   file://resolv.conf \
-	   file://close_systemd_resolved.service"
+	   file://close_systemd_resolved.service \
+	   file://adv-route-wwan0.service "
 
 inherit systemd
 
@@ -27,11 +28,13 @@ do_install() {
         install -d ${D}${systemd_unitdir}/system
         install -m 0644 ${WORKDIR}/adv-router.service ${D}${systemd_unitdir}/system
 	install -m 0644 ${WORKDIR}/close_systemd_resolved.service ${D}${systemd_unitdir}/system
+	install -m 0644 ${WORKDIR}/adv-route-wwan0.service ${D}${systemd_unitdir}/system
     fi
 }
 
 
 SYSTEMD_SERVICE_${PN} = "adv-router.service"
 SYSTEMD_SERVICE_${PN} += "close_systemd_resolved.service"
+SYSTEMD_SERVICE_${PN} += "adv-route-wwan0.service"
 
 FILES_${PN} = "/tools /usr/sbin /etc"
