@@ -60,7 +60,8 @@ IMAGE_INSTALL_append_imx8mpepcr5710a1 = " xauth \
 				   tappas-apps \
 				   add-led-ctrl \
 				   hailo-post-processes \
-                                   "
+                   apphub-edge \
+				   "
 #docker-ce 
 
 IMAGE_INSTALL_remove_imx8mpepcr5710a1 = " add-virtual-network "
