@@ -1,0 +1,12 @@
+[Unit]
+Description=adv-wwan0 route
+After=hwclock.service
+
+[Service]
+Type=forking
+ExecStart=/tools/adv-wwan0.sh &
+TimeoutSec=0
+
+[Install]
+WantedBy=multi-user.target
+

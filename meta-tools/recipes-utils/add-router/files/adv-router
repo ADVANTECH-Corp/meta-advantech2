@@ -1,22 +1,22 @@
 #! /bin/sh
 
-while true
-do
-  num=`route | grep -o eth1 | wc -l`
-  if [ "$num" != "3" ];then
-  echo no eth1 router
-  sleep 5
-  continue
-  fi
-  num=`route | grep -o eth0 | wc -l`
-  route | grep eth0 | grep default
-  if [ $? -ne 0 ]||[ "$num" != "1" ];then
-  ifconfig eth0 down
-  sleep 0.01
-  ifconfig eth0 up
-  fi
-  break
-done
+#while true
+#do
+#  num=`route | grep -o eth1 | wc -l`
+#  if [ "$num" != "3" ];then
+#  echo no eth1 router
+#  sleep 5
+#  continue
+#  fi
+#  num=`route | grep -o eth0 | wc -l`
+#  route | grep eth0 | grep default
+#  if [ $? -ne 0 ]||[ "$num" != "1" ];then
+#  ifconfig eth0 down
+#  sleep 0.01
+#  ifconfig eth0 up
+#  fi
+#  break
+#done
 
 sleep 0.1
 iptables -A FORWARD -i eth0 -o eth1 -j ACCEPT
