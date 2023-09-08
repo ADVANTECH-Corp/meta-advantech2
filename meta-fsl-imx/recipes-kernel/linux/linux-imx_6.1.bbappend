@@ -20,3 +20,7 @@ do_copy_defconfig:mx8-nxp-bsp () {
     cp ${S}/arch/arm64/configs/imx_v8_adv_defconfig ${B}/../defconfig
 }
 
+do_copy_defconfig:mx9-nxp-bsp () {
+    cp ${S}/arch/arm64/configs/imx_v8_adv_defconfig ${B}/.config
+    cp ${S}/arch/arm64/configs/imx_v8_adv_defconfig ${B}/../defconfig
+}
