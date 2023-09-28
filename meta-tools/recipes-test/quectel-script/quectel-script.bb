@@ -20,7 +20,6 @@ do_install() {
     install -m 755 ${WORKDIR}/ec-25-a.sh ${D}/tools/ppp/
     install -m 755 ${WORKDIR}/quectel-pppd.sh ${D}/tools/ppp/
     install -m 755 ${WORKDIR}/quectel-ppp-kill ${D}/tools/ppp/
-    install -m 755 ${WORKDIR}/quectel-CM ${D}/tools/ppp/
 
     install -d ${D}/etc/ppp/peers
     install -m 644 ${WORKDIR}/quectel-chat-connect ${D}/etc/ppp/peers/
