@@ -1,0 +1,12 @@
+[Unit]
+Description=Add virtual network
+
+[Service]
+Type=idle
+ExecStart=/tools/add_virtual_network.sh
+StandardOutput=kmsg+console
+
+
+[Install]
+WantedBy=multi-user.target
+
