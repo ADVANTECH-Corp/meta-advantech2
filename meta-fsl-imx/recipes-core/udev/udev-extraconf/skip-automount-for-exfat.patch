@@ -1,0 +1,16 @@
+diff --git a/mount.sh b/mount.sh
+index d760328..a18b096 100644
+--- a/mount.sh
++++ b/mount.sh
+@@ -33,6 +33,11 @@ automount() {
+ 	vfat|fat)
+ 		MOUNT="$MOUNT -o umask=007,gid=`awk -F':' '/^disk/{print $3}' /etc/group`"
+ 		;;
++	# [Advantech] Skip automount to avoid "Transport endpoint is not connected" issue
++	exfat)
++		rm_dir "/run/media/$name"
++		exit 0
++		;;
+ 	# TODO
+ 	*)
+ 		;;
