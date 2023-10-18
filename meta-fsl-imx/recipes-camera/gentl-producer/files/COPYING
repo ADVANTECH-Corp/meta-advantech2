@@ -1,0 +1,57 @@
+Copyright (c) 2018 Basler AG 
+
+Software License Agreement 
+--------------------------
+BASLER grants you a personal, non-exclusive, non-transferable right to use the software.
+You may install and use the software as a whole or in parts (single files, e.g. DLLs etc.) on
+an unlimited number of computers. You may solely use the software for the purpose of 
+operating a BASLER camera product. You may not rent, lease, sub-license, or lend the 
+program or any portions thereof to others. You may transfer the software in whole or in parts 
+(single files, e.g. DLLs etc.) to another individual/entity provided that the transferee accepts 
+the terms of this agreement. You may not copy or use the software except as set forth in this 
+agreement. You may not remove any proprietary notices or labels on the software; any 
+copies that you are permitted to make pursuant to this agreement must contain the same 
+copyright and other proprietary notices that appear on and in the software. You agree not to 
+modify, adapt, reverse engineer, decompile, or disassemble the software or otherwise 
+attempt to discover the source code of the software or algorithms contained therein or create 
+any derivative works from the software, except as expressly provided in this agreement.
+
+This program contains non-proprietary BASLER software or software provided under an 
+open source license or a non open source license by third parties ("third-party software") and 
+is licensed to you subject to the terms and conditions of the software license agreement 
+accompanying such third-party software. Use of the third-party software by you shall be 
+governed entirely by the terms and conditions of such license. You can find the license terms 
+and conditions as described below or by contacting BASLER support. BASLER software 
+includes some open source software source code that may be used and modified by anyone 
+and everyone, provided they, in turn, make it available to everyone else with the same 
+licensing agreement. For a period of three (3) years, commencing from the reception of this 
+software, you or any third person may obtain a complete machine-readable copy of the 
+source code for the components licensed under Open source licenses in the extend required 
+by the respective licenses on a medium customarily used for software interchange without 
+charge except for the cost of physically performing source distribution upon written request to 
+the supplier of the software.
+
+Disclaimer
+----------
+BECAUSE THE SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO 
+WARRANTY FOR THE SOFWTARE, TO THE EXTENT PERMITTED BY APPLICABLE 
+LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS 
+AND/OR OTHER PARTIES PROVIDE THE SOFTWARE “AS IS” WITHOUT WARRANTY 
+OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, 
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A 
+PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE 
+OF THE SOFTWARE IS WITH YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, 
+YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR 
+CORRECTION. 
+
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING 
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR 
+REDISTRIBUTE THE SOFTWARE AS PERMITTED ABOVE, BE LIABLE TO YOU FOR 
+DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL 
+DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE SOFTWARE 
+(INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED 
+INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A FAILURE OF 
+THE SOFTWARE TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH 
+HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH 
+DAMAGES. 
+
