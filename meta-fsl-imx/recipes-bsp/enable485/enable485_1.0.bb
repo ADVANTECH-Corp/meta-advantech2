@@ -29,4 +29,4 @@ enable485_sysroot_preprocess() {
     install -m 755 ${D}/usr/bin/enable485 ${SYSROOT_DESTDIR}/usr/bin/
 }
 
-COMPATIBLE_MACHINE = "(mx6-nxp-bsp|mx7-nxp-bsp|mx8-nxp-bsp)"
+COMPATIBLE_MACHINE = "(mx6-nxp-bsp|mx7-nxp-bsp|mx8-nxp-bsp|mx93-nxp-bsp)"
