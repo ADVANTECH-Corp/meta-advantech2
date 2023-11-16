@@ -50,18 +50,20 @@ IMAGE_INSTALL_append_imx8mpepcr5710a1 = " xauth \
                                    gentl-producer \
                                    add-router \
                                    dhcp-server \
-				   libhailort \
-				   hailortcli \
-				   pyhailort \
-				   libgsthailo \
-				   hailo-pci \
-				   hailo-firmware \
-				   libgsthailotools \
-				   tappas-apps \
-				   add-led-ctrl \
-				   hailo-post-processes \
-                   apphub-edge \
-				   "
+								   libhailort \
+								   hailortcli \
+								   pyhailort \
+								   libgsthailo \
+								   hailo-pci \
+								   hailo-firmware \
+								   libgsthailotools \
+								   tappas-apps \
+								   add-led-ctrl \
+								   hailo-post-processes \
+								   apphub-edge \
+								   chromium-ozone-wayland \
+								   ttf-wqy-zenhei \
+								   "
 #docker-ce 
 
 IMAGE_INSTALL_remove_imx8mpepcr5710a1 = " add-virtual-network "
