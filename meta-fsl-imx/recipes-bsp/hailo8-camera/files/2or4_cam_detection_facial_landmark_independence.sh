@@ -17,7 +17,7 @@ function init_variables() {
     readonly FACIAL_LANDMARK_INPUT0="rtsp://admin:Advantech@192.168.1.109:554/cam/realmonitor?channel=1\&subtype=1"
     readonly FACIAL_LANDMARK_INPUT1="rtsp://admin:Advantech@192.168.1.110:554/cam/realmonitor?channel=1\&subtype=1"
 
-    readonly RESOURCES_DIR="/home/root/apps/advantech_0529/resources"
+    readonly RESOURCES_DIR="${CURRENT_DIR}/resources"
     readonly POSTPROCESS_DIR="/usr/lib/hailo-post-processes"
     
     #readonly POSTPROCESS_SO="$POSTPROCESS_DIR/libyolo_post.so"
