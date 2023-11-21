@@ -47,3 +47,7 @@ SERIAL_CONSOLES = "115200;ttyLP1"
 
 # Add additional firmware
 MACHINE_FIRMWARE:append = " firmware-imx-epdc"
+
+# Add AD Decoder
+IMAGE_INSTALL:append = " gstreamer1.0-libav"
+LICENSE_FLAGS_ACCEPTED = "commercial"
