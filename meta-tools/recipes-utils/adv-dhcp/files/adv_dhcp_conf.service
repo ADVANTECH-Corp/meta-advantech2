@@ -1,0 +1,10 @@
+[Unit]
+Description=adv static IP dhcp conf
+After=hwclock.service
+
+[Service]
+Type=idle
+ExecStart=/tools/adv_dhcp.o 
+
+[Install]
+WantedBy=multi-user.target
