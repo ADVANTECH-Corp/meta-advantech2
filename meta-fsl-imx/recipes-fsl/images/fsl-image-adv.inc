@@ -63,6 +63,7 @@ IMAGE_INSTALL_append_imx8mpepcr5710a1 = " xauth \
 								   apphub-edge \
 								   chromium-ozone-wayland \
 								   ttf-wqy-zenhei \
+								   adv-dhcp \
 								   "
 #docker-ce 
 
