@@ -1,0 +1,93 @@
+Subject: [Advantech] Add support for multi-display
+
+This commit provides a new feature for multi-display.
+Users can show different pictures on specific framebuffer devices.
+Framebuffer device should be set as a parameter for fbv program.
+
+---
+diff --git a/fb_display.c b/fb_display.c
+index 02e579e..4d252d8 100644
+--- a/fb_display.c
++++ b/fb_display.c
+@@ -63,7 +63,7 @@ void blit2FB(int fh, void *fbbuff, unsigned char *alpha,
+ 	unsigned int xoffs, unsigned int yoffs,
+ 	int cpp);
+ 
+-void fb_display(unsigned char *rgbbuff, unsigned char * alpha, int x_size, int y_size, int x_pan, int y_pan, int x_offs, int y_offs)
++void fb_display(const char *name, unsigned char *rgbbuff, unsigned char * alpha, int x_size, int y_size, int x_pan, int y_pan, int x_offs, int y_offs)
+ {
+     struct fb_var_screeninfo var;
+     struct fb_fix_screeninfo fix;
+@@ -72,7 +72,7 @@ void fb_display(unsigned char *rgbbuff, unsigned char * alpha, int x_size, int y
+     unsigned long x_stride;
+     
+     /* get the framebuffer device handle */
+-    fh = openFB(NULL);
++    fh = openFB(name);
+     
+     /* read current video mode */
+     getVarScreenInfo(fh, &var);
+diff --git a/fbv.h b/fbv.h
+index 1bf53fa..391638a 100644
+--- a/fbv.h
++++ b/fbv.h
+@@ -21,7 +21,7 @@
+ #define FH_ERROR_FILE 1		/* read/access error */
+ #define FH_ERROR_FORMAT 2	/* file format error */
+ 
+-void fb_display(unsigned char *rgbbuff, unsigned char * alpha, int x_size, int y_size, int x_pan, int y_pan, int x_offs, int y_offs);
++void fb_display(const char *name, unsigned char *rgbbuff, unsigned char * alpha, int x_size, int y_size, int x_pan, int y_pan, int x_offs, int y_offs);
+ void getCurrentRes(int *x, int *y);
+ 
+ int fh_bmp_id(char *name);
+diff --git a/main.c b/main.c
+index d5ee4de..a4b53ac 100644
+--- a/main.c
++++ b/main.c
+@@ -193,7 +193,7 @@ static inline void do_fit_to_screen(struct image *i, int screen_width, int scree
+ }
+ 
+ 
+-int show_image(char *filename)
++int show_image(const char* device_name, char *filename)
+ {
+ 	int (*load)(char *, unsigned char *, unsigned char **, int, int);
+ 
+@@ -318,7 +318,7 @@ identified:
+ 			else
+ 				y_offs = 0;
+ 			
+-			fb_display(i.rgb, i.alpha, i.width, i.height, x_pan, y_pan, x_offs, y_offs);
++			fb_display(device_name, i.rgb, i.alpha, i.width, i.height, x_pan, y_pan, x_offs, y_offs);
+ 			refresh = 0;
+ 		}
+ 		if(delay)
+@@ -439,7 +439,7 @@ error_mem:
+ 
+ void help(char *name)
+ {
+-	printf("Usage: %s [options] image1 image2 image3 ...\n\n"
++	printf("Usage: %s [options] fb_device image1 image2 image3 ...\nExample: fbv /dev/fb0 test.jpg\n\n"
+ 		   "Available options:\n"
+ 		   " --help        | -h : Show this help\n"
+ 		   " --alpha       | -a : Use the alpha channel (if applicable)\n"
+@@ -560,15 +560,15 @@ int main(int argc, char **argv)
+ 	
+ 	setup_console(1);
+ 
+-	for(i = optind; argv[i]; )
++	for(i = optind + 1; argv[i]; )
+ 	{
+-		int r = show_image(argv[i]);
++		int r = show_image(argv[1], argv[i]);
+ 	
+ 		if(!r) break;
+ 		
+ 		i += r;
+-		if(i < optind)
+-			i = optind;
++		if(i < optind + 1)
++			i = optind + 1;
+ 	}
+ 
+ 	setup_console(0);

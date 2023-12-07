@@ -1,0 +1,9 @@
+[Unit]
+Description=Stress Test
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c '/tools/stress.sh 2>&1 > /tools/QAlab.log'
+
+[Install]
+WantedBy=multi-user.target

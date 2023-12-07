@@ -1,0 +1,9 @@
+[Unit]
+Description=hwclock Service
+
+[Service]
+Type=oneshot
+ExecStart=/tools/hwclock.sh
+
+[Install]
+WantedBy=multi-user.target
