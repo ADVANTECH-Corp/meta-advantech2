@@ -1,0 +1,10 @@
+user "username"
+password "password"
+connect "/usr/sbin/chat -v -s -t10 -f /etc/chatscripts/3g.chat"
+
+/dev/ttyUSB2
+460800
+nodetach
+debug
+usepeerdns
+defaultroute
