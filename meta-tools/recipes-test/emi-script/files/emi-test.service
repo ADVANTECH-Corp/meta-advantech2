@@ -1,0 +1,9 @@
+[Unit]
+Description=EMI Test
+
+[Service]
+Type=oneshot
+ExecStart=/tools/emi_run
+
+[Install]
+WantedBy=multi-user.target

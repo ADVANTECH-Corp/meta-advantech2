@@ -1,0 +1,41 @@
+#!/bin/sh
+#top -d 1 &
+
+#ethernet
+ifconfig eth0 192.168.0.1 netmask 255.255.255.0 up
+route add default gw 192.168.0.254
+
+#SATA
+#platform=`cat /proc/board`
+#if [[ $platform == "ROM-7420" ]]
+#then
+#       ./rwsata.sh &
+#fi
+#echo "SATA"
+
+#cpu and memory
+#./stress -c 1 -i 1 1>/dev/null 2>/dev/null &
+#echo "cpu and memory"
+
+#RS232
+/tools/emi_rs232.sh &
+
+#USB
+#/tools/emi_usb.sh &
+
+#VGA
+#/tools/emi_vga.sh &
+
+#Audio
+#/tools/emi_audio.sh &
+
+#H pattern
+printf "\033[9;0]" > /dev/tty0 #set fbcon non-sleep
+echo "dev tty"
+#setting console to monitor
+modprobe fbcon
+echo "console to monitor"
+#pop string
+/tools/dupchar.sh
+echo "pop string"
+
