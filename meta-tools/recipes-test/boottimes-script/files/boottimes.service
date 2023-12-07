@@ -1,0 +1,10 @@
+[Unit]
+Description=Boot Times
+
+[Service]
+Type=idle
+ExecStart=/tools/boottimes.sh
+StandardOutput=kmsg+console
+
+[Install]
+WantedBy=multi-user.target
