@@ -32,7 +32,7 @@ while true
 do
     ip_address_4G=`ifconfig | grep -A 3 ppp0 | awk '/inet/ {print $2}' | cut -f2 -d ":"`
     ip_address_5G=`ifconfig | grep -A 3 wwan0 | awk '/inet/ {print $2}' | cut -f2 -d ":"`
-    sim_modules_insert="Wireless"
+    sim_modules_insert="Quectel Wireless"
     sim_status=`lsusb | grep "${sim_modules_insert}"`
     if [[ "e${sim_status}" != "e" ]] && [[ "e$ip_address_5G" != "e" || "e$ip_address_4G" != "e" ]]
     then
