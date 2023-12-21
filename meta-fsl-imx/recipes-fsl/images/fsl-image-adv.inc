@@ -30,6 +30,10 @@ IMAGE_INSTALL += " \
     mdio-tool \
     hwclock \
     libgpiod-tools \
+    tcpdump \
+    iperf3 \
+    bridge-utils \
+    poweronoff-script \
 "
 
 # Depends on projects
@@ -54,6 +58,13 @@ IMAGE_INSTALL:append:imx8mpepcr5710a1 = " xauth \
                                    pylon \
                                    python3-pypylon \
                                    gentl-producer \
+                                   add-led-ctrl \
+                                   add-router \
+                                   adv-dhcp \
+                                   chromium-ozone-wayland \
+                                   ttf-wqy-zenhei \
+                                   ecsd \
                                    "
+#dhcp-server \
 # Browser
 #IMAGE_INSTALL += " firefox "

@@ -1,0 +1,9 @@
+[Unit]
+Description=Software Router Daemon
+After=network.target dhcpd.service
+
+[Service]
+ExecStart=/usr/sbin/adv-router
+
+[Install]
+WantedBy=multi-user.target
