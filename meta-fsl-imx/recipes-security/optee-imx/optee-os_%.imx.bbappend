@@ -21,6 +21,7 @@ SRC_URI_append_imx8qmrom7720a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '4G 
 SRC_URI_append_imx8mprsb3720a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '2G FSPI_2G', 'file://0005-add-imx8mp-rsb3720a1-2G-support.patch', '', d)}"
 SRC_URI_append_imx8mprsb3720a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '4G FSPI_4G', 'file://0005-add-imx8mp-rsb3720a1-4G-support.patch', '', d)}"
 SRC_URI_append_imx8mprsb3720a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '6G FSPI_6G', 'file://0005-add-imx8mp-rsb3720a1-6G-support.patch', '', d)}"
+SRC_URI_append_imx8mprsb3720a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '8G FSPI_8G', 'file://0005-add-imx8mp-rsb3720a1-8G-support.patch', '', d)}"
 SRC_URI_append_imx8mpepcr5710a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '2G FSPI_2G', 'file://0005-add-imx8mp-epcr5710a1-2G-support.patch', '', d)}"
 SRC_URI_append_imx8mpepcr5710a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '4G FSPI_4G', 'file://0005-add-imx8mp-epcr5710a1-4G-support.patch', '', d)}"
 SRC_URI_append_imx8mpepcr5710a1 += "${@bb.utils.contains_any('UBOOT_CONFIG', '6G FSPI_6G', 'file://0005-add-imx8mp-epcr5710a1-6G-support.patch', '', d)}"

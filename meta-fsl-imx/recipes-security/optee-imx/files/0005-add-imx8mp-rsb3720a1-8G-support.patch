@@ -1,0 +1,53 @@
+From c559b5b64d3ad5e9c2e78acc6a9a3c18f3766f80 Mon Sep 17 00:00:00 2001
+From: clayderhua <clayderhua@gmail.com>
+Date: Wed, 10 Jan 2024 17:10:33 +0800
+Subject: [PATCH] rsb3720-8G
+
+---
+ core/arch/arm/plat-imx/conf.mk | 10 +++++++++-
+ scripts/nxp_build.sh           |  1 +
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/core/arch/arm/plat-imx/conf.mk b/core/arch/arm/plat-imx/conf.mk
+index c1907500f..299cc0610 100644
+--- a/core/arch/arm/plat-imx/conf.mk
++++ b/core/arch/arm/plat-imx/conf.mk
+@@ -69,7 +69,8 @@ mx8mn-flavorlist = \
+ 	mx8mnevk
+ 
+ mx8mp-flavorlist = \
+-	mx8mpevk
++	mx8mpevk \
++	mx8mprsb3720a1 \
+ 
+ mx8qm-flavorlist = \
+ 	mx8qmmek \
+@@ -347,6 +348,13 @@ CFG_DDR_SIZE ?= 0x80000000
+ CFG_UART_BASE ?= UART2_BASE
+ endif
+ 
++ifneq (,$(filter $(PLATFORM_FLAVOR),mx8mprsb3720a1))
++CFG_DDR_SIZE ?= 0x200000000ULL
++CFG_UART_BASE ?= UART3_BASE
++$(call force,CFG_CORE_LARGE_PHYS_ADDR,y)
++$(call force,CFG_CORE_ARM64_PA_BITS,36)
++endif
++
+ ifneq (,$(filter $(PLATFORM_FLAVOR),mx8mpevk))
+ CFG_DDR_SIZE ?= 0x180000000ULL
+ CFG_UART_BASE ?= UART2_BASE
+diff --git a/scripts/nxp_build.sh b/scripts/nxp_build.sh
+index 381989357..a275aefbd 100755
+--- a/scripts/nxp_build.sh
++++ b/scripts/nxp_build.sh
+@@ -34,6 +34,7 @@ boards_list=(
+ 	mx8mmevk \
+ 	mx8mnevk \
+ 	mx8mpevk \
++	mx8mprsb3720a1 \
+ 	mx8qxpmek \
+ 	mx8qmmek \
+ 	mx8dxlevk \
+-- 
+2.38.1
+
