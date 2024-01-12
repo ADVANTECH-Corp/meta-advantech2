@@ -64,6 +64,15 @@ IMAGE_INSTALL:append:imx8mpepcr5710a1 = " xauth \
                                    chromium-ozone-wayland \
                                    ttf-wqy-zenhei \
                                    ecsd \
+                                   libhailort \
+                                   hailortcli \
+                                   pyhailort \
+                                   libgsthailo \
+                                   hailo-pci \
+                                   hailo-firmware \
+                                   libgsthailotools \
+                                   tappas-apps \
+                                   hailo-post-processes \
                                    "
 #dhcp-server \
 # Browser

@@ -187,6 +187,9 @@ echo "BBLAYERS += \"\${BSPDIR}/sources/meta-virtualization\"" >> $BUILD_DIR/conf
 echo "BBLAYERS += \"\${BSPDIR}/sources/meta-advantech/meta-fsl-imx \"" >> $BUILD_DIR/conf/bblayers.conf
 echo "BBLAYERS += \"\${BSPDIR}/sources/meta-advantech/meta-tools \"" >> $BUILD_DIR/conf/bblayers.conf
 # echo "BBLAYERS += \"\${BSPDIR}/sources/meta-advantech/meta-WISE-PaaS \"" >> $BUILD_DIR/conf/bblayers.conf
+echo "BBLAYERS += \"\${BSPDIR}/sources/meta-hailo/meta-hailo-accelerator \"" >> $BUILD_DIR/conf/bblayers.conf
+echo "BBLAYERS += \"\${BSPDIR}/sources/meta-hailo/meta-hailo-libhailort \"" >> $BUILD_DIR/conf/bblayers.conf
+echo "BBLAYERS += \"\${BSPDIR}/sources/meta-hailo/meta-hailo-tappas \"" >> $BUILD_DIR/conf/bblayers.conf
 
 echo BSPDIR=$BSPDIR
 echo BUILD_DIR=$BUILD_DIR
