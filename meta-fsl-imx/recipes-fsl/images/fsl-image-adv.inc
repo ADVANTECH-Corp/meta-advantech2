@@ -55,5 +55,6 @@ IMAGE_INSTALL:append:imx8mpepcr5710a1 = " xauth \
                                    python3-pypylon \
                                    gentl-producer \
                                    "
+IMAGE_INSTALL:append:imx8ulprom2620a1 = " weston-exception "
 # Browser
 #IMAGE_INSTALL += " firefox "
