@@ -3,14 +3,15 @@ LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/GPL-2.0-only;md5=801f80980d171dd6425610833a22dbe6"
 
 SRC_URI = "file://cellular-guard.service \
-	   file://cellular-guard.sh"
+          git://github.com/ADVANTECH-Corp/cellular_guard;protocol=https;branch=main"
+
+SRCREV = "${AUTOREV}"
 
 inherit systemd
 
 do_install() {
     install -d ${D}/tools
-    install -m 755 ${WORKDIR}/cellular-guard.sh ${D}/tools/cellular-guard.sh
-
+    install -m 755 ${WORKDIR}/git/entry.sh ${D}/tools/cellular-guard.sh
     # systemd
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
         install -d ${D}${systemd_unitdir}/system
