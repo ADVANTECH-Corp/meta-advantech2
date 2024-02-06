@@ -1,0 +1,31 @@
+From 55c6a8850091de6676e22b3930839deaa0297c7c Mon Sep 17 00:00:00 2001
+From: clayderhua <clayderhua@gmail.com>
+Date: Tue, 6 Feb 2024 10:54:00 +0800
+Subject: [PATCH] Add keyevent and ecevent
+
+---
+ rc.local.etc | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/rc.local.etc b/rc.local.etc
+index cfd2ff4..40ca198 100755
+--- a/rc.local.etc
++++ b/rc.local.etc
+@@ -36,5 +36,14 @@ then
+ 	/tools/weston_boot_exception.sh &
+ fi
+ 
++#Add key_event and ec_uevent
++if [ -e /usr/bin/key_event ];then
++        key_event &
++fi
++
++if [ -e /usr/bin/ec_uevent ];then
++        ec_uevent &
++fi
++
+ exit 0
+ 
+-- 
+2.34.1
+
