@@ -19,8 +19,8 @@ do_copy_defconfig:mx7-nxp-bsp () {
 }
 
 do_copy_defconfig:mx8-nxp-bsp () {
-    cp ${S}/arch/arm64/configs/imx_v8_adv_defconfig ${B}/.config
-    cp ${S}/arch/arm64/configs/imx_v8_adv_defconfig ${B}/../defconfig
+    cp ${S}/arch/arm64/configs/imx_v8_adv_r5710_ubuntu22_defconfig ${B}/.config
+    cp ${S}/arch/arm64/configs/imx_v8_adv_r5710_ubuntu22_defconfig ${B}/../defconfig
 }
 
 do_kernel_localversion_force() {
