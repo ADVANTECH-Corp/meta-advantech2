@@ -1,7 +1,6 @@
 #!/bin/sh
 #########################################################
-#   description: wifi5 test script
-#   usage: cm276_wifi5_test.sh
+#   description: wifi modprobe script
 #   version:2023/03/03 by kuihong
 ########################################################
 
@@ -15,7 +14,7 @@ ADV_AW_WIFI_NXP()
         ip_address=
 
         wifi5_status=`lspci -n |grep "1b4b:2b42"`
-        if [[ "e$wifi5_status" != "e" ]]
+        if [ "e$wifi5_status" != "e" ]
         then
                 e=`lsmod|grep moal_5x17283_pcie_8997 |awk {'print$1'}`
                 if [ -z "$e" ]
@@ -27,7 +26,7 @@ ADV_AW_WIFI_NXP()
         fi
 
         wifi6_status=`lspci -n |grep "1b4b:2b44"`
-        if [[ "e$wifi6_status" != "e" ]]
+        if [ "e$wifi6_status" != "e" ]
         then
                 e=`lsmod|grep moal_mxm6x17408_pcieuart_88w9098 |awk {'print$1'}`
                 if [ -z "$e" ]

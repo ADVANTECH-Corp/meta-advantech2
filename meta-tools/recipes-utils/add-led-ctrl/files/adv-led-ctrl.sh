@@ -62,5 +62,5 @@ if [ -e /sys/class/leds/wifi/brightness ]; then
 fi 
 
 if [ -e /sys/class/leds/cellular/brightness ]; then
-	cellular_monitor &
+	cellular_monitor
 fi
