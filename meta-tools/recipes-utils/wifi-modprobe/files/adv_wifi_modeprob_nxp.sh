@@ -1,0 +1,42 @@
+#!/bin/sh
+#########################################################
+#   description: wifi5 test script
+#   usage: cm276_wifi5_test.sh
+#   version:2023/03/03 by kuihong
+########################################################
+
+DIR=`dirname $0`
+
+#海华wifi模组
+ADV_AW_WIFI_NXP()
+{
+        wifi5_status=
+        wifi6_status=
+        ip_address=
+
+        wifi5_status=`lspci -n |grep "1b4b:2b42"`
+        if [[ "e$wifi5_status" != "e" ]]
+        then
+                e=`lsmod|grep moal_5x17283_pcie_8997 |awk {'print$1'}`
+                if [ -z "$e" ]
+                then
+                        modprobe mlan_5x17283_pcie_8997
+                        modprobe moal_5x17283_pcie_8997 drv_mode=1 cal_data_cfg=none cfg80211_wext=0xf fw_name=nxp/pcieuart8997_combo_v4_5x17283.bin
+                        sleep 1
+                fi
+        fi
+
+        wifi6_status=`lspci -n |grep "1b4b:2b44"`
+        if [[ "e$wifi6_status" != "e" ]]
+        then
+                e=`lsmod|grep moal_mxm6x17408_pcieuart_88w9098 |awk {'print$1'}`
+                if [ -z "$e" ]
+                then
+                        modprobe mlan_mxm6x17408_pcieuart_88w9098
+                        modprobe moal_mxm6x17408_pcieuart_88w9098 drv_mode=1 ps_mode=2 auto_ds=2 cfg80211_wext=0xf cal_data_cfg=none fw_name=nxp/pcieuart9098_combo_v1.bin host_mlme=1
+                        sleep 1
+                fi
+        fi
+}
+
+ADV_AW_WIFI_NXP &

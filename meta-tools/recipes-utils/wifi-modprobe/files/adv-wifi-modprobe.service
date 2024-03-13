@@ -1,0 +1,13 @@
+# adv_ubuntu22 2023
+
+[Unit]
+Description= ADV WIFI modporbe
+Before=imx8-isp.service
+
+
+[Service]
+Type=forking
+ExecStart=/tools/adv_wifi_modeprob_nxp.sh
+
+[Install]
+WantedBy=multi-user.target

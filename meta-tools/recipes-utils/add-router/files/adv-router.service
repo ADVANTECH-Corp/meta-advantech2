@@ -1,0 +1,9 @@
+[Unit]
+Description=Software Router Daemon
+After=network.target
+
+[Service]
+ExecStart=/tools/adv-router
+
+[Install]
+WantedBy=multi-user.target
