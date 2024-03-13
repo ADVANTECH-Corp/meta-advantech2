@@ -1,12 +1,12 @@
 #!/bin/sh
 
-function wifi_monitor()
+wifi_monitor()
 {
 while true
 do
 	wifi_status=`lspci |grep Ethernet`
 	ip_address=`ifconfig | grep -A 3 mlan0 | awk '/inet/ {print $2}' | cut -f2 -d ":"`
-	if [[ "e$wifi_status" != "e" ]] && [[ "e$ip_address" != "e" ]]
+	if [ "e$wifi_status" != "e" ] && [ "e$ip_address" != "e" ]
     then
         # echo "mlan0 get ip"
         echo 1 > /sys/class/leds/wifi/brightness
@@ -26,22 +26,21 @@ do
 done
 }
 
-function cellular_monitor()
+cellular_monitor()
 {
 while true
 do
-    ip_address_4G=`ifconfig | grep -A 3 ppp0 | awk '/inet/ {print $2}' | cut -f2 -d ":"`
     ip_address_5G=`ifconfig | grep -A 3 wwan0 | awk '/inet/ {print $2}' | cut -f2 -d ":"`
     sim_modules_insert="Quectel Wireless"
     sim_status=`lsusb | grep "${sim_modules_insert}"`
-    if [[ "e${sim_status}" != "e" ]] && [[ "e$ip_address_5G" != "e" || "e$ip_address_4G" != "e" ]]
+    if [ "e${sim_status}" != "e" ] && [ "e$ip_address_5G" != "e" ]
     then
         # echo "get ip"
         echo 1 > /sys/class/leds/cellular/brightness
         sleep 1
         echo 0 > /sys/class/leds/cellular/brightness
         sleep 1
-    elif  [[ "e${sim_status}" != "e" ]]
+    elif  [ "e${sim_status}" != "e" ]
     then
         # echo " insert"
         echo 1 > /sys/class/leds/cellular/brightness
@@ -63,5 +62,5 @@ if [ -e /sys/class/leds/wifi/brightness ]; then
 fi 
 
 if [ -e /sys/class/leds/cellular/brightness ]; then
-	cellular_monitor 
+	cellular_monitor &
 fi
