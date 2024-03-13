@@ -6,7 +6,7 @@ IMAGE_FEATURES += " ssh-server-openssh "
 #IMAGE_INSTALL += " packagegroup-core-eclipse-debug "
 
 # Native Compiler
-IMAGE_INSTALL +=" add-router wifi-modprobe adv-led-ctrl desktop-dhcp "
+IMAGE_INSTALL +=" add-router wifi-modprobe add-led-ctrl desktop-dhcp "
 # desktop-dhcp
 
 # Tools 
