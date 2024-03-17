@@ -1,0 +1,9 @@
+[Unit]
+Description=ADV LED ctrl Daemon
+After=user@.service
+
+[Service]
+ExecStart=/tools/adv-overlay.sh
+
+[Install]
+WantedBy=multi-user.target
