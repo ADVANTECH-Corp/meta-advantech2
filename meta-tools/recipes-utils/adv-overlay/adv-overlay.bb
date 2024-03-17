@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/GPL-2.0-only;md5=801f80980d171d
 SRC_URI = "file://dhcpd.conf \
 			file://ADV_OVERLAY \
 			file://adv-overlay.sh \
-			file://adv-overlay.service"
+			file://adv-overlay.service "
 
 inherit systemd
 
@@ -25,4 +25,4 @@ do_install() {
 }
 
 SYSTEMD_SERVICE:${PN} = "adv-overlay.service"
-FILES:${PN} = "/etc/tools "
+FILES:${PN} = "/tools "
