@@ -1,5 +1,5 @@
 [Unit]
-Description=ADV LED ctrl Daemon
+Description=ADV Overlay Onetimes
 After=user@.service
 
 [Service]
