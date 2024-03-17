@@ -5,7 +5,7 @@ wifi_monitor()
 while true
 do
 	wifi_status=`lspci |grep Ethernet`
-	ip_address=`ifconfig | grep -A 3 mlan0 | awk '/inet/ {print $2}' | cut -f2 -d ":"`
+	ip_address=`ifconfig | grep -A 3 wlp1s0f | awk '/inet/ {print $2}' | cut -f2 -d ":"`
 	if [ "e$wifi_status" != "e" ] && [ "e$ip_address" != "e" ]
     then
         # echo "mlan0 get ip"
