@@ -14,7 +14,7 @@ do_install() {
 	install -d ${D}/tools
 	install -m 0644 ${WORKDIR}/dhcpd.conf ${D}/tools/dhcpd.conf
 	install -m 0644 ${WORKDIR}/ADV_OVERLAY ${D}/tools/ADV_OVERLAY
-	install -m 0644 ${WORKDIR}/adv-overlay.sh ${D}/tools/adv-overlay.sh
+	install -m 0755 ${WORKDIR}/adv-overlay.sh ${D}/tools/adv-overlay.sh
 
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
         install -d ${D}${systemd_unitdir}/system

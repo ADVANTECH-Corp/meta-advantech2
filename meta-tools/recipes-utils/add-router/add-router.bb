@@ -11,8 +11,8 @@ inherit systemd
 do_install() {
 	install -d ${D}/tools
 	install -d ${D}/etc/systemd/network
-	install -m 644 ${WORKDIR}/10-eth0-static.network ${D}/etc/systemd/network/10-eth0-static.network
-	install -m 755 ${WORKDIR}/adv-router ${D}/tools/adv-router
+	install -m 0644 ${WORKDIR}/10-eth0-static.network ${D}/etc/systemd/network/10-eth0-static.network
+	install -m 0755 ${WORKDIR}/adv-router ${D}/tools/adv-router
 
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
         install -d ${D}${systemd_unitdir}/system
