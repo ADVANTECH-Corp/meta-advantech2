@@ -7,7 +7,10 @@ IMAGE_FEATURES += " ssh-server-openssh "
 
 # Native Compiler
 IMAGE_INSTALL +=" add-router wifi-modprobe add-led-ctrl desktop-dhcp adv-overlay"
-# desktop-dhcp
+
+# Login: adv  || Password: 123456
+USER_PASSWD_USER = "ixdYFBDxaBTYI"
+APTGET_ADD_USERS = "adv:${USER_PASSWD_USER}:${USER_SHELL_BASH}"
 
 # Tools 
 APTGET_EXTRA_PACKAGES += " \
