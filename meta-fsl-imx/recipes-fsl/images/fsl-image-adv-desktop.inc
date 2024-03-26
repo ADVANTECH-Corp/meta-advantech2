@@ -41,4 +41,15 @@ APTGET_EXTRA_PACKAGES += " \
     iptables \
     nftables \
     isc-dhcp-server \
+    memtester \
+    gdbserver \
+    libqt5webenginecore5 \
+    libqt5quickwidgets5 \
+    libqt5webenginewidgets5 \
+    qt5-qmake \
+    libqt5*-dev \
+    qt5*-dev \
+    qt*5-dev \
+    qt*5-private-dev \
+    qt*5-doc-dev \
 "
