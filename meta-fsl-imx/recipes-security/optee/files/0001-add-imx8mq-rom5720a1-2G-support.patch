@@ -1,0 +1,51 @@
+From ea831f6298172aa89572b6e6eb15e1c0ffeb957a Mon Sep 17 00:00:00 2001
+From: clayderhua <clayderhua@gmail.com>
+Date: Wed, 20 Mar 2024 15:49:06 +0800
+Subject: [PATCH] ROM-5720
+
+---
+ core/arch/arm/plat-imx/conf.mk | 8 +++++++-
+ scripts/nxp_build.sh           | 1 +
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/core/arch/arm/plat-imx/conf.mk b/core/arch/arm/plat-imx/conf.mk
+index 1d5081f96..674d6d34b 100644
+--- a/core/arch/arm/plat-imx/conf.mk
++++ b/core/arch/arm/plat-imx/conf.mk
+@@ -60,7 +60,8 @@ mx7ulp-flavorlist = \
+ 	mx7ulpevk
+ 
+ mx8mq-flavorlist = \
+-	mx8mqevk
++	mx8mqevk \
++	mx8mqrom5720a1
+ 
+ mx8mm-flavorlist = \
+ 	mx8mmevk \
+@@ -371,6 +372,11 @@ CFG_DDR_SIZE ?= 0x10000000
+ CFG_UART_BASE ?= UART7_BASE
+ endif
+ 
++ifneq (,$(filter $(PLATFORM_FLAVOR),mx8mqrom5720a1))
++CFG_DDR_SIZE ?= 0x80000000
++CFG_UART_BASE ?= UART1_BASE
++endif
++
+ ifneq (,$(filter $(PLATFORM_FLAVOR),mx8mqevk))
+ CFG_DDR_SIZE ?= 0xc0000000
+ CFG_UART_BASE ?= UART1_BASE
+diff --git a/scripts/nxp_build.sh b/scripts/nxp_build.sh
+index 73b60fbde..8c0af9058 100755
+--- a/scripts/nxp_build.sh
++++ b/scripts/nxp_build.sh
+@@ -34,6 +34,7 @@ boards_list=(
+ 	imx-mx7ulpevk \
+ 	imx-mx8dxmek \
+ 	imx-mx8mqevk \
++	imx-mx8mqrom5720a1 \
+ 	imx-mx8mmevk \
+ 	imx-mx8mnevk \
+ 	imx-mx8mpevk \
+-- 
+2.38.1
+
