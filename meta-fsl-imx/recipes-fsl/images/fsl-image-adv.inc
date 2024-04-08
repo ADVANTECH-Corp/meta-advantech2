@@ -73,6 +73,7 @@ IMAGE_INSTALL:append:imx8mpepcr5710a1 = " xauth \
                                    libgsthailotools \
                                    tappas-apps \
                                    hailo-post-processes \
+                                   kea \
                                    "
 #dhcp-server \
 # Browser
