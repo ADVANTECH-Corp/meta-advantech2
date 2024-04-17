@@ -4,7 +4,7 @@ TCMBINPATH := "${THISDIR}/files"
 SRC_URI:append:imx8mqrom5720a1 ="${@bb.utils.contains_any('UBOOT_CONFIG', '2G', 'file://0001-add-imx8mq-rom5720a1-2G-support.patch', '', d)}"
 
 compile_mx8ulp:prepend() {
-    cp ${TCMBINPATH}/imx8ulprom2620a1_m33_TCM_power_mode_switch_v0002.bin       ${BOOT_STAGING}/m33_image.bin
+    cp ${TCMBINPATH}/imx8ulprom2620a1_m33_TCM_sdk_2_14_0_v0001.bin       ${BOOT_STAGING}/m33_image.bin
 }
 compile_mx8m:prepend() {
     case ${MACHINE} in
