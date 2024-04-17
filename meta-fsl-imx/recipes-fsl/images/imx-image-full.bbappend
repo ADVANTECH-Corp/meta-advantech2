@@ -20,6 +20,7 @@ install_utils() {
 	mkdir -p ${IMAGE_ROOTFS}/lib/firmware/rtlwifi/rtl8821ae
 	install -m 0755 ${ADDON_FILES_DIR}/wifi_ant_isolation.txt ${IMAGE_ROOTFS}/lib/firmware/rtlwifi/rtl8821ae
 	install -m 0644 ${ADDON_FILES_DIR}/sdsd8997_combo_v4.bin ${IMAGE_ROOTFS}/lib/firmware/nxp/sdsd8997_combo_v4.bin
+	install -m 0644 ${ADDON_FILES_DIR}/pcieuart8997_combo_v4_mxm5x17391.bin ${IMAGE_ROOTFS}/lib/firmware/nxp/pcieuart8997_combo_v4_mxm5x17391.bin
 	mkdir -p ${IMAGE_ROOTFS}/lib/firmware/qca
 	install -m 0644 ${ADDON_FILES_DIR}/nvm_usb_00000302.bin ${IMAGE_ROOTFS}/lib/firmware/qca/nvm_usb_00000302.bin
 	install -m 0644 ${ADDON_FILES_DIR}/rampatch_usb_00000302.bin ${IMAGE_ROOTFS}/lib/firmware/qca/rampatch_usb_00000302.bin
