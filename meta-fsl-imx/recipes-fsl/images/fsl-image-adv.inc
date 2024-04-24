@@ -50,6 +50,7 @@ IMAGE_INSTALL:append:imx8mprsb3720a1 = " xauth \
                                    python3-pypylon \
                                    gentl-producer \
                                    "
+IMAGE_INSTALL:append:imx8mmrsb3730a2 = " dns-add "
 IMAGE_INSTALL:append:imx8mpepcr5710a1 = " xauth \
                                    pylon \
                                    python3-pypylon \
