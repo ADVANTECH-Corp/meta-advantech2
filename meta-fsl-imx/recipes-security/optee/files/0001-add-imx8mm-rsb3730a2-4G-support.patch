@@ -1,5 +1,5 @@
 diff --git a/core/arch/arm/plat-imx/conf.mk b/core/arch/arm/plat-imx/conf.mk
-index 1d5081f96..2fe57288d 100644
+index 1d5081f96..cbe79e3e8 100644
 --- a/core/arch/arm/plat-imx/conf.mk
 +++ b/core/arch/arm/plat-imx/conf.mk
 @@ -64,7 +64,8 @@ mx8mq-flavorlist = \
@@ -12,14 +12,14 @@ index 1d5081f96..2fe57288d 100644
  
  mx8mn-flavorlist = \
  	mx8mnevk
-@@ -388,6 +389,15 @@ CFG_NSEC_DDR_1_BASE ?= 0x80000000UL
+@@ -388,6 +389,14 @@ CFG_NSEC_DDR_1_BASE ?= 0x80000000UL
  CFG_NSEC_DDR_1_SIZE ?= 0x40000000UL
  endif
  
 +ifneq (,$(filter $(PLATFORM_FLAVOR),mx8mmrsb3730a2))
-+CFG_DDR_SIZE ?= 0x100000000
-+CFG_TZDRAM_START ?= 0xBE000000
++CFG_DDR_SIZE ?= UL(0x100000000)
 +CFG_UART_BASE ?= UART2_BASE
++CFG_TZDRAM_START ?= 0xBE000000
 +$(call force,CFG_CORE_LARGE_PHYS_ADDR,y)
 +$(call force,CFG_CORE_ARM64_PA_BITS,36)
 +endif
