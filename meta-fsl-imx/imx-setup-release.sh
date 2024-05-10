@@ -145,7 +145,12 @@ fi
 echo >> conf/local.conf
 echo "# Switch to Debian packaging and include package-management in the image" >> conf/local.conf
 echo "PACKAGE_CLASSES = \"package_deb\"" >> conf/local.conf
-echo "EXTRA_IMAGE_FEATURES += \"package-management\"" >> conf/local.conf
+#echo "EXTRA_IMAGE_FEATURES += \"package-management\"" >> conf/local.conf
+sed -i '3d' $BUILD_DIR/conf/local.conf
+sed -i '3iINHERIT += "extrausers"' $BUILD_DIR/conf/local.conf
+passwd="(openssl passwd 12345678)"
+word="$"
+echo "EXTRA_USERS_PARAMS = \"usermod -p '${word}${passwd}' root;\"" >> conf/local.conf
 
 if [ ! -e $BUILD_DIR/conf/bblayers.conf.org ]; then
     cp $BUILD_DIR/conf/bblayers.conf $BUILD_DIR/conf/bblayers.conf.org
