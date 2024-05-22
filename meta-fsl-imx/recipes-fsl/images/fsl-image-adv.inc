@@ -53,6 +53,10 @@ IMAGE_INSTALL:append:imx8mprsb3720a1 = " xauth \
 IMAGE_INSTALL:append:imx8mmrsb3730a2 = " dns-add adv-overlay ecsd \
                                     chromium-ozone-wayland ttf-wqy-zenhei \
                                     "
+TOOLCHAIN_HOST_TASK:append:imx8mmrsb3730a2 = " \
+   nativesdk-qtdeclarative-tools nativesdk-qtdeclarative-staticdev nativesdk-qtdeclarative-qmlplugins nativesdk-qtdeclarative-plugins nativesdk-qtdeclarative-dev \
+   "
+
 IMAGE_INSTALL:append:imx8mpepcr5710a1 = " xauth \
                                    pylon \
                                    python3-pypylon \
