@@ -14,9 +14,7 @@ do_install() {
 	install -d ${D}/tools/adv-overlay
 	install -m 0644 ${WORKDIR}/ADV_OVERLAY ${D}/tools/adv-overlay/ADV_OVERLAY
 	install -m 0755 ${WORKDIR}/adv-overlay.sh ${D}/tools/adv-overlay/adv-overlay.sh
-
-	install -d ${D}/etc
-	install -m 0644 ${WORKDIR}/ntp.conf ${D}/etc/ntp.conf
+	install -m 0644 ${WORKDIR}/ntp.conf ${D}/tools/adv-overlay/ntp.conf
 
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
         install -d ${D}${systemd_unitdir}/system
@@ -27,4 +25,4 @@ do_install() {
 }
 
 SYSTEMD_SERVICE:${PN} = "adv-overlay.service"
-FILES:${PN} = "/tools /etc "
+FILES:${PN} = "/tools "
