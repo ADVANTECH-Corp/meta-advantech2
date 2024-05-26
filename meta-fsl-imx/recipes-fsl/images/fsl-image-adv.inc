@@ -74,6 +74,7 @@ IMAGE_INSTALL:append:imx8mpepcr5710a1 = " xauth \
                                    tappas-apps \
                                    hailo-post-processes \
                                    kea \
+                                   adv-overlay \
                                    "
 #dhcp-server \
 # Browser

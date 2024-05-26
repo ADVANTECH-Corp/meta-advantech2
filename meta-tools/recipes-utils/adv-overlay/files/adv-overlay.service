@@ -1,0 +1,9 @@
+[Unit]
+Description=ADV Overlay Onetimes
+After=xinetd.service
+
+[Service]
+ExecStart=/tools/adv-overlay/adv-overlay.sh
+
+[Install]
+WantedBy=multi-user.target
