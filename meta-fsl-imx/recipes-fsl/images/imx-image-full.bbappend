@@ -23,7 +23,7 @@ install_utils() {
 	mkdir -p ${IMAGE_ROOTFS}/lib/firmware/rtlwifi/rtl8821ae
 	install -m 0755 ${ADDON_FILES_DIR}/wifi_ant_isolation.txt ${IMAGE_ROOTFS}/lib/firmware/rtlwifi/rtl8821ae
 	install -m 0644 ${ADDON_FILES_DIR}/sdsd8997_combo_v4.bin ${IMAGE_ROOTFS}/lib/firmware/nxp/sdsd8997_combo_v4.bin
-	install -m 0644 ${ADDON_FILES_DIR}/pcieuart8997_combo_v4_5x17283.bin ${IMAGE_ROOTFS}/lib/firmware/nxp/pcieuart8997_combo_v4_5x17283.bin
+	install -m 0644 ${ADDON_FILES_DIR}/pcieuart8997_combo_v4_6x17408.bin ${IMAGE_ROOTFS}/lib/firmware/nxp/pcieuart8997_combo_v4_6x17408.bin
 	install -m 0644 ${ADDON_FILES_DIR}/pcieuart9098_combo_v1.bin ${IMAGE_ROOTFS}/lib/firmware/nxp/pcieuart9098_combo_v1.bin
 	install -m 0755 ${ADDON_FILES_DIR}/tpm-ST33HTP-Demo ${IMAGE_ROOTFS}/usr/bin/tpm-ST33HTP-Demo
 	install -m 0755 ${ADDON_FILES_DIR}/quectel-CM ${IMAGE_ROOTFS}/usr/bin/quectel-CM
