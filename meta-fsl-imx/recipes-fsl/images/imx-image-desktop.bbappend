@@ -7,7 +7,7 @@ install_utils() {
         install -m 0755 ${ADDON_FILES_DIR}/expand-root-partition.sh ${IMAGE_ROOTFS}/usr/local/bin
 
         mkdir -p ${IMAGE_ROOTFS}/usr/local/bin
-        install -m 0644 ${ADDON_FILES_DIR}/pcieuart8997_combo_v4_5x17283.bin ${IMAGE_ROOTFS}/lib/firmware/nxp/pcieuart8997_combo_v4_5x17283.bin
+        install -m 0644 ${ADDON_FILES_DIR}/pcieuart8997_combo_v4_6x17408.bin ${IMAGE_ROOTFS}/lib/firmware/nxp/pcieuart8997_combo_v4_6x17408.bin
         install -m 0644 ${ADDON_FILES_DIR}/pcieuart9098_combo_v1.bin ${IMAGE_ROOTFS}/lib/firmware/nxp/pcieuart9098_combo_v1.bin
         install -m 0755 ${ADDON_FILES_DIR}/tpm-ST33HTP-Demo ${IMAGE_ROOTFS}/usr/bin/tpm-ST33HTP-Demo
 
