@@ -13,6 +13,9 @@ IMAGE_INSTALL += " linux-firmware-rtl8821 "
 IMAGE_INSTALL += " linux-firmware-rtl8723 rtl8723bs-bt "
 IMAGE_INSTALL += " linux-firmware-rtl8168 "
 
+# 5G modem manager
+IMAGE_INSTALL += " modemmanager "
+
 # Native Compiler
 IMAGE_INSTALL += " packagegroup-sdk-target "
 
