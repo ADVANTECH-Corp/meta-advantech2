@@ -26,6 +26,8 @@ install_utils() {
 	install -m 0644 ${ADDON_FILES_DIR}/nvm_usb_00000302.bin ${IMAGE_ROOTFS}/lib/firmware/qca/nvm_usb_00000302.bin
 	install -m 0644 ${ADDON_FILES_DIR}/rampatch_usb_00000302.bin ${IMAGE_ROOTFS}/lib/firmware/qca/rampatch_usb_00000302.bin
 	install -m 0644 ${ADDON_FILES_DIR}/demos.json ${IMAGE_ROOTFS}/home/root/.nxp-demo-experience/demos.json
+	mkdir -p ${IMAGE_ROOTFS}/lib/modules/rtl8822cu
+	install -m 0755 ${ADDON_FILES_DIR}/8822cu.ko ${IMAGE_ROOTFS}/lib/modules/rtl8822cu
 }
 
 update_profile() {
