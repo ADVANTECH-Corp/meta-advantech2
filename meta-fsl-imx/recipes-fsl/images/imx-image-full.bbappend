@@ -28,6 +28,9 @@ install_utils() {
 	install -m 0644 ${ADDON_FILES_DIR}/demos.json ${IMAGE_ROOTFS}/home/root/.nxp-demo-experience/demos.json
 	mkdir -p ${IMAGE_ROOTFS}/lib/modules/rtl8822cu
 	install -m 0755 ${ADDON_FILES_DIR}/8822cu.ko ${IMAGE_ROOTFS}/lib/modules/rtl8822cu
+	mkdir -p ${IMAGE_ROOTFS}/lib/firmware/rtl_bt
+	install -m 0755 ${ADDON_FILES_DIR}/rtl8822cu_fw.bin ${IMAGE_ROOTFS}/lib/firmware/rtl_bt
+	install -m 0755 ${ADDON_FILES_DIR}/rtl8822cu_config.bin ${IMAGE_ROOTFS}/lib/firmware/rtl_bt
 }
 
 update_profile() {
