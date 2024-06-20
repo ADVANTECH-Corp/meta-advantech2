@@ -152,6 +152,14 @@ passwd="(openssl passwd 12345678)"
 word="$"
 echo "EXTRA_USERS_PARAMS = \"usermod -p '${word}${passwd}' root;\"" >> conf/local.conf
 
+# Add some image when OTA=y
+if [ -n "${OTA+x}" ]; then
+    if [ "$(echo "$OTA" | tr '[:lower:]' '[:upper:]')" = "Y" ]; then
+        echo "IMAGE_FSTYPES = \" ext4 ext4.gz wic.bmap wic.gz\"" >> conf/local.conf
+        echo "IMAGE_INSTALL:append = \" swupdate swupdate-www swupdate-progress swupdate-client u-boot-imx u-boot-fw-utils systemd-swusys json-c\"" >> conf/local.conf	
+    fi
+fi
+
 if [ ! -e $BUILD_DIR/conf/bblayers.conf.org ]; then
     cp $BUILD_DIR/conf/bblayers.conf $BUILD_DIR/conf/bblayers.conf.org
 else
@@ -185,6 +193,13 @@ echo "BBLAYERS += \"\${BSPDIR}/sources/meta-virtualization\"" >> $BUILD_DIR/conf
 echo "BBLAYERS += \"\${BSPDIR}/sources/meta-advantech/meta-fsl-imx \"" >> $BUILD_DIR/conf/bblayers.conf
 echo "BBLAYERS += \"\${BSPDIR}/sources/meta-advantech/meta-tools \"" >> $BUILD_DIR/conf/bblayers.conf
 #echo "BBLAYERS += \"\${BSPDIR}/sources/meta-advantech/meta-WISE-PaaS \"" >> $BUILD_DIR/conf/bblayers.conf
+
+if [ -n "${OTA+x}" ]; then
+    if [ "$(echo "$OTA" | tr '[:lower:]' '[:upper:]')" = "Y" ]; then
+        echo "BBLAYERS += \"\${BSPDIR}/sources/meta-swupdate\"" >> $BUILD_DIR/conf/bblayers.conf
+        echo "BBLAYERS += \"\${BSPDIR}/sources/meta-swupdate-imx\"" >> $BUILD_DIR/conf/bblayers.conf
+    fi
+fi
 
 echo BSPDIR=$BSPDIR
 echo BUILD_DIR=$BUILD_DIR
