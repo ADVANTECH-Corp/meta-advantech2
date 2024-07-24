@@ -1,7 +1,6 @@
 # Advantech package
 IMAGE_FEATURES += " ssh-server-openssh "
 
-IMAGE_INSTALL:append:imx8mmebcrs08a2 = " modemmanager cellular-guard "
-IMAGE_INSTALL:append:imx8mmebcrs08a2 = " ecsd "
+IMAGE_INSTALL:append = " bluez5 bluez5-noinst-tools bluez5-obex openobex obexftp glibc-gconv-utf-16 glibc-utils "
 
 IMAGE_INSTALL:append:imx8mmebcrs12a1 = " ecsd  adv-overlay "
