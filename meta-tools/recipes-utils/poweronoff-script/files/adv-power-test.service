@@ -1,6 +1,6 @@
 [Unit]
 Description=Advantech Power Test
-After=systemd-logind
+After=boottimes.service
 
 [Service]
 Type=oneshot
