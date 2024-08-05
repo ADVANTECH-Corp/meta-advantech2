@@ -44,4 +44,4 @@ SERIAL_CONSOLES = "115200;ttyLP0"
 
 IMX_DEFAULT_BSP = "nxp"
 
-IMAGE_INSTALL:append = " modemmanager"
+IMAGE_INSTALL:append = " modemmanager gstreamer1.0-libav"
