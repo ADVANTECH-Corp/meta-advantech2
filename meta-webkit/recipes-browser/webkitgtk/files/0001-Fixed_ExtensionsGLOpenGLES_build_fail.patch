@@ -1,0 +1,104 @@
+From 5a2536dee79f6bdb6a75b40f9a33f7c1ba6dda85 Mon Sep 17 00:00:00 2001
+From: Adrian Perez de Castro <aperez@igalia.com>
+Date: Sun, 23 Apr 2023 23:44:51 +0300
+Subject: [PATCH] [WPE][GTK] ExtensionsGLOpenGLES.cpp uses GLES3 symbols
+ unconditionally in 2.38.x https://bugs.webkit.org/show_bug.cgi?id=255847
+
+Reviewed by NOBODY (OOPS!).
+
+EGLNativeWindowType can be aliased to a different type depending on the
+EGL implementation headers, and static_cast (or reinterpret_cast) may
+not always work. This is similar to 194561@main, but with the conversion
+being done in the opposite direction, therefore we apply the same
+solution using a C style cast expression, which works in all cases.
+
+For the build failures related to the usage of OpenGL ES 3 symbols, add
+the needed HAVE(OPENGL_3_ES) guards and avoid using GL_MAJOR_VERSION
+and instead parse the GL_VERSION string in a way similar as in the
+GLContext::version() function.
+
+* Source/WebCore/platform/graphics/egl/GLContextEGL.cpp:
+(WebCore::GLContextEGL::createWindowContext): Use a plain C cast expression.
+* Source/WebCore/platform/graphics/opengl/ExtensionsGLOpenGLES.cpp:
+(WebCore::ExtensionsGLOpenGLES::platformSupportsExtension): Apply
+HAVE(OPENGL_3_ES) guards, avoid using GL_MAJOR_VERSION.
+---
+ .../platform/graphics/egl/GLContextEGL.cpp    |  5 +++-
+ .../graphics/opengl/ExtensionsGLOpenGLES.cpp  | 28 ++++++++++++++++---
+ 2 files changed, 28 insertions(+), 5 deletions(-)
+
+diff --git a/Source/WebCore/platform/graphics/egl/GLContextEGL.cpp b/Source/WebCore/platform/graphics/egl/GLContextEGL.cpp
+index 262b2fb90237..2b76c2974394 100644
+--- a/Source/WebCore/platform/graphics/egl/GLContextEGL.cpp
++++ b/Source/WebCore/platform/graphics/egl/GLContextEGL.cpp
+@@ -195,7 +195,10 @@ std::unique_ptr<GLContextEGL> GLContextEGL::createWindowContext(GLNativeWindowTy
+ 
+     if (surface == EGL_NO_SURFACE) {
+         RELEASE_LOG_INFO(Compositing, "Cannot create EGL window surface: %s. Retrying with fallback.", lastErrorString());
+-        surface = eglCreateWindowSurface(display, config, static_cast<EGLNativeWindowType>(window), nullptr);
++        // EGLNativeWindowType changes depending on the EGL implementation, reinterpret_cast
++        // would work for pointers, and static_cast for numeric types only; so use a plain
++        // C cast expression which works in all possible cases.
++        surface = eglCreateWindowSurface(display, config, (EGLNativeWindowType) window, nullptr);
+     }
+ 
+     if (surface == EGL_NO_SURFACE) {
+diff --git a/Source/WebCore/platform/graphics/opengl/ExtensionsGLOpenGLES.cpp b/Source/WebCore/platform/graphics/opengl/ExtensionsGLOpenGLES.cpp
+index 027da1081f5f..813a6f9be33a 100644
+--- a/Source/WebCore/platform/graphics/opengl/ExtensionsGLOpenGLES.cpp
++++ b/Source/WebCore/platform/graphics/opengl/ExtensionsGLOpenGLES.cpp
+@@ -40,6 +40,8 @@
+ #include <EGL/egl.h>
+ #endif
+ 
++#include <wtf/text/StringToIntegerConversion.h>
++
+ namespace WebCore {
+ 
+ ExtensionsGLOpenGLES::ExtensionsGLOpenGLES(GraphicsContextGLOpenGL* context, bool useIndexedGetString)
+@@ -253,23 +255,41 @@ void ExtensionsGLOpenGLES::vertexAttribDivisorANGLE(GCGLuint index, GCGLuint div
+ bool ExtensionsGLOpenGLES::platformSupportsExtension(const String& name)
+ {
+     if (name == "GL_ANGLE_instanced_arrays"_s) {
++#if HAVE(OPENGL_ES_3)
+         auto majorVersion = []() {
++            // Loosely inspired by GLContext::version()
+             GLint version = 0;
+-            ::glGetIntegerv(GL_MAJOR_VERSION, &version);
+-            return version;
++            auto versionString = String::fromLatin1(reinterpret_cast<const char*>(::glGetString(GL_VERSION)));
++            Vector<String> versionStringComponents = versionString.split(' ');
++
++            Vector<String> versionDigits;
++            if (versionStringComponents[0] == "OpenGL"_s) {
++                // If the version string starts with "OpenGL" it can be GLES 1 or 2. In GLES1 version string starts
++                // with "OpenGL ES-<profile> major.minor" and in GLES2 with "OpenGL ES major.minor". Version is the
++                // third component in both cases.
++                versionDigits = versionStringComponents[2].split('.');
++            } else {
++                // Version is the first component. The version number is always "major.minor" or
++                // "major.minor.release". Ignore the release number.
++                versionDigits = versionStringComponents[0].split('.');
++            }
++            return parseIntegerAllowingTrailingJunk<GLint>(versionDigits[0]).value_or(0);
+         };
+-
++#endif
+         if (m_availableExtensions.contains(name)) {
+             m_glVertexAttribDivisorANGLE = reinterpret_cast<PFNGLVERTEXATTRIBDIVISORANGLEPROC>(eglGetProcAddress("glVertexAttribDivisorANGLE"));
+             m_glDrawArraysInstancedANGLE = reinterpret_cast<PFNGLDRAWARRAYSINSTANCEDANGLEPROC >(eglGetProcAddress("glDrawArraysInstancedANGLE"));
+             m_glDrawElementsInstancedANGLE = reinterpret_cast<PFNGLDRAWELEMENTSINSTANCEDANGLEPROC >(eglGetProcAddress("glDrawElementsInstancedANGLE"));
+             m_supportsANGLEinstancedArrays = true;
+-        } else if (majorVersion() >= 3 || (m_availableExtensions.contains("GL_EXT_instanced_arrays"_s) && m_availableExtensions.contains("GL_EXT_draw_instanced"_s))) {
++        }
++#if HAVE(OPENGL_ES_3)
++        else if (majorVersion() >= 3 || (m_availableExtensions.contains("GL_EXT_instanced_arrays"_s) && m_availableExtensions.contains("GL_EXT_draw_instanced"_s))) {
+             m_glVertexAttribDivisorANGLE = ::glVertexAttribDivisor;
+             m_glDrawArraysInstancedANGLE = ::glDrawArraysInstanced;
+             m_glDrawElementsInstancedANGLE = ::glDrawElementsInstanced;
+             m_supportsANGLEinstancedArrays = true;
+         }
++#endif
+         return m_supportsANGLEinstancedArrays;
+     }
+     

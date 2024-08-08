@@ -183,6 +183,9 @@ EOF
     if [ -n "$UBOOT_CONFIG" ]; then
     	echo "UBOOT_CONFIG=\"$UBOOT_CONFIG\"" >> conf/local.conf
     fi
+    # Add webkitgtk ------------------------------------------------
+    echo "IMAGE_INSTALL:append =\" webkitgtk\"" >> conf/local.conf
+    # --------------------------------------------------------------
     cp $TEMPLATES/* conf/
 
     for s in $HOME/.oe $HOME/.yocto; do
