@@ -14,6 +14,11 @@ then
 	[ -e /lib/modules/$M_NAME/extra ]  && rm -rf /lib/modules/$M_NAME/extra
 	sync
 
+# add timesync server , ntp.conf
+	cp /tools/adv-overlay/ntp.conf /etc
+	sync
+	systemctl restart ntpd.service
+
 ###################END YOUR WORK########################
 	sync
 	rm "${OVERLAY_FLAG}"
