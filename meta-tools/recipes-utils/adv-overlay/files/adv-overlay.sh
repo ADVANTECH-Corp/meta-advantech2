@@ -26,7 +26,7 @@ then
 fi
 
 ################### every times runing ###################
-hwclock -w
+#hwclock -w
 
 
 #systemctl disable adv-overlay.service
