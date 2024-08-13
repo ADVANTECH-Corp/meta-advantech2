@@ -25,6 +25,10 @@ then
 	echo "adv-overlay.sh end"
 fi
 
+################### every times runing ###################
+hwclock -w
+
+
 #systemctl disable adv-overlay.service
 
 sync
