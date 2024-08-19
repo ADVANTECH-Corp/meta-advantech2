@@ -7,6 +7,9 @@ require fsl-image-adv.inc
 install_utils() {
 	mkdir -p ${IMAGE_ROOTFS}/lib/firmware/nxp
 	install -m 0644 ${ADDON_FILES_DIR}/pcieuart8997_combo_v4_6x17408.bin ${IMAGE_ROOTFS}/lib/firmware/nxp/pcieuart8997_combo_v4_6x17408.bin
+
+	mkdir -p ${IMAGE_ROOTFS}/etc/systemd/network
+	install -m 0644 ${ADDON_FILES_DIR}/10-mlan0.network ${IMAGE_ROOTFS}/etc/systemd/network/10-mlan0.network
 }
 
 update_profile() {
