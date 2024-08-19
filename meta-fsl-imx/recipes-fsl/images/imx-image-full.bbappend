@@ -10,6 +10,7 @@ install_utils() {
 
 	mkdir -p ${IMAGE_ROOTFS}/etc/systemd/network
 	install -m 0644 ${ADDON_FILES_DIR}/10-mlan0.network ${IMAGE_ROOTFS}/etc/systemd/network/10-mlan0.network
+	install -m 0644 ${ADDON_FILES_DIR}/resolv.conf ${IMAGE_ROOTFS}/etc/resolv.conf
 }
 
 update_profile() {
