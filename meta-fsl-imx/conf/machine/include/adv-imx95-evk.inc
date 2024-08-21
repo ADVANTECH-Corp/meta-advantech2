@@ -19,7 +19,8 @@ UBOOT_MAKE_TARGET = ""
 
 SPL_BINARY = "spl/u-boot-spl.bin"
 
-UBOOT_CONFIG ??= "16G"
+UBOOT_CONFIG ??= "8G"
+UBOOT_CONFIG[8G] = "${UBOOT_CONFIG_BASENAME}_8G_defconfig,sdcard"
 UBOOT_CONFIG[16G] = "${UBOOT_CONFIG_BASENAME}_16G_defconfig,sdcard"
 UBOOT_CONFIG[fspi] = "${UBOOT_CONFIG_BASENAME}_fspi_defconfig"
 
