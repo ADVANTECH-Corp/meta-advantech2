@@ -30,7 +30,8 @@ OEI_CONFIGS = "ddr tcm"
 OEI_CORE   = "m33"
 OEI_SOC    = "mx95"
 OEI_BOARD  = "${@bb.utils.contains('UBOOT_CONFIG', '16G', 'mx95lp5_aom3511a1_16G', \
-                                                         'mx95lp5', d)}"
+		 bb.utils.contains('UBOOT_CONFIG', '8G', 'mx95lp5_aom3511a1_8G', \
+                                                         'mx95lp5', d), d)}"
 
 IMXBOOT_TARGETS = " \
     ${@bb.utils.contains('UBOOT_CONFIG', 'fspi', '${IMXBOOT_TARGETS_BASENAME}_a55_flexspi', '${IMXBOOT_TARGETS_BASENAME}_all', d)} \
