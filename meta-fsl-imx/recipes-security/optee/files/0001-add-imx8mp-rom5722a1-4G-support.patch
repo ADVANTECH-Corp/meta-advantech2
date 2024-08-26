@@ -1,0 +1,53 @@
+From ef4abbaf705a41771c2a0772208fae6ab265d4ca Mon Sep 17 00:00:00 2001
+From: clayderhua <clayderhua@gmail.com>
+Date: Wed, 3 Jan 2024 14:17:16 +0800
+Subject: [PATCH] rom5722a2-6G
+
+---
+ core/arch/arm/plat-imx/conf.mk | 10 +++++++++-
+ scripts/nxp_build.sh           |  1 +
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/core/arch/arm/plat-imx/conf.mk b/core/arch/arm/plat-imx/conf.mk
+index 1d5081f96..962b707de 100644
+--- a/core/arch/arm/plat-imx/conf.mk
++++ b/core/arch/arm/plat-imx/conf.mk
+@@ -71,7 +71,8 @@ mx8mn-flavorlist = \
+ 
+ mx8mp-flavorlist = \
+ 	mx8mpevk \
+-	mx8mp_rsb3720_6g
++	mx8mp_rsb3720_6g \
++	mx8mprom5722a1 \
+ 
+ mx8qm-flavorlist = \
+ 	mx8qmmek \
+@@ -400,6 +401,13 @@ $(call force,CFG_CORE_LARGE_PHYS_ADDR,y)
+ $(call force,CFG_CORE_ARM64_PA_BITS,36)
+ endif
+ 
++ifneq (,$(filter $(PLATFORM_FLAVOR),mx8mprom5722a1))
++CFG_DDR_SIZE ?= UL(0x140000000)
++CFG_UART_BASE ?= UART2_BASE
++$(call force,CFG_CORE_LARGE_PHYS_ADDR,y)
++$(call force,CFG_CORE_ARM64_PA_BITS,36)
++endif
++
+ ifneq (,$(filter $(PLATFORM_FLAVOR),mx8mp_rsb3720_6g))
+ CFG_DDR_SIZE ?= UL(0x180000000)
+ CFG_UART_BASE ?= UART3_BASE
+diff --git a/scripts/nxp_build.sh b/scripts/nxp_build.sh
+index 73b60fbde..a61ed4dc2 100755
+--- a/scripts/nxp_build.sh
++++ b/scripts/nxp_build.sh
+@@ -37,6 +37,7 @@ boards_list=(
+ 	imx-mx8mmevk \
+ 	imx-mx8mnevk \
+ 	imx-mx8mpevk \
++	imx-mx8mprom5722a1 \
+ 	imx-mx8qxpmek \
+ 	imx-mx8qmmek \
+ 	imx-mx8qmmekcockpita53 \
+-- 
+2.38.1
+
