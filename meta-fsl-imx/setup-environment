@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # -*- mode: shell-script; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
 #
 # Copyright (C) 2012, 2013, 2016 O.S. Systems Software LTDA.
@@ -27,7 +27,7 @@ PACKAGE_CLASSES=${PACKAGE_CLASSES:-package_rpm}
 usage()
 {
     echo -e "
-Usage: MACHINE=<machine> DISTRO=<distro> source $PROGNAME <build-dir>
+Usage: MACHINE=<machine> UBOOT_CONFIG=<uboot-config> DISTRO=<distro> source $PROGNAME <build-dir>
 Usage:                                   source $PROGNAME <build-dir>
     <machine>    machine name
     <distro>     distro name
@@ -59,7 +59,7 @@ Available Poky's distros: `echo; ls sources/poky/meta-poky/conf/distro/*.conf \
 Examples:
 
 - To create a new Yocto build directory:
-  $ MACHINE=imx6qdlsabresd DISTRO=fslc-framebuffer source $PROGNAME build
+  $ MACHINE=imx6qdlsabresd UBOOT_CONFIG=2G DISTRO=fslc-framebuffer source $PROGNAME build
 
 - To use an existing Yocto build directory:
   $ source $PROGNAME build
@@ -72,7 +72,7 @@ clean_up()
    unset EULA LIST_MACHINES VALID_MACHINE
    unset CWD TEMPLATES SHORTOPTS LONGOPTS ARGS PROGNAME
    unset generated_config updated
-   unset MACHINE SDKMACHINE DISTRO OEROOT
+   unset MACHINE SDKMACHINE DISTRO OEROOT UBOOT_CONFIG
 }
 
 # get command line options
@@ -172,6 +172,8 @@ EOF
         -e "s,PACKAGE_CLASSES ?=.*,PACKAGE_CLASSES ?= '$PACKAGE_CLASSES',g" \
         -i conf/local.conf
 
+    [[ $UBOOT_CONFIG != "" ]] && sed -i "/^DISTRO/a UBOOT_CONFIG ?= '$UBOOT_CONFIG'" conf/local.conf
+
     cp $TEMPLATES/* conf/
 
     for s in $HOME/.oe $HOME/.yocto; do
@@ -267,6 +269,7 @@ Your build environment has been configured with:
     DISTRO=$DISTRO
     EULA=$EULA
 EOF
+    [[ $UBOOT_CONFIG != "" ]] && echo "    UBOOT_CONFIG=$UBOOT_CONFIG"
 else
     echo "Your configuration files at $1 have not been touched."
 fi
