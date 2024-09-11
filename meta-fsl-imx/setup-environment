@@ -27,9 +27,10 @@ PACKAGE_CLASSES=${PACKAGE_CLASSES:-package_rpm}
 usage()
 {
     echo -e "
-Usage: MACHINE=<machine> DISTRO=<distro> source $PROGNAME <build-dir>
+Usage: MACHINE=<machine> UBOOT_CONFIG=<uboot-config> DISTRO=<distro> source $PROGNAME <build-dir>
 Usage:                                   source $PROGNAME <build-dir>
     <machine>    machine name
+    <uboot-config> 1G,2G,FSPI_1G...
     <distro>     distro name
     <build-dir>  build directory
 
@@ -48,7 +49,7 @@ directory <build-dir>. The build directory configuration is unchanged.
     ls sources/meta-freescale-distro/conf/distro/fsl-*.conf > /dev/null 2>&1
     if [ $? -eq 0 ]; then
         echo -e "
-Supported machines: `echo; ls sources/*/conf/machine/*.conf \
+Supported machines: `echo; ls sources/*/conf/machine/*.conf ls sources/meta-advantech/*/conf/machine/*.conf \
 | sed s/\.conf//g | sed -r 's/^.+\///' | xargs -I% echo -e "\t%"`
 
 Supported Freescale's distros: `echo; ls sources/meta-freescale-distro/conf/distro/fslc-*.conf \
@@ -62,7 +63,7 @@ Available Poky's distros: `echo; ls sources/poky/meta-poky/conf/distro/*.conf \
 Examples:
 
 - To create a new Yocto build directory:
-  $ MACHINE=imx6qdlsabresd DISTRO=fslc-framebuffer source $PROGNAME build
+  $ MACHINE=imx6qdlsabresd UBOOT_CONFIG=2G DISTRO=fslc-framebuffer source $PROGNAME build
 
 - To use an existing Yocto build directory:
   $ source $PROGNAME build
@@ -75,7 +76,7 @@ clean_up()
    unset EULA LIST_MACHINES VALID_MACHINE
    unset CWD TEMPLATES SHORTOPTS LONGOPTS ARGS PROGNAME
    unset generated_config updated
-   unset MACHINE SDKMACHINE DISTRO OEROOT
+   unset MACHINE SDKMACHINE DISTRO OEROOT UBOOT_CONFIG
 }
 
 # get command line options
@@ -167,6 +168,14 @@ if [ "$build_dir_setup_enabled" = "true" ]; then
     cat >> conf/local.conf <<EOF
 
 DL_DIR ?= "\${BSPDIR}/downloads/"
+
+# Source mirror
+ADVANTECH_MIRROR_SERVER="ftp://ess-downloads.advantech.com.tw/"
+MIRRORS:prepend = "\
+    git://.*/.* \${ADVANTECH_MIRROR_SERVER} \n \\
+    gitsm://.*/.* \${ADVANTECH_MIRROR_SERVER} \n \\
+    https?$://.*/.* \${ADVANTECH_MIRROR_SERVER} \n \\
+    ftp://.*/.* \${ADVANTECH_MIRROR_SERVER} \n "
 EOF
     # Change settings according environment
     sed -e "s,MACHINE ??=.*,MACHINE ??= '$MACHINE',g" \
@@ -175,6 +184,12 @@ EOF
         -e "s,PACKAGE_CLASSES ?=.*,PACKAGE_CLASSES ?= '$PACKAGE_CLASSES',g" \
         -i conf/local.conf
 
+    if [ -n "$UBOOT_CONFIG" ]; then
+        echo "UBOOT_CONFIG=\"$UBOOT_CONFIG\"" >> conf/local.conf
+    fi
+    # Add webkitgtk ------------------------------------------------
+    echo "IMAGE_INSTALL:append =\" webkitgtk\"" >> conf/local.conf
+    # --------------------------------------------------------------
     cp $TEMPLATES/* conf/
 
     for s in $HOME/.oe $HOME/.yocto; do
@@ -266,6 +281,7 @@ if [ -n "$generated_config" ]; then
 Your build environment has been configured with:
 
     MACHINE=$MACHINE
+    UBOOT_CONFIG=$UBOOT_CONFIG
     SDKMACHINE=$SDKMACHINE
     DISTRO=$DISTRO
     EULA=$EULA
