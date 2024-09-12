@@ -1,4 +1,4 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:${THISDIR}/${PN}:"
 KERNEL_BRANCH = "adv_6.1.22_2.0.0"
 KERNEL_SRC = "git://github.com/ADVANTECH-Corp/linux-imx.git;protocol=https"
 SRC_URI = "${KERNEL_SRC};branch=${KERNEL_BRANCH}"
@@ -38,3 +38,13 @@ do_kernel_localversion_force() {
 }
 
 addtask kernel_localversion_force before do_configure after do_kernel_localversion
+
+# Disable Vivante GPU for imx6dlrsb4411a2 machine
+SRC_URI:append:imx6dlrsb4411a2 = " file://disable-vivante-gpu.cfg"
+KERNEL_CONFIG_FRAGMENTS:append:imx6dlrsb4411a2 = " disable-vivante-gpu.cfg"
+KERNEL_CONFIG_FRAGMENTS:append:imx6dlrsb4411a2 = " ${WORKDIR}/disable-vivante-gpu.cfg"
+
+do_configure:append:imx6dlrsb4411a2 () {
+    sed -i "/CONFIG_MXC_GPU_VIV[ =]/d" ${B}/.config
+    echo "# CONFIG_MXC_GPU_VIV is not set" >> ${B}/.config
+}
