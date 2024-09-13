@@ -32,6 +32,8 @@ install_utils() {
 	mkdir -p ${IMAGE_ROOTFS}/lib/firmware/rtl_bt
 	install -m 0755 ${ADDON_FILES_DIR}/rtl8822cu_fw.bin ${IMAGE_ROOTFS}/lib/firmware/rtl_bt
 	install -m 0755 ${ADDON_FILES_DIR}/rtl8822cu_config.bin ${IMAGE_ROOTFS}/lib/firmware/rtl_bt
+	mkdir -p ${IMAGE_ROOTFS}/etc/systemd/network/
+	install -m 0755 ${ADDON_FILES_DIR}/10-wireless.network ${IMAGE_ROOTFS}/etc/systemd/network/10-wireless.network
 }
 
 update_profile() {
