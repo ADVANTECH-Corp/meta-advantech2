@@ -46,13 +46,9 @@ IMAGE_INSTALL:append:imx6qrsb4410a2 = " lirc "
 IMAGE_INSTALL:append:mx8-nxp-bsp = " si-script keyevent "
 IMAGE_INSTALL:append:imx8qmrom7720a1 = " wdt-button "
 IMAGE_INSTALL:append:imx8mprsb3720a1 = " xauth \
-                                   pylon \
-                                   python3-pypylon \
                                    gentl-producer \
                                    "
 IMAGE_INSTALL:append:imx8mpepcr5710a1 = " xauth \
-                                   pylon \
-                                   python3-pypylon \
                                    gentl-producer \
                                    "
 # Browser
