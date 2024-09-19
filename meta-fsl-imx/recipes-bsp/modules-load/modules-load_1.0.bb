@@ -11,4 +11,4 @@ do_install () {
         install -m 0755    ${WORKDIR}/advantech.conf       ${D}${sysconfdir}/modules-load.d	
 }
 
-COMPATIBLE_MACHINE = "(mx6-nxp-bsp|mx7-nxp-bsp|mx8-nxp-bsp)"
+COMPATIBLE_MACHINE = "(mx6-nxp-bsp|mx7-nxp-bsp|mx8-nxp-bsp|mx9-nxp-bsp)"
