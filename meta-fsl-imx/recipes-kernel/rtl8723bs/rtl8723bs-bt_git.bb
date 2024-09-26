@@ -19,13 +19,13 @@ do_compile(){
 }
 
 do_install(){
-	install -d ${D}/lib/firmware/rtl_bt
+	install -d ${D}/usr/lib/firmware/rtl_bt
 	install -d ${D}/opt/rtl8723bs_bt
-	install -m 0755 rtlbt_* ${D}/lib/firmware/rtl_bt
+	install -m 0755 rtlbt_* ${D}/usr/lib/firmware/rtl_bt
 	install -m 0755 rtk_hciattach ${D}/opt/rtl8723bs_bt
 	install -m 0755 start_bt.sh ${D}/opt/rtl8723bs_bt
 }
 
-FILES:${PN} = "/lib/firmware \
+FILES:${PN} = "/usr/lib/firmware \
 	     /opt/rtl8723bs_bt \
 	     "
