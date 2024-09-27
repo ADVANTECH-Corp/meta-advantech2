@@ -13,6 +13,7 @@ inherit autotools pkgconfig
 EXTRA_OECONF:append_mx6 = "--host arm-poky-linux-gnueabi"
 EXTRA_OECONF:append_mx7 = "--host arm-poky-linux-gnueabi"
 EXTRA_OECONF:append_mx8 = "--host aarch64-poky-linux"
+EXTRA_OECONF:append_mx9 = "--host aarch64-poky-linux"
 
 # We overwrite do_configure() to avoid perform autoreconf again
 do_configure() {
@@ -29,4 +30,4 @@ diag_sysroot_preprocess() {
     install -m 755 ${D}/usr/bin/key_event ${SYSROOT_DESTDIR}/usr/bin/
 }
 
-COMPATIBLE_MACHINE = "(mx6-nxp-bsp|mx7-nxp-bsp|mx8-nxp-bsp)"
+COMPATIBLE_MACHINE = "(mx6-nxp-bsp|mx7-nxp-bsp|mx8-nxp-bsp|mx9-nxp-bsp)"
