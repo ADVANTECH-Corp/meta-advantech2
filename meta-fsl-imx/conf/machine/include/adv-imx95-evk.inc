@@ -2,7 +2,7 @@ require conf/machine/include/imx-base.inc
 require conf/machine/include/arm/armv8-2a/tune-cortexa55.inc
 
 MACHINE_FEATURES += "pci wifi bluetooth"
-MACHINE_FEATURES:append:use-nxp-bsp = " nxpwifi-all-pcie jailhouse"
+MACHINE_FEATURES:append:use-nxp-bsp = " nxpiw612-sdio nxpwifi-all-pcie jailhouse"
 #MACHINE_FEATURES:append:use-nxp-bsp = " optee"
 
 KERNEL_DEVICETREE = " \
