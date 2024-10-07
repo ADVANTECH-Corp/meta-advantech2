@@ -55,3 +55,5 @@ IMX_BOOT_SEEK = "32"
 SERIAL_CONSOLES = "115200;ttyLP0"
 
 IMX_DEFAULT_BSP = "nxp"
+
+IMAGE_INSTALL:append = " modemmanager"
