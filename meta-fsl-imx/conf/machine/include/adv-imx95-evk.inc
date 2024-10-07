@@ -25,7 +25,8 @@ ATF_PLATFORM = "imx95"
 OEI_CONFIGS = "ddr tcm"
 OEI_CORE   = "m33"
 OEI_SOC    = "mx95"
-OEI_BOARD  ?= "mx95lp5"
+OEI_BOARD  ?= "${@bb.utils.contains('UBOOT_CONFIG', '16G', 'mx95lp5_aom3511a1_16G', \
+							   'mx95lp5', d)}"
 DDR_TYPE   ?= "lpddr5"
 
 IMXBOOT_VARIANTS = "alt jailhouse netc"
