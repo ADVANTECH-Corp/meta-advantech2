@@ -1,23 +1,272 @@
 diff --git a/boards/mx95lp5_aom3511a1_8G/Makefile b/boards/mx95lp5_aom3511a1_8G/Makefile
 new file mode 100644
-index 0000000..16d5ac7
+index 0000000..913e739
 --- /dev/null
 +++ b/boards/mx95lp5_aom3511a1_8G/Makefile
-@@ -0,0 +1,6 @@
+@@ -0,0 +1,23 @@
 +cpu     := m33
-+SOC     := mx95
++SOC     := MIMX95
 +SOCFULL := $(SOC)
 +SOC_DEVICE_DIR := devices/$(SOC)
 +
-+FLAGS += -DCONFIG_IMX95 -DCM33 -DDEBUG_UART_INSTANCE=2
++ifneq ($(REV),A0)
++FLAGS += -DCONFIG_DUMMY_TRAIN_DATA_SUPPORT -DCONFIG_ELE
++endif
++
++BOARDS_DIR = $(ROOT_DIR)/boards
++BOARD_DIR = $(BOARDS_DIR)/$(SOM)
++
++INCLUDE +=  \
++	-I$(BOARDS_DIR)  \
++	-I$(BOARD_DIR)
++
++OBJS += \
++	$(OUT)/board.o  \
++	$(OUT)/pin_mux.o
++
++VPATH +=  \
++	$(BOARDS_DIR)  \
++	$(BOARD_DIR)
+diff --git a/boards/mx95lp5_aom3511a1_8G/board.c b/boards/mx95lp5_aom3511a1_8G/board.c
+new file mode 100644
+index 0000000..1de0262
+--- /dev/null
++++ b/boards/mx95lp5_aom3511a1_8G/board.c
+@@ -0,0 +1,80 @@
++/*
++ * Copyright 2023-2024 NXP
++ *
++ * SPDX-License-Identifier: BSD-3-Clause
++ */
++
++#include "oei.h"
++#include "board.h"
++#include "fsl_lpuart.h"
++#include "fsl_ccm.h"
++#include "fsl_clock.h"
++
++/*******************************************************************************
++ * Variables
++ ******************************************************************************/
++/* Debug UART base pointer list */
++static LPUART_Type *const s_uartBases[] = LPUART_BASE_PTRS;
++
++/* Debug UART clock list */
++static uint32_t const s_uartClks[] =
++{
++    0U,
++    CLOCK_ROOT_LPUART1,
++    CLOCK_ROOT_LPUART2,
++    CLOCK_ROOT_LPUART3,
++    CLOCK_ROOT_LPUART4,
++    CLOCK_ROOT_LPUART5,
++    CLOCK_ROOT_LPUART6,
++    CLOCK_ROOT_LPUART7,
++    CLOCK_ROOT_LPUART8
++};
++
++/* Debug UART configuration info */
++static board_uart_config_t const s_uartConfig =
++{
++    .base = s_uartBases[BOARD_DEBUG_UART_INSTANCE],
++    .clockId = s_uartClks[BOARD_DEBUG_UART_INSTANCE],
++    .baud = BOARD_DEBUG_UART_BAUDRATE,
++    .inst = BOARD_DEBUG_UART_INSTANCE
++};
++
++/*******************************************************************************
++ * Code
++ ******************************************************************************/
++
++/*--------------------------------------------------------------------------*/
++/* Return the debug UART info                                               */
++/*--------------------------------------------------------------------------*/
++const board_uart_config_t *BOARD_GetDebugUart(void)
++{
++    return &s_uartConfig;
++}
++
++/*--------------------------------------------------------------------------*/
++/* Initialize debug console                                                 */
++/*--------------------------------------------------------------------------*/
++void BOARD_InitDebugConsole(void)
++{
++    if (s_uartConfig.base != NULL)
++    {
++#if 0
++        uint64_t rate = CCM_RootGetRate(s_uartConfig.clockId);
++#else
++        uint64_t rate = 24000000;
++#endif
++
++        /* Configure debug UART */
++        lpuart_config_t lpuart_config;
++        LPUART_GetDefaultConfig(&lpuart_config);
++        lpuart_config.baudRate_Bps = s_uartConfig.baud;
++        lpuart_config.rxFifoWatermark = ((uint8_t)
++            FSL_FEATURE_LPUART_FIFO_SIZEn(s_uartConfig.base)) - 1U;
++        lpuart_config.txFifoWatermark = ((uint8_t)
++            FSL_FEATURE_LPUART_FIFO_SIZEn(s_uartConfig.base)) - 1U;
++        lpuart_config.enableTx = true;
++        lpuart_config.enableRx = true;
++        (void) LPUART_Init(s_uartConfig.base, &lpuart_config,
++            (uint32_t) rate & 0xFFFFFFFFU);
++    }
++}
+diff --git a/boards/mx95lp5_aom3511a1_8G/board.h b/boards/mx95lp5_aom3511a1_8G/board.h
+new file mode 100644
+index 0000000..6142222
+--- /dev/null
++++ b/boards/mx95lp5_aom3511a1_8G/board.h
+@@ -0,0 +1,72 @@
++/*
++ * Copyright 2023-2024 NXP
++ *
++ * SPDX-License-Identifier: BSD-3-Clause
++ */
++
++#ifndef BOARD_H
++#define BOARD_H
++
++#include "fsl_common.h"
++#include "pin_mux.h"
++#include "config_board.h"
++
++/*!
++ * @addtogroup BRD_OEI_MX95EVK
++ * @{
++ *
++ * @file
++ * @brief
++ *
++ * Header file containing the board API.
++ */
++
++/*******************************************************************************
++ * Types
++ ******************************************************************************/
++
++/*!
++ * Debug UART configuration info
++ */
++typedef struct
++{
++    LPUART_Type *const base;  /*!< LPUART base pointer */
++    uint32_t clockId;         /*!< Clock ID */
++    uint32_t baud;            /*!< Baud rate */
++    uint8_t inst;             /*!< Instance number */
++} board_uart_config_t;
++
++#if defined(__cplusplus)
++extern "C" {
++#endif /* __cplusplus */
++
++/*******************************************************************************
++ * API
++ ******************************************************************************/
++
++/*! Init hardware */
++void BOARD_InitHardware(void);
++
++/*! Init clocks */
++void BOARD_InitClocks(void);
++
++/*!
++ * Get a device clock debug UART info.
++ *
++ * This function returns the UART info for the UART used for SM
++ * debug.
++ *
++ * @return Returns the debug UART config info.
++ */
++const board_uart_config_t *BOARD_GetDebugUart(void);
++
++/*! Init the debug UART */
++void BOARD_InitDebugConsole(void);
++
++#if defined(__cplusplus)
++}
++#endif /* __cplusplus */
++
++/** @} */
++
++#endif /* BOARD_H */
+diff --git a/boards/mx95lp5_aom3511a1_8G/config_board.h b/boards/mx95lp5_aom3511a1_8G/config_board.h
+new file mode 100644
+index 0000000..3095ebf
+--- /dev/null
++++ b/boards/mx95lp5_aom3511a1_8G/config_board.h
+@@ -0,0 +1,61 @@
++/*
++** ###################################################################
++**
++** Copyright 2023-2024 NXP
++**
++** Redistribution and use in source and binary forms, with or without modification,
++** are permitted provided that the following conditions are met:
++**
++** o Redistributions of source code must retain the above copyright notice, this list
++**   of conditions and the following disclaimer.
++**
++** o Redistributions in binary form must reproduce the above copyright notice, this
++**   list of conditions and the following disclaimer in the documentation and/or
++**   other materials provided with the distribution.
++**
++** o Neither the name of the copyright holder nor the names of its
++**   contributors may be used to endorse or promote products derived from this
++**   software without specific prior written permission.
++**
++** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
++** ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
++** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
++** DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
++** ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
++** (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++** LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
++** ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
++** SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++**
++**
++** ###################################################################
++*/
++
++/*==========================================================================*/
++/*!
++ * @addtogroup CONFIG_MX95EVK
++ * @{
++ *
++ * @file
++ * @brief
++ *
++ * Header file containing coniguration info for the board abstraction.
++ */
++/*==========================================================================*/
++
++#ifndef CONFIG_BOARD_H
++#define CONFIG_BOARD_H
++
++/* Includes */
++
++/* Defines */
++
++/*! Config for UART instance */
++#define BOARD_DEBUG_UART_INSTANCE    2U
++/*! Config for UART baudrate */
++#define BOARD_DEBUG_UART_BAUDRATE    115200U
++
++#endif /* CONFIG_BOARD_H */
++
++/** @} */
 diff --git a/boards/mx95lp5_aom3511a1_8G/ddr/Makefile b/boards/mx95lp5_aom3511a1_8G/ddr/Makefile
 new file mode 100644
-index 0000000..755c484
+index 0000000..6ff2522
 --- /dev/null
 +++ b/boards/mx95lp5_aom3511a1_8G/ddr/Makefile
-@@ -0,0 +1,4 @@
-+OBJS  += $(OUT)/lpddr5_timing.o
-+FLAGS += -DDDR5
+@@ -0,0 +1,5 @@
++DDR_CONFIG ?= lpddr5_timing
++OBJS  += $(OUT)/$(DDR_CONFIG).o
++FLAGS += -DLPDDR5
 +
 +VPATH += boards/mx95lp5_aom3511a1_8G/ddr
 diff --git a/boards/mx95lp5_aom3511a1_8G/ddr/lpddr5_timing.c b/boards/mx95lp5_aom3511a1_8G/ddr/lpddr5_timing.c
@@ -10763,4 +11012,93 @@ index 0000000..ee673a1
 +    .fsp_cfg = ddr_dram_fsp_cfg,
 +    .fsp_cfg_num = ARRAY_SIZE(ddr_dram_fsp_cfg),
 +};
++
+diff --git a/boards/mx95lp5_aom3511a1_8G/pin_mux.c b/boards/mx95lp5_aom3511a1_8G/pin_mux.c
+new file mode 100644
+index 0000000..a8c1551
+--- /dev/null
++++ b/boards/mx95lp5_aom3511a1_8G/pin_mux.c
+@@ -0,0 +1,33 @@
++/*
++ * Copyright 2023-2024 NXP
++ *
++ * SPDX-License-Identifier: BSD-3-Clause
++ */
++
++#include "pin_mux.h"
++#include "board.h"
++
++/* FUNCTION ************************************************************************************************************
++ *
++ * Function Name : BOARD_InitPins
++ * Description   : Configures pin routing and optionally pin electrical features.
++ *
++ * END ****************************************************************************************************************/
++void BOARD_InitPins(void)
++{
++#if (BOARD_DEBUG_UART_INSTANCE == 1U)
++    /* Configure LPUART 1 */
++    IOMUXC_SetPinMux(IOMUXC_PAD_UART1_RXD__LPUART1_RX, 0U);
++    IOMUXC_SetPinConfig(IOMUXC_PAD_UART1_RXD__LPUART1_RX, IOMUXC_PAD_PD(1U));
++
++    IOMUXC_SetPinMux(IOMUXC_PAD_UART1_TXD__LPUART1_TX, 0);
++    IOMUXC_SetPinConfig(IOMUXC_PAD_UART1_TXD__LPUART1_TX, IOMUXC_PAD_DSE(0xFU));
++#elif (BOARD_DEBUG_UART_INSTANCE == 2U)
++    /* Configure LPUART 2 */
++    IOMUXC_SetPinMux(IOMUXC_PAD_UART2_RXD__LPUART2_RX, 0);
++    IOMUXC_SetPinConfig(IOMUXC_PAD_UART2_RXD__LPUART2_RX, IOMUXC_PAD_PD(1U));
++
++    IOMUXC_SetPinMux(IOMUXC_PAD_UART2_TXD__LPUART2_TX, 0);
++    IOMUXC_SetPinConfig(IOMUXC_PAD_UART2_TXD__LPUART2_TX, IOMUXC_PAD_DSE(0xFU));
++#endif
++}
+diff --git a/boards/mx95lp5_aom3511a1_8G/pin_mux.h b/boards/mx95lp5_aom3511a1_8G/pin_mux.h
+new file mode 100644
+index 0000000..24cd792
+--- /dev/null
++++ b/boards/mx95lp5_aom3511a1_8G/pin_mux.h
+@@ -0,0 +1,44 @@
++/*
++ * Copyright 2023 NXP
++ *
++ * SPDX-License-Identifier: BSD-3-Clause
++ */
++
++#ifndef PIN_MUX_H
++#define PIN_MUX_H
++
++#include "fsl_iomuxc.h"
++
++/***********************************************************************************************************************
++ * Definitions
++ **********************************************************************************************************************/
++
++/*!
++ * @addtogroup BRD_SM_MX95EVK
++ * @file
++ * @{
++ */
++
++/***********************************************************************************************************************
++ * API
++ **********************************************************************************************************************/
++
++#if defined(__cplusplus)
++extern "C" {
++#endif
++
++/*!
++ * @brief Configures pin routing and optionally pin electrical features.
++ *
++ */
++void BOARD_InitPins(void); /*!< Function assigned for the core: Cortex-M33[cm33] */
++
++#if defined(__cplusplus)
++}
++#endif
++
++/*!
++ * @}
++ */
++#endif /* PIN_MUX_H */
 +
