@@ -182,6 +182,14 @@ echo "BBLAYERS += \"\${BSPDIR}/sources/meta-virtualization\"" >> $BUILD_DIR/conf
 echo "BBLAYERS += \"\${BSPDIR}/sources/meta-advantech/meta-tools \"" >> $BUILD_DIR/conf/bblayers.conf
 echo "BBLAYERS += \"\${BSPDIR}/sources/meta-advantech/meta-fsl-imx\"" >> $BUILD_DIR/conf/bblayers.conf
 
+echo "# layers for i.MX MATTER & OpenThread Border Router" >> conf/bblayers.conf
+echo "BBLAYERS += \"\${BSPDIR}/sources/meta-nxp-connectivity/meta-nxp-matter-baseline\"" >> conf/bblayers.conf
+echo "BBLAYERS += \"\${BSPDIR}/sources/meta-nxp-connectivity/meta-nxp-matter-advanced\"" >> conf/bblayers.conf
+echo "BBLAYERS += \"\${BSPDIR}/sources/meta-nxp-connectivity/meta-nxp-openthread\"" >> conf/bblayers.conf
+echo "BBLAYERS += \"\${BSPDIR}/sources/meta-nxp-connectivity/meta-nxp-otbr\"" >> conf/bblayers.conf
+echo "BBLAYERS += \"\${BSPDIR}/sources/meta-nxp-connectivity/meta-nxp-connectivity-examples\"" >> conf/bblayers.conf
+sed '/meta-matter/d' "conf/bblayers.conf" > temp && mv temp "conf/bblayers.conf"
+
 echo BSPDIR=$BSPDIR
 echo BUILD_DIR=$BUILD_DIR
 
