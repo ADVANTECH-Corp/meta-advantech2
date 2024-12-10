@@ -1,0 +1,10 @@
+[Unit]
+Description=Key Event
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/key_event
+StandardOutput=kmsg+console
+
+[Install]
+WantedBy=multi-user.target
