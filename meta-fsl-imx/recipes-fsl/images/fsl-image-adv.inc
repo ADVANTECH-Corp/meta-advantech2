@@ -33,6 +33,8 @@ IMAGE_INSTALL += " \
     mdio-tool \
     hwclock \
     libgpiod-tools \
+    poweronoff-script \
+    si-script \
 "
 
 # Depends on projects
