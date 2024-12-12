@@ -19,8 +19,10 @@ install_utils() {
         install -m 0755 ${ADDON_FILES_DIR}/mlanutl ${IMAGE_ROOTFS}/usr/local/bin
         mkdir -p ${IMAGE_ROOTFS}/lib/firmware/rtlwifi/rtl8821ae
         install -m 0755 ${ADDON_FILES_DIR}/wifi_ant_isolation.txt ${IMAGE_ROOTFS}/lib/firmware/rtlwifi/rtl8821ae
-        install -m 0644 ${ADDON_FILES_DIR}/sdsd8997_combo_v4.bin ${IMAGE_ROOTFS}/lib/firmware/nxp/sdsd8997_combo_v4.bin
-        install -m 0644 ${ADDON_FILES_DIR}/pcieuart8997_combo_v4_mxm5x17391.bin ${IMAGE_ROOTFS}/lib/firmware/nxp/pcieuart8997_combo_v4_mxm5x17391.bin
+        install -m 0644 ${ADDON_FILES_DIR}/sduart_nw61x_v1.bin.se ${IMAGE_ROOTFS}/lib/firmware/nxp/sduart_nw61x_v1.bin.se
+        install -m 0644 ${ADDON_FILES_DIR}/sd_w61x_v1.bin.se ${IMAGE_ROOTFS}/lib/firmware/nxp/sd_w61x_v1.bin.se
+        install -m 0644 ${ADDON_FILES_DIR}/uartspi_n61x_v1.bin.se ${IMAGE_ROOTFS}/lib/firmware/nxp/uartspi_n61x_v1.bin.se
+        install -m 0644 ${ADDON_FILES_DIR}/uartuart_n61x_v1.bin.se ${IMAGE_ROOTFS}/lib/firmware/nxp/uartuart_n61x_v1.bin.se
         install -m 0755 ${ADDON_FILES_DIR}/quectel-CM ${IMAGE_ROOTFS}/usr/bin/quectel-CM
         mkdir -p ${IMAGE_ROOTFS}/lib/firmware/qca
         install -m 0644 ${ADDON_FILES_DIR}/nvm_usb_00000302.bin ${IMAGE_ROOTFS}/lib/firmware/qca/nvm_usb_00000302.bin
@@ -53,5 +55,5 @@ EOB
 }
 
 ROOTFS_POSTPROCESS_COMMAND += "update_profile ;"
-#ROOTFS_POSTPROCESS_COMMAND += "install_utils;"
+ROOTFS_POSTPROCESS_COMMAND += "install_utils;"
 ROOTFS_POSTPROCESS_COMMAND += "fbi_rootfs_postprocess;"
