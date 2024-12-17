@@ -35,6 +35,7 @@ IMAGE_INSTALL += " \
     libgpiod-tools \
     poweronoff-script \
     si-script \
+    ecsd \
 "
 
 # Depends on projects
