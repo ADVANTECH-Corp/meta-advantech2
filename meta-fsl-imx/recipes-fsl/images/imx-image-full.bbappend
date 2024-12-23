@@ -12,6 +12,7 @@ fbi_rootfs_postprocess() {
 
 install_utils() {
         mkdir -p ${IMAGE_ROOTFS}/usr/local/bin
+	mkdir -p ${IMAGE_ROOTFS}/lib/firmware/nxp
         install -m 0755 ${ADDON_FILES_DIR}/bt_pair.sh ${IMAGE_ROOTFS}/usr/local/bin
         install -m 0755 ${ADDON_FILES_DIR}/bt_send.sh ${IMAGE_ROOTFS}/usr/local/bin
         install -m 0755 ${ADDON_FILES_DIR}/bt_obexd_start.sh ${IMAGE_ROOTFS}/usr/local/bin
