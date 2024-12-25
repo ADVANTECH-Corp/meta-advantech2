@@ -40,4 +40,5 @@ IMAGE_INSTALL += " \
 
 # Depends on projects
 IMAGE_INSTALL:append:imx8mmebcrs16a1 = " openthread openthread-iwxxx-spi otbr tayga otbr-iwxxx-spi \
-					  bluez5 bluez5-noinst-tools bluez5-obex openobex obexftp glibc-gconv-utf-16 glibc-utils "
+					  bluez5 bluez5-noinst-tools bluez5-obex openobex obexftp glibc-gconv-utf-16 glibc-utils \
+					  kea "
