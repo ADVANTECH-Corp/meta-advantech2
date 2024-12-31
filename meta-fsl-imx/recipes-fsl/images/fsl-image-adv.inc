@@ -58,5 +58,7 @@ IMAGE_INSTALL:append:imx8mpepcr5710a1 = " xauth \
                                    python3-pypylon \
                                    gentl-producer \
                                    "
+IMAGE_INSTALL:append:imx93afee320a1 = " open-plc-utils"
+
 # Browser
 #IMAGE_INSTALL += " firefox "
