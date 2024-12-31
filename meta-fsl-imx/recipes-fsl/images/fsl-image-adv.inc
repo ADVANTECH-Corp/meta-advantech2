@@ -58,7 +58,7 @@ IMAGE_INSTALL:append:imx8mpepcr5710a1 = " xauth \
                                    python3-pypylon \
                                    gentl-producer \
                                    "
-IMAGE_INSTALL:append:imx93afee320a1 = " open-plc-utils"
+IMAGE_INSTALL:append:imx93afee320a1 = " open-plc-utils rtdconverter rtdtest-script"
 
 # Browser
 #IMAGE_INSTALL += " firefox "
