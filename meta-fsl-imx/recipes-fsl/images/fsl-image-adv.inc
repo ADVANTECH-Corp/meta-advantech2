@@ -36,6 +36,7 @@ IMAGE_INSTALL += " \
     poweronoff-script \
     si-script \
     ecsd \
+    add-router \
 "
 
 # Depends on projects
