@@ -38,7 +38,7 @@ install_utils() {
         install -m 0644 ${ADDON_FILES_DIR}/hostapd.VHT80.conf ${IMAGE_ROOTFS}/etc/hostapd.VHT80.conf
         install -m 0644 ${ADDON_FILES_DIR}/udhcpd.conf ${IMAGE_ROOTFS}/etc/udhcpd.conf
         mkdir -p ${IMAGE_ROOTFS}/etc/systemd/network/
-        install -m 0755 ${ADDON_FILES_DIR}/10-wireless.network ${IMAGE_ROOTFS}/etc/systemd/network/10-wireless.network
+        install -m 0644 ${ADDON_FILES_DIR}/10-wireless.network ${IMAGE_ROOTFS}/etc/systemd/network/10-wireless.network
 }
 
 update_profile() {
