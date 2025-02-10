@@ -24,6 +24,7 @@ install_utils() {
         install -m 0644 ${ADDON_FILES_DIR}/uartspi_n61x_v1.bin.se ${IMAGE_ROOTFS}/lib/firmware/nxp/uartspi_n61x_v1.bin.se
         install -m 0644 ${ADDON_FILES_DIR}/uartuart_n61x_v1.bin.se ${IMAGE_ROOTFS}/lib/firmware/nxp/uartuart_n61x_v1.bin.se
         install -m 0755 ${ADDON_FILES_DIR}/quectel-CM ${IMAGE_ROOTFS}/usr/bin/quectel-CM
+        install -m 0755 ${ADDON_FILES_DIR}/adv-quectel-CM ${IMAGE_ROOTFS}/usr/bin/adv-quectel-CM
         mkdir -p ${IMAGE_ROOTFS}/lib/firmware/qca
         install -m 0644 ${ADDON_FILES_DIR}/nvm_usb_00000302.bin ${IMAGE_ROOTFS}/lib/firmware/qca/nvm_usb_00000302.bin
         install -m 0644 ${ADDON_FILES_DIR}/rampatch_usb_00000302.bin ${IMAGE_ROOTFS}/lib/firmware/qca/rampatch_usb_00000302.bin
@@ -36,6 +37,8 @@ install_utils() {
         mkdir -p ${IMAGE_ROOTFS}/etc
         install -m 0644 ${ADDON_FILES_DIR}/hostapd.VHT80.conf ${IMAGE_ROOTFS}/etc/hostapd.VHT80.conf
         install -m 0644 ${ADDON_FILES_DIR}/udhcpd.conf ${IMAGE_ROOTFS}/etc/udhcpd.conf
+        mkdir -p ${IMAGE_ROOTFS}/etc/systemd/network/
+        install -m 0755 ${ADDON_FILES_DIR}/10-wireless.network ${IMAGE_ROOTFS}/etc/systemd/network/10-wireless.network
 }
 
 update_profile() {

@@ -1,0 +1,11 @@
+[Match]
+Name=mlan0
+
+[Network]
+DHCP=yes
+
+[Match]
+Name=wwan0
+
+[Network]
+DHCP=yes
