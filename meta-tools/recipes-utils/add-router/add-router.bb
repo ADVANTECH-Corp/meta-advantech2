@@ -4,6 +4,9 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/GPL-2.0-only;md5=801f80980d171d
 
 SRC_URI = "file://adv-router.service \
 	   file://adv-router \
+	   file://adv_close_service.service \
+	   file://adv_close_service.sh \
+	   file://resolv.conf \
 	   file://10-eth0-static.network "
 
 inherit systemd
@@ -15,21 +18,21 @@ do_install() {
 #	install -m 755 ${WORKDIR}/adv-router ${D}/usr/sbin/adv-router
 	install -m 644 ${WORKDIR}/10-eth0-static.network ${D}/etc/systemd/network/10-eth0-static.network
 #	install -m 755 ${WORKDIR}/adv-wwan0.sh ${D}/tools
-#	install -m 755 ${WORKDIR}/close_resolved_service.sh ${D}/tools
-#	install -m 755 ${WORKDIR}/resolv.conf ${D}/etc/
+	install -m 755 ${WORKDIR}/adv_close_service.sh ${D}/tools
+	install -m 644 ${WORKDIR}/resolv.conf ${D}/tools
 
     # systemd
-#    if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
-#        install -d ${D}${systemd_unitdir}/system
+    if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
+	install -d ${D}${systemd_unitdir}/system
 #        install -m 0644 ${WORKDIR}/adv-router.service ${D}${systemd_unitdir}/system
-#	install -m 0644 ${WORKDIR}/close_systemd_resolved.service ${D}${systemd_unitdir}/system
+	install -m 0644 ${WORKDIR}/adv_close_service.service ${D}${systemd_unitdir}/system
 #	install -m 0644 ${WORKDIR}/adv-route-wwan0.service ${D}${systemd_unitdir}/system
-#    fi
+    fi
 }
 
 
 #SYSTEMD_SERVICE:${PN} = "adv-router.service"
-#SYSTEMD_SERVICE:${PN} += "close_systemd_resolved.service"
+SYSTEMD_SERVICE:${PN} = "adv_close_service.service"
 #SYSTEMD_SERVICE:${PN} += "adv-route-wwan0.service"
 
 FILES:${PN} = "/tools /usr/sbin /etc"
