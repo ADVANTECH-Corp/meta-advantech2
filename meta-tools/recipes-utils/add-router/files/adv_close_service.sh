@@ -27,14 +27,15 @@ sync
 #        systemctl disable close_systemd_resolved.service
 #fi
 
+
+systemctl enable systemd-resolved.service
+systemctl restart systemd-resolved.service
+sync
+sleep 1
+rm /etc/resolv.conf
+ln -s /etc/resolv-conf.systemd /etc/resolv.conf
+sync
+
 systemctl disable adv_close_service.service
-sync
-
-[ -e /etc/resolv.conf ] && rm /etc/resolv.conf
-sync
-[ -e /etc/resolv.conf ] || ln -s /etc/resolv-conf.systemd /etc/resolv.conf
-sync
-#[ -e /etc/resolv.conf ] || cp /tools/resolv.conf /etc
-
 sync
 
