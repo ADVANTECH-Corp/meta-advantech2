@@ -36,6 +36,9 @@ rm /etc/resolv.conf
 ln -s /etc/resolv-conf.systemd /etc/resolv.conf
 sync
 
+rm -rf /lib/modules/6.6.23*/updates/
+rmmod mlan
+
 systemctl disable adv_close_service.service
 sync
 
