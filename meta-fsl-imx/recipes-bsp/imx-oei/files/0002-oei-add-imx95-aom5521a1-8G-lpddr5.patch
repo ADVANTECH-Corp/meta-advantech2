@@ -1,8 +1,8 @@
-diff --git a/boards/mx95lp5_aom3511a1_8G/Makefile b/boards/mx95lp5_aom3511a1_8G/Makefile
+diff --git a/boards/mx95lp5_aom5521a1_8G/Makefile b/boards/mx95lp5_aom5521a1_8G/Makefile
 new file mode 100644
 index 0000000..913e739
 --- /dev/null
-+++ b/boards/mx95lp5_aom3511a1_8G/Makefile
++++ b/boards/mx95lp5_aom5521a1_8G/Makefile
 @@ -0,0 +1,23 @@
 +cpu     := m33
 +SOC     := MIMX95
@@ -27,11 +27,11 @@ index 0000000..913e739
 +VPATH +=  \
 +	$(BOARDS_DIR)  \
 +	$(BOARD_DIR)
-diff --git a/boards/mx95lp5_aom3511a1_8G/board.c b/boards/mx95lp5_aom3511a1_8G/board.c
+diff --git a/boards/mx95lp5_aom5521a1_8G/board.c b/boards/mx95lp5_aom5521a1_8G/board.c
 new file mode 100644
 index 0000000..1de0262
 --- /dev/null
-+++ b/boards/mx95lp5_aom3511a1_8G/board.c
++++ b/boards/mx95lp5_aom5521a1_8G/board.c
 @@ -0,0 +1,80 @@
 +/*
 + * Copyright 2023-2024 NXP
@@ -113,11 +113,11 @@ index 0000000..1de0262
 +            (uint32_t) rate & 0xFFFFFFFFU);
 +    }
 +}
-diff --git a/boards/mx95lp5_aom3511a1_8G/board.h b/boards/mx95lp5_aom3511a1_8G/board.h
+diff --git a/boards/mx95lp5_aom5521a1_8G/board.h b/boards/mx95lp5_aom5521a1_8G/board.h
 new file mode 100644
 index 0000000..6142222
 --- /dev/null
-+++ b/boards/mx95lp5_aom3511a1_8G/board.h
++++ b/boards/mx95lp5_aom5521a1_8G/board.h
 @@ -0,0 +1,72 @@
 +/*
 + * Copyright 2023-2024 NXP
@@ -191,11 +191,11 @@ index 0000000..6142222
 +/** @} */
 +
 +#endif /* BOARD_H */
-diff --git a/boards/mx95lp5_aom3511a1_8G/config_board.h b/boards/mx95lp5_aom3511a1_8G/config_board.h
+diff --git a/boards/mx95lp5_aom5521a1_8G/config_board.h b/boards/mx95lp5_aom5521a1_8G/config_board.h
 new file mode 100644
 index 0000000..3095ebf
 --- /dev/null
-+++ b/boards/mx95lp5_aom3511a1_8G/config_board.h
++++ b/boards/mx95lp5_aom5521a1_8G/config_board.h
 @@ -0,0 +1,61 @@
 +/*
 +** ###################################################################
@@ -258,22 +258,22 @@ index 0000000..3095ebf
 +#endif /* CONFIG_BOARD_H */
 +
 +/** @} */
-diff --git a/boards/mx95lp5_aom3511a1_8G/ddr/Makefile b/boards/mx95lp5_aom3511a1_8G/ddr/Makefile
+diff --git a/boards/mx95lp5_aom5521a1_8G/ddr/Makefile b/boards/mx95lp5_aom5521a1_8G/ddr/Makefile
 new file mode 100644
 index 0000000..6ff2522
 --- /dev/null
-+++ b/boards/mx95lp5_aom3511a1_8G/ddr/Makefile
++++ b/boards/mx95lp5_aom5521a1_8G/ddr/Makefile
 @@ -0,0 +1,5 @@
 +DDR_CONFIG ?= lpddr5_timing
 +OBJS  += $(OUT)/$(DDR_CONFIG).o
 +FLAGS += -DLPDDR5
 +
-+VPATH += boards/mx95lp5_aom3511a1_8G/ddr
-diff --git a/boards/mx95lp5_aom3511a1_8G/ddr/lpddr5_timing.c b/boards/mx95lp5_aom3511a1_8G/ddr/lpddr5_timing.c
++VPATH += boards/mx95lp5_aom5521a1_8G/ddr
+diff --git a/boards/mx95lp5_aom5521a1_8G/ddr/lpddr5_timing.c b/boards/mx95lp5_aom5521a1_8G/ddr/lpddr5_timing.c
 new file mode 100644
 index 0000000..ee673a1
 --- /dev/null
-+++ b/boards/mx95lp5_aom3511a1_8G/ddr/lpddr5_timing.c
++++ b/boards/mx95lp5_aom5521a1_8G/ddr/lpddr5_timing.c
 @@ -0,0 +1,10738 @@
 +/*
 + * Copyright 2023-2024 NXP
@@ -11013,11 +11013,11 @@ index 0000000..ee673a1
 +    .fsp_cfg_num = ARRAY_SIZE(ddr_dram_fsp_cfg),
 +};
 +
-diff --git a/boards/mx95lp5_aom3511a1_8G/pin_mux.c b/boards/mx95lp5_aom3511a1_8G/pin_mux.c
+diff --git a/boards/mx95lp5_aom5521a1_8G/pin_mux.c b/boards/mx95lp5_aom5521a1_8G/pin_mux.c
 new file mode 100644
 index 0000000..a8c1551
 --- /dev/null
-+++ b/boards/mx95lp5_aom3511a1_8G/pin_mux.c
++++ b/boards/mx95lp5_aom5521a1_8G/pin_mux.c
 @@ -0,0 +1,33 @@
 +/*
 + * Copyright 2023-2024 NXP
@@ -11052,11 +11052,11 @@ index 0000000..a8c1551
 +    IOMUXC_SetPinConfig(IOMUXC_PAD_UART2_TXD__LPUART2_TX, IOMUXC_PAD_DSE(0xFU));
 +#endif
 +}
-diff --git a/boards/mx95lp5_aom3511a1_8G/pin_mux.h b/boards/mx95lp5_aom3511a1_8G/pin_mux.h
+diff --git a/boards/mx95lp5_aom5521a1_8G/pin_mux.h b/boards/mx95lp5_aom5521a1_8G/pin_mux.h
 new file mode 100644
 index 0000000..24cd792
 --- /dev/null
-+++ b/boards/mx95lp5_aom3511a1_8G/pin_mux.h
++++ b/boards/mx95lp5_aom5521a1_8G/pin_mux.h
 @@ -0,0 +1,44 @@
 +/*
 + * Copyright 2023 NXP
