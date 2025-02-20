@@ -14,7 +14,7 @@ sync
 systemctl enable systemd-resolved.service
 systemctl restart systemd-resolved.service
 sync
-sleep 1
+sleep 0.2
 rm /etc/resolv.conf
 ln -s /etc/resolv-conf.systemd /etc/resolv.conf
 sync

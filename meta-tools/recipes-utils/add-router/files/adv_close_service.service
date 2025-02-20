@@ -1,6 +1,6 @@
 [Unit]
 Description=close_some_service
-After=connman.service systemd-resolved.service
+Before=connman.service
 
 [Service]
 Type=forking
