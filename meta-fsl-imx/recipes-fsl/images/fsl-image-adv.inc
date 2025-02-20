@@ -37,6 +37,7 @@ IMAGE_INSTALL += " \
     si-script \
     ecsd \
     add-router \
+    adv-overlay \
 "
 
 # Depends on projects

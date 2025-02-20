@@ -1,6 +1,6 @@
 [Unit]
 Description=ADV Overlay Onetimes
-After=xinetd.service
+Before=ntpd.service
 
 [Service]
 ExecStart=/tools/adv-overlay/adv-overlay.sh
