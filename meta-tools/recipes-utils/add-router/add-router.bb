@@ -6,6 +6,7 @@ SRC_URI = "file://adv-router.service \
 	   file://adv-router \
 	   file://adv_close_service.service \
 	   file://adv_close_service.sh \
+	   file://systemd-networkd-wait-online.service \
 	   file://resolv.conf \
 	   file://10-eth0-static.network "
 
@@ -14,12 +15,13 @@ inherit systemd
 do_install() {
 	install -d ${D}/usr/sbin
 	install -d ${D}/etc/systemd/network
-	install -d ${D}/tools
+	install -d ${D}/tools/add-router
 #	install -m 755 ${WORKDIR}/adv-router ${D}/usr/sbin/adv-router
 	install -m 644 ${WORKDIR}/10-eth0-static.network ${D}/etc/systemd/network/10-eth0-static.network
 #	install -m 755 ${WORKDIR}/adv-wwan0.sh ${D}/tools
-	install -m 755 ${WORKDIR}/adv_close_service.sh ${D}/tools
-	install -m 644 ${WORKDIR}/resolv.conf ${D}/tools
+	install -m 755 ${WORKDIR}/adv_close_service.sh ${D}/tools/add-router
+	install -m 755 ${WORKDIR}/systemd-networkd-wait-online.service ${D}/tools/add-router
+	install -m 644 ${WORKDIR}/resolv.conf ${D}/tools/add-router
 
     # systemd
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then

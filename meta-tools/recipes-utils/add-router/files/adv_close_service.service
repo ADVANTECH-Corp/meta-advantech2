@@ -4,7 +4,7 @@ After=connman.service systemd-resolved.service
 
 [Service]
 Type=forking
-ExecStart=/tools/adv_close_service.sh
+ExecStart=/tools/add-router/adv_close_service.sh
 
 [Install]
 WantedBy=multi-user.target
