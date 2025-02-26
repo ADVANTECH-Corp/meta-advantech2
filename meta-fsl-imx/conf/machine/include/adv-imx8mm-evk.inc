@@ -1,6 +1,6 @@
 MACHINEOVERRIDES =. "mx8mm:"
 
-require conf/machine/include/imx-base.inc
+require conf/machine/include/adv-imx-base.inc
 require conf/machine/include/arm/armv8a/tune-cortexa53.inc
 
 # Mainline BSP defaults to "generic" cortexa53 configuration,
