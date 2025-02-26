@@ -4,6 +4,9 @@ require conf/machine/include/arm/armv8-2a/tune-cortexa55.inc
 MACHINE_FEATURES += "pci wifi bluetooth"
 MACHINE_FEATURES:append:use-nxp-bsp = " optee jailhouse nxpiw612-sdio"
 
+# Extra udev rules
+MACHINE_EXTRA_RRECOMMENDS += " udev-rules-adv "
+
 KERNEL_DEVICETREE = " \
     freescale/${KERNEL_DEVICETREE_BASENAME}.dtb \
 "
