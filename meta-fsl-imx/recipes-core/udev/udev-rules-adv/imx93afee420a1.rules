@@ -1,2 +1,4 @@
+SUBSYSTEM=="net", ACTION=="add", KERNEL=="eth0", NAME="lan1"
+SUBSYSTEM=="net", ACTION=="add", KERNEL=="eth1", NAME="lan0"
 SUBSYSTEM=="net", ACTION=="add", KERNEL=="eth2", NAME="plc1"
 SUBSYSTEM=="net", ACTION=="add", KERNEL=="eth3", NAME="plc0"
