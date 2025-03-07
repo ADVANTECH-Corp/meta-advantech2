@@ -2,7 +2,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 KERNEL_BRANCH = "adv_6.6.36_2.1.0"
 KERNEL_SRC = "git://github.com/ADVANTECH-Corp/linux-imx.git;protocol=https"
 SRC_URI = "${KERNEL_SRC};branch=${KERNEL_BRANCH}"
-SRCREV = "cbfc8917afc8ceec4298081abe1bb028be8105d5"
+SRCREV = "${AUTOREV}"
 SCMVERSION = "n"
 
 # Linux Kernel Localversion
