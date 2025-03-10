@@ -11,7 +11,7 @@ do_install () {
 	install -d ${D}${sysconfdir}/udev/rules.d
 }
 
-do_install:imx93afee320a1() {
+do_install:imx93afee420a1() {
 	install -d ${D}${sysconfdir}/udev/rules.d
 	install -m 0644 ${WORKDIR}/imx93afee420a1.rules ${D}${sysconfdir}/udev/rules.d/
 }
