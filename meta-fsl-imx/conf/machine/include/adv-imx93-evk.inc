@@ -25,6 +25,8 @@ UBOOT_CONFIG ??= "sd"
 UBOOT_CONFIG[sd]   = "${UBOOT_CONFIG_BASENAME}_defconfig,sdcard"
 UBOOT_CONFIG[ecc]  = "${UBOOT_CONFIG_BASENAME}_inline_ecc_defconfig"
 UBOOT_CONFIG[ld]   = "${UBOOT_CONFIG_BASENAME}_ld_defconfig"
+UBOOT_CONFIG[2G]   = "${UBOOT_CONFIG_BASENAME}_2G_defconfig,sdcard"
+UBOOT_CONFIG[LVDS_2G] = "${UBOOT_CONFIG_BASENAME}_LVDS_2G_defconfig,sdcard"
 
 # Set ATF platform name
 ATF_PLATFORM = "imx93"
