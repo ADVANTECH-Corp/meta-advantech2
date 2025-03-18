@@ -3,7 +3,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 UBOOT_SRC = "git://github.com/ADVANTECH-Corp/uboot-imx.git;protocol=https"
 SRCBRANCH = "adv_v2023.04_6.1.36-2.1.0"
 SRC_URI = "${UBOOT_SRC};branch=${SRCBRANCH}"
-SRCREV = "80f3712febb1fbc12adb2771c21560a5e454771d"
+SRCREV = "${AUTOREV}"
 
 #do_deploy_append_mx6() {
 #    install -d ${DEPLOYDIR}
