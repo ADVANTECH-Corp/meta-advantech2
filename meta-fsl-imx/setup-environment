@@ -174,6 +174,10 @@ EOF
         -e "s,DISTRO ?=.*,DISTRO ?= '$DISTRO',g" \
         -e "s,PACKAGE_CLASSES ?=.*,PACKAGE_CLASSES ?= '$PACKAGE_CLASSES',g" \
         -i conf/local.conf
+# Add cve -----------------------------------------------------
+    echo "INHERIT += \" cve-check\"" >> conf/local.conf
+# Add SBOM ----------------------------------------------------
+    echo "INHERIT += \" create-spdx\"" >> conf/local.conf
 
     cp $TEMPLATES/* conf/
 
