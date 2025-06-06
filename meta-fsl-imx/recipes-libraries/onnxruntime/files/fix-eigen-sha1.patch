@@ -1,0 +1,13 @@
+diff --git a/cmake/external/eigen.cmake b/cmake/external/eigen.cmake
+index b123adb..f983618 100644
+--- a/cmake/external/eigen.cmake
++++ b/cmake/external/eigen.cmake
+@@ -6,7 +6,7 @@ else ()
+     FetchContent_Declare(
+         eigen
+         URL ${DEP_URL_eigen}
+-        URL_HASH SHA1=${DEP_SHA1_eigen}
++        URL_HASH SHA1=32b145f525a8308d7ab1c09388b2e288312d8eba
+     )
+ 
+     FetchContent_Populate(eigen)
