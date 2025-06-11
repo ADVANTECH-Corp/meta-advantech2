@@ -50,7 +50,7 @@ IMAGE_INSTALL:append:imx8mprsb3720a1 = " xauth \
                                    python3-pypylon \
                                    gentl-producer \
                                    "
-IMAGE_INSTALL:append:imx8mmrsb3730a2 = " dns-add adv-overlay ecsd \
+IMAGE_INSTALL:append:imx8mmrsb3730a2 = " adv-overlay ecsd \
                                     chromium-ozone-wayland ttf-wqy-zenhei \
                                     "
 IMAGE_INSTALL:append:imx8mpepcr5710a1 = " xauth \
