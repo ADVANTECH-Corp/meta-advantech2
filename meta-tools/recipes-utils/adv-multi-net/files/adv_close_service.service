@@ -1,0 +1,10 @@
+[Unit]
+Description=close_some_service
+Before=connman.service
+
+[Service]
+Type=forking
+ExecStart=/tools/adv-muti-networks/adv_close_service.sh
+
+[Install]
+WantedBy=multi-user.target

@@ -50,7 +50,7 @@ IMAGE_INSTALL:append:imx8mprsb3720a1 = " xauth \
                                    python3-pypylon \
                                    gentl-producer \
                                    "
-IMAGE_INSTALL:append:imx8mmrsb3730a2 = " adv-overlay ecsd \
+IMAGE_INSTALL:append:imx8mmrsb3730a2 = " adv-multi-net adv-overlay ecsd \
                                     chromium-ozone-wayland ttf-wqy-zenhei \
                                     bluez5 bluez5-noinst-tools bluez5-obex openobex obexftp glibc-gconv-utf-16 glibc-utils \
                                     "
