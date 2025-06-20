@@ -8,11 +8,11 @@ then
 ##################START YOUR WORK#######################
 
 # fix wifi modeproe issue ,(rm -rf /lib/moduels/xxx/updates)
-	M_NAME=`uname -a | awk {print'$3'}`
-	[ -e /lib/modules/$M_NAME ] && echo "/lib/modules/$M_NAME File exists"
-	[ -e /lib/modules/$M_NAME/updates ]  && echo "/lib/modules/$M_NAME/updates File exists , start to remove"
-	[ -e /lib/modules/$M_NAME/updates ]  && rm -rf /lib/modules/$M_NAME/updates
-	sync
+#	M_NAME=`uname -a | awk {print'$3'}`
+#	[ -e /lib/modules/$M_NAME ] && echo "/lib/modules/$M_NAME File exists"
+#	[ -e /lib/modules/$M_NAME/updates ]  && echo "/lib/modules/$M_NAME/updates File exists , start to remove"
+#	[ -e /lib/modules/$M_NAME/updates ]  && rm -rf /lib/modules/$M_NAME/updates
+#	sync
 
 # add timesync server , ntp.conf
 	cp /tools/adv-overlay/ntp.conf /etc
