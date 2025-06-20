@@ -51,9 +51,11 @@ IMAGE_INSTALL:append:imx8mprsb3720a1 = " xauth \
                                    gentl-producer \
                                    "
 IMAGE_INSTALL:append:imx8mmrsb3730a2 = " adv-multi-net adv-overlay ecsd \
-                                    chromium-ozone-wayland ttf-wqy-zenhei \
                                     bluez5 bluez5-noinst-tools bluez5-obex openobex obexftp glibc-gconv-utf-16 glibc-utils \
                                     "
+# rsb3730a2 backup packages
+#                                    chromium-ozone-wayland ttf-wqy-zenhei
+
 IMAGE_INSTALL:append:imx8mpepcr5710a1 = " xauth \
                                    pylon \
                                    python3-pypylon \
