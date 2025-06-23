@@ -50,7 +50,7 @@ IMAGE_INSTALL:append:imx8mprsb3720a1 = " xauth \
                                    python3-pypylon \
                                    gentl-producer \
                                    "
-IMAGE_INSTALL:append:imx8mmrsb3730a2 = " adv-multi-net adv-overlay ecsd \
+IMAGE_INSTALL:append:imx8mmrsb3730a2 = " dns-add adv-multi-net adv-overlay ecsd \
                                     bluez5 bluez5-noinst-tools bluez5-obex openobex obexftp glibc-gconv-utf-16 glibc-utils \
                                     "
 # rsb3730a2 backup packages
