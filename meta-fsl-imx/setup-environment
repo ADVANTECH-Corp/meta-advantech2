@@ -177,10 +177,6 @@ EOF
     if [ -n "$UBOOT_CONFIG" ]; then
       echo "UBOOT_CONFIG=\"$UBOOT_CONFIG\"" >> conf/local.conf
     fi
-# Add cve -----------------------------------------------------
-    echo "INHERIT += \" cve-check\"" >> conf/local.conf
-# Add SBOM ----------------------------------------------------
-    echo "INHERIT += \" create-spdx\"" >> conf/local.conf
 
     cp $TEMPLATES/* conf/
 
