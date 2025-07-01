@@ -32,3 +32,6 @@ IMAGE_INSTALL += " \
 IMAGE_INSTALL:append:imx8mmebcrs16a1 = " openthread openthread-iwxxx-spi otbr tayga otbr-iwxxx-spi \
 					  bluez5 bluez5-noinst-tools bluez5-obex openobex obexftp glibc-gconv-utf-16 glibc-utils \
 					  kea "
+
+IMAGE_INSTALL:remove:imx8mmebcrs08a2 = " add-router"
+IMAGE_INSTALL:append:imx8mmebcrs08a2 = " modemmanager net-service "
