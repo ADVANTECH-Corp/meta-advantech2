@@ -47,7 +47,7 @@ IMXBOOT_TARGETS_SD = " \
        bb.utils.contains('IMXBOOT_VARIANT', 'netc',      '${IMXBOOT_TARGETS_BASENAME}_netc', \
        bb.utils.contains('IMXBOOT_VARIANT', 'rpmsg',     '${IMXBOOT_TARGETS_BASENAME}_lpboot_sm_a55', \
        bb.utils.contains('IMXBOOT_VARIANT', 'sof',       '${IMXBOOT_TARGETS_BASENAME}_a55', \
-                                                         '${IMXBOOT_TARGETS_BASENAME}_all ${IMXBOOT_TARGETS_BASENAME}_a55', d), d), d), d), d)} \
+                                                         '${IMXBOOT_TARGETS_BASENAME}_all', d), d), d), d), d)} \
 "
 
 IMXBOOT_TARGETS = " \
