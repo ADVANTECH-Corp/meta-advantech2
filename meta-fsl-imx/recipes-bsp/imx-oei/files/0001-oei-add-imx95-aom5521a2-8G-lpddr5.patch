@@ -2,6 +2,7 @@ From 00e67f5d3d81ba6c2c423b4dce6935850dea9d74 Mon Sep 17 00:00:00 2001
 From: SeanChuang2 <dinner0828@gmail.com>
 Date: Tue, 8 Jul 2025 17:00:09 +0800
 Subject: [PATCH] oei add imx95-aom5521a2 8G lpddr5
+Upstream-Status: Inappropriate
 
 ---
  boards/mx95lp5_aom5521a2_8G/Makefile          |    25 +
