@@ -12,7 +12,7 @@ SRC_URI = "file://mx8/modelist.sh \
 
 do_install() {
     install -d ${D}/tools/si
-    install -m 755 ${WORKDIR}/mx8/*.sh ${D}/tools/si/
+    install -m 755 ${UNPACKDIR}/mx8/*.sh ${D}/tools/si/
 }
 
 FILES:${PN} = "/tools/si"

@@ -6,7 +6,7 @@ SRC_URI = "file://update-mac_smsc75xx.sh"
 
 do_install() {
     install -d ${D}/tools
-    install -m 755 ${WORKDIR}/update-mac_smsc75xx.sh ${D}/tools/update-mac_smsc75xx.sh
+    install -m 755 ${UNPACKDIR}/update-mac_smsc75xx.sh ${D}/tools/update-mac_smsc75xx.sh
 }
 
 FILES:${PN} = "/tools"

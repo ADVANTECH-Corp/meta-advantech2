@@ -9,12 +9,12 @@ inherit systemd
 
 do_install() {
     install -d ${D}/tools
-    install -m 755 ${WORKDIR}/adv_resize.sh ${D}/tools/adv_resize.sh
+    install -m 755 ${UNPACKDIR}/adv_resize.sh ${D}/tools/adv_resize.sh
 
     # systemd
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
         install -d ${D}${systemd_unitdir}/system
-        install -m 0644 ${WORKDIR}/adv_resize.service ${D}${systemd_unitdir}/system
+        install -m 0644 ${UNPACKDIR}/adv_resize.service ${D}${systemd_unitdir}/system
     fi
 }
 

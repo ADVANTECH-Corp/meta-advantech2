@@ -9,12 +9,12 @@ inherit systemd
 
 do_install() {
     install -d ${D}/tools
-    install -m 755 ${WORKDIR}/add_virtual_network.sh ${D}/tools/add_virtual_network.sh
+    install -m 755 ${UNPACKDIR}/add_virtual_network.sh ${D}/tools/add_virtual_network.sh
 
     # systemd
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
         install -d ${D}${systemd_unitdir}/system
-        install -m 0644 ${WORKDIR}/add_virtual_network.service ${D}${systemd_unitdir}/system
+        install -m 0644 ${UNPACKDIR}/add_virtual_network.service ${D}${systemd_unitdir}/system
     fi
 }
 

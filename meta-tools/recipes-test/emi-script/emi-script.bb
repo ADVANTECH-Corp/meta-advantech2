@@ -11,12 +11,12 @@ inherit systemd
 
 do_install() {
     install -d ${D}/tools
-    install -m 755 ${WORKDIR}/emi_run ${D}/tools/emi_run
-    install -m 755 ${WORKDIR}/emi_rs232.sh ${D}/tools/emi_rs232.sh
-    install -m 755 ${WORKDIR}/dupchar.sh ${D}/tools/dupchar.sh
+    install -m 755 ${UNPACKDIR}/emi_run ${D}/tools/emi_run
+    install -m 755 ${UNPACKDIR}/emi_rs232.sh ${D}/tools/emi_rs232.sh
+    install -m 755 ${UNPACKDIR}/dupchar.sh ${D}/tools/dupchar.sh
 
     install -d ${D}${systemd_unitdir}/system
-    install -m 0644 ${WORKDIR}/emi-test.service ${D}${systemd_unitdir}/system
+    install -m 0644 ${UNPACKDIR}/emi-test.service ${D}${systemd_unitdir}/system
 }
 
 SYSTEMD_SERVICE:${PN} = "emi-test.service"

@@ -11,7 +11,7 @@ do_install() {
     # systemd
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
         install -d ${D}${systemd_unitdir}/system
-        install -m 0644 ${WORKDIR}/keyevent.service ${D}${systemd_unitdir}/system
+        install -m 0644 ${UNPACKDIR}/keyevent.service ${D}${systemd_unitdir}/system
     fi
 }
 

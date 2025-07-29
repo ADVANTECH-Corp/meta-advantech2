@@ -12,17 +12,17 @@ do_install() {
     # Telit
     install -d ${D}/tools
     install -d ${D}/tools/ppp
-    install -m 755 ${WORKDIR}/telit3g.sh ${D}/tools/ppp/
+    install -m 755 ${UNPACKDIR}/telit3g.sh ${D}/tools/ppp/
 
     # EWM-C106
-    install -m 755 ${WORKDIR}/ewm-c106.sh ${D}/tools/ppp/
+    install -m 755 ${UNPACKDIR}/ewm-c106.sh ${D}/tools/ppp/
     install -d ${D}/etc/ppp/peers
-    install -m 644 ${WORKDIR}/3glink ${D}/etc/ppp/peers/
+    install -m 644 ${UNPACKDIR}/3glink ${D}/etc/ppp/peers/
     install -d ${D}/etc/chatscripts
-    install -m 644 ${WORKDIR}/3g.chat ${D}/etc/chatscripts/
+    install -m 644 ${UNPACKDIR}/3g.chat ${D}/etc/chatscripts/
 
     # Sierra EM7565
-    install -m 755 ${WORKDIR}/sierra-em7565.sh ${D}/tools/ppp/
+    install -m 755 ${UNPACKDIR}/sierra-em7565.sh ${D}/tools/ppp/
 }
 
 FILES:${PN} = "/tools/ppp"

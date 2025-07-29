@@ -7,8 +7,8 @@ SRC_URI = "file://audio_playback.sh \
 
 do_install() {
     install -d ${D}/tools
-    install -m 755 ${WORKDIR}/audio_playback.sh ${D}/tools/audio_playback.sh
-    install -m 755 ${WORKDIR}/audio_recording.sh ${D}/tools/audio_recording.sh
+    install -m 755 ${UNPACKDIR}/audio_playback.sh ${D}/tools/audio_playback.sh
+    install -m 755 ${UNPACKDIR}/audio_recording.sh ${D}/tools/audio_recording.sh
 }
 
 FILES:${PN} = "/tools"

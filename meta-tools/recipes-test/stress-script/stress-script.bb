@@ -20,28 +20,28 @@ inherit systemd
 
 do_install() {
     install -d ${D}/tools
-    install -m 755 ${WORKDIR}/stress.sh ${D}/tools/stress.sh
-    install -m 755 ${WORKDIR}/log.sh ${D}/tools/log.sh
-    install -m 755 ${WORKDIR}/gpu.sh ${D}/tools/gpu.sh
-	install -m 755 ${WORKDIR}/eth0.sh ${D}/tools/eth0.sh
-	install -m 755 ${WORKDIR}/eth1.sh ${D}/tools/eth1.sh
-	install -m 755 ${WORKDIR}/play.sh ${D}/tools/play.sh
-	install -m 755 ${WORKDIR}/sd.sh ${D}/tools/sd.sh
-	install -m 755 ${WORKDIR}/uart.sh ${D}/tools/uart.sh
-	install -m 755 ${WORKDIR}/usb.sh ${D}/tools/usb.sh
-	install -m 755 ${WORKDIR}/wifi.sh ${D}/tools/wifi.sh
-	install -m 755 ${WORKDIR}/cpu-gpu-vpu.sh ${D}/tools/cpu-gpu-vpu.sh
+    install -m 755 ${UNPACKDIR}/stress.sh ${D}/tools/stress.sh
+    install -m 755 ${UNPACKDIR}/log.sh ${D}/tools/log.sh
+    install -m 755 ${UNPACKDIR}/gpu.sh ${D}/tools/gpu.sh
+	install -m 755 ${UNPACKDIR}/eth0.sh ${D}/tools/eth0.sh
+	install -m 755 ${UNPACKDIR}/eth1.sh ${D}/tools/eth1.sh
+	install -m 755 ${UNPACKDIR}/play.sh ${D}/tools/play.sh
+	install -m 755 ${UNPACKDIR}/sd.sh ${D}/tools/sd.sh
+	install -m 755 ${UNPACKDIR}/uart.sh ${D}/tools/uart.sh
+	install -m 755 ${UNPACKDIR}/usb.sh ${D}/tools/usb.sh
+	install -m 755 ${UNPACKDIR}/wifi.sh ${D}/tools/wifi.sh
+	install -m 755 ${UNPACKDIR}/cpu-gpu-vpu.sh ${D}/tools/cpu-gpu-vpu.sh
 
     # SysV
     if ${@bb.utils.contains('DISTRO_FEATURES','sysvinit','true','false',d)}; then
         install -d ${D}${sysconfdir}/init.d
-        install -m 0755 ${WORKDIR}/stress-test ${D}${sysconfdir}/init.d/stress-test
+        install -m 0755 ${UNPACKDIR}/stress-test ${D}${sysconfdir}/init.d/stress-test
     fi
 
     # Systemd
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
         install -d ${D}${systemd_unitdir}/system
-        install -m 0644 ${WORKDIR}/stress-test.service ${D}${systemd_unitdir}/system
+        install -m 0644 ${UNPACKDIR}/stress-test.service ${D}${systemd_unitdir}/system
     fi
 }
 

@@ -10,12 +10,12 @@ RDEPENDS:${PN} += "bash"
 
 do_install() {
     install -d ${D}/tools
-    install -m 755 ${WORKDIR}/boottimes.sh ${D}/tools/boottimes.sh
+    install -m 755 ${UNPACKDIR}/boottimes.sh ${D}/tools/boottimes.sh
 
     # systemd
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
         install -d ${D}${systemd_unitdir}/system
-        install -m 0644 ${WORKDIR}/boottimes.service ${D}${systemd_unitdir}/system
+        install -m 0644 ${UNPACKDIR}/boottimes.service ${D}${systemd_unitdir}/system
     fi
 }
 

@@ -8,7 +8,7 @@ SRC_URI = "file://advantech.conf \
 
 do_install () {
 	install -d ${D}${sysconfdir}/modules-load.d
-        install -m 0755    ${WORKDIR}/advantech.conf       ${D}${sysconfdir}/modules-load.d	
+        install -m 0755    ${UNPACKDIR}/advantech.conf       ${D}${sysconfdir}/modules-load.d	
 }
 
 COMPATIBLE_MACHINE = "(mx6-nxp-bsp|mx7-nxp-bsp|mx8-nxp-bsp|mx9-nxp-bsp)"
