@@ -7,6 +7,7 @@ SCMVERSION = "n"
 
 # Linux Kernel Localversion
 LOCALVERSION = ""
+GITHASH_SUFFIX = "n"
 
 do_copy_defconfig:mx6-nxp-bsp () {
     cp ${S}/arch/arm/configs/imx_v7_adv_defconfig ${B}/.config
@@ -28,13 +29,22 @@ do_copy_defconfig:mx9-nxp-bsp () {
     cp ${S}/arch/arm64/configs/imx_v8_adv_defconfig ${B}/../defconfig
 }
 
-do_kernel_localversion_force() {
+do_configure:append() {
+    NEW_LOCALVERSION="${LOCALVERSION}"
 
-    # Force overwrite kernel localversion
-    sed -i -e "/CONFIG_LOCALVERSION[ =]/d" ${B}/.config
-    echo "CONFIG_LOCALVERSION=\"${LOCALVERSION}\"" >> ${B}/.config
-    sed -i -e "/CONFIG_LOCALVERSION_AUTO[ =]/d" ${B}/.config
-    echo "CONFIG_LOCALVERSION_AUTO=y" >> ${B}/.config
+    if [ "${GITHASH_SUFFIX}" = "y" ]; then
+        HASH=$(cd ${S} && git rev-parse --short=12 HEAD)
+        if [ -n "${HASH}" ] && [ "${HASH}" != "unknown" ]; then
+            NEW_LOCALVERSION="${NEW_LOCALVERSION}-g${HASH}"
+            bbnote "Final HASH=${HASH}"
+        else
+            bbwarn "HASH is empty or invalid, skipping suffix"
+        fi
+        bbnote "Final LOCALVERSION=${NEW_LOCALVERSION}"
+    fi
+
+    oe_runmake olddefconfig
+    ${S}/scripts/config --file ${B}/.config --disable LOCALVERSION_AUTO
+    ${S}/scripts/config --file ${B}/.config --set-str LOCALVERSION "${NEW_LOCALVERSION}"
 }
 
-addtask kernel_localversion_force before do_configure after do_kernel_localversion
