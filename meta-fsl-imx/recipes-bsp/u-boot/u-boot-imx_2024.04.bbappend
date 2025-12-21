@@ -3,7 +3,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 UBOOT_SRC = "git://github.com/ADVANTECH-Corp/uboot-imx.git;protocol=https"
 SRCBRANCH = "adv_v2024.04_6.6.23_2.0.0"
 SRC_URI = "${UBOOT_SRC};branch=${SRCBRANCH}"
-SRCREV = "0e7ca2675c8f2eb6a2b37027796a3e267d946bab"
+SRCREV = "${AUTOREV}"
 
 #EXTRA_OEMAKE += "-I${S}/usr/bin' "
 #EXTRA_OEMAKE += "-I${S}/usr/bin' "
