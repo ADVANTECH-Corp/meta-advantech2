@@ -1,0 +1,38 @@
+From ed8d5f268519d6403b039fd1d64f8f0571a8b6a7 Mon Sep 17 00:00:00 2001
+From: Your Name <you@example.com>
+Date: Wed, 10 Dec 2025 15:40:13 +0800
+Subject: [PATCH] [common][Kconfig] Add ARCH_ADVANTECH platform option
+Upstream-Status: Inappropriate
+---
+ include/drivers/arm/css/scmi.h   | 1 +
+ plat/imx/imx9/imx95/imx95_psci.c | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/include/drivers/arm/css/scmi.h b/include/drivers/arm/css/scmi.h
+index 1e7f120dc..6a2e4b058 100644
+--- a/include/drivers/arm/css/scmi.h
++++ b/include/drivers/arm/css/scmi.h
+@@ -102,6 +102,7 @@
+ #define SCMI_SYS_PWR_WARM_RESET			0x2
+ #define SCMI_SYS_PWR_POWER_UP			0x3
+ #define SCMI_SYS_PWR_SUSPEND			0x4
++#define SCMI_SYS_STATE_FULL_SHUTDOWN 		0x80000001U
+ #define SCMI_SYS_STATE_FULL_RESET		0x80000002U
+ 
+ /*
+diff --git a/plat/imx/imx9/imx95/imx95_psci.c b/plat/imx/imx9/imx95/imx95_psci.c
+index 61e151413..f6192d916 100644
+--- a/plat/imx/imx9/imx95/imx95_psci.c
++++ b/plat/imx/imx9/imx95/imx95_psci.c
+@@ -815,7 +815,7 @@ void __dead2 imx_system_off(void)
+ 
+ 	ret = scmi_sys_pwr_state_set(imx9_scmi_handle,
+ 				     SCMI_SYS_PWR_FORCEFUL_REQ,
+-				     SCMI_SYS_PWR_SHUTDOWN);
++				     SCMI_SYS_STATE_FULL_SHUTDOWN);
+ 	if (ret) {
+ 		NOTICE("%s failed: %d\n", __func__, ret);
+ 	}
+-- 
+2.34.1
+
