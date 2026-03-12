@@ -1,0 +1,25 @@
+From ae4e1196e5a80229db0451ca0f658fa3fa188a94 Mon Sep 17 00:00:00 2001
+From: SeanChuang2 <dinner0828@gmail.com>
+Date: Wed, 11 Mar 2026 10:58:01 +0800
+Subject: [PATCH] [ATF] Change system reset type
+Upstream-Status: Inappropriate
+---
+ plat/imx/imx9/imx95/imx95_psci.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/plat/imx/imx9/imx95/imx95_psci.c b/plat/imx/imx9/imx95/imx95_psci.c
+index 61e151413..b06daee02 100644
+--- a/plat/imx/imx9/imx95/imx95_psci.c
++++ b/plat/imx/imx9/imx95/imx95_psci.c
+@@ -758,7 +758,7 @@ void __dead2 imx_system_reset(void)
+ 	/* Force: work, Gracefull: not work */
+ 	ret = scmi_sys_pwr_state_set(imx9_scmi_handle,
+ 				     SCMI_SYS_PWR_FORCEFUL_REQ,
+-				     SCMI_SYS_PWR_COLD_RESET);
++				     SCMI_SYS_STATE_FULL_RESET);
+ 	if (ret) {
+ 		VERBOSE("%s failed: %d\n", __func__, ret);
+ 	}
+-- 
+2.34.1
+
