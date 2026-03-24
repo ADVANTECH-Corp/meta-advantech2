@@ -23,6 +23,9 @@ install_utils() {
         install -m 0644 ${ADDON_FILES_DIR}/sd_w61x_v1.bin.se ${IMAGE_ROOTFS}/lib/firmware/nxp/sd_w61x_v1.bin.se
         install -m 0644 ${ADDON_FILES_DIR}/uartspi_n61x_v1.bin.se ${IMAGE_ROOTFS}/lib/firmware/nxp/uartspi_n61x_v1.bin.se
         install -m 0644 ${ADDON_FILES_DIR}/uartuart_n61x_v1.bin.se ${IMAGE_ROOTFS}/lib/firmware/nxp/uartuart_n61x_v1.bin.se
+        install -m 0644 ${ADDON_FILES_DIR}/IW612_QFN_iPA_power_table_DVT2_V1.bin ${IMAGE_ROOTFS}/lib/firmware/nxp/IW612_QFN_iPA_power_table_DVT2_V1.bin
+        install -m 0644 ${ADDON_FILES_DIR}/sduart_nw61x_v1_zb_dual_pan.bin.se ${IMAGE_ROOTFS}/lib/firmware/nxp/sduart_nw61x_v1_zb_dual_pan.bin.se
+        install -m 0644 ${ADDON_FILES_DIR}/uartspi_n61x_v1_zb_dual_pan.bin.se ${IMAGE_ROOTFS}/lib/firmware/nxp/uartspi_n61x_v1_zb_dual_pan.bin.se
         install -m 0644 ${ADDON_FILES_DIR}/wifi_mod_para.conf ${IMAGE_ROOTFS}/lib/firmware/nxp/wifi_mod_para.conf
         install -m 0755 ${ADDON_FILES_DIR}/quectel-CM ${IMAGE_ROOTFS}/usr/bin/quectel-CM
         install -m 0755 ${ADDON_FILES_DIR}/adv-quectel-CM ${IMAGE_ROOTFS}/usr/bin/adv-quectel-CM
