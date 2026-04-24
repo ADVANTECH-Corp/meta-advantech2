@@ -1,0 +1,39 @@
+diff --git a/core/arch/arm/plat-imx/conf.mk b/core/arch/arm/plat-imx/conf.mk
+index c1907500f..01b1e7dac 100644
+--- a/core/arch/arm/plat-imx/conf.mk
++++ b/core/arch/arm/plat-imx/conf.mk
+@@ -73,6 +73,7 @@ mx8mp-flavorlist = \
+
+ mx8qm-flavorlist = \
+	mx8qmmek \
++	mx8qxprom5620a1 \
+
+ mx8qx-flavorlist = \
+	mx8qxpmek \
+@@ -360,6 +361,11 @@ CFG_UART_BASE ?= UART0_BASE
+ $(call force,CFG_TZC380,n)
+ endif
+
++ifneq (,$(filter $(PLATFORM_FLAVOR),mx8qxprom5620a1))
++CFG_DDR_SIZE ?= 0x100000000
++CFG_UART_BASE ?= UART0_BASE
++endif
++
+ ifneq (,$(filter $(PLATFORM_FLAVOR),mx8dxmek))
+ CFG_DDR_SIZE ?= 0x40000000
+ CFG_UART_BASE ?= UART0_BASE
+diff --git a/scripts/nxp_build.sh b/scripts/nxp_build.sh
+index 381989357..cad9e46d7 100755
+--- a/scripts/nxp_build.sh
++++ b/scripts/nxp_build.sh
+@@ -35,6 +35,7 @@ boards_list=(
+	mx8mnevk \
+	mx8mpevk \
+	mx8qxpmek \
++	mx8qxprom5620a1 \
+	mx8qmmek \
+	mx8dxlevk \
+	ls1021atwr \
+--
+2.34.1
+
