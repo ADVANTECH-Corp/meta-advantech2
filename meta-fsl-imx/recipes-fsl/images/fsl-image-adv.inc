@@ -53,6 +53,7 @@ IMAGE_INSTALL:append:imx8mpepcr5710a1 = " xauth \
                                    gentl-producer \
                                    "
 IMAGE_INSTALL:append:mx9-nxp-bsp = " keyevent "
+IMAGE_INSTALL:append:imx95aom5521a2 = " lt9611uxd-firmware "
 
 # Browser
 #IMAGE_INSTALL += " firefox "
